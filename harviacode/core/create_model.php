@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $string = "<?php
 
@@ -18,20 +18,20 @@ class " . $m . " extends CI_Model
     }";
 
 if ($jenis_tabel <> 'reguler_table') {
-    
-$column_all = array();
-foreach ($all as $row) {
-    $column_all[] = $row['column_name'];
-}
-$columnall = implode(',', $column_all);
-    
-$string .="\n\n    // datatables
+
+    $column_all = array();
+    foreach ($all as $row) {
+        $column_all[] = $row['column_name'];
+    }
+    $columnall = implode(',', $column_all);
+
+    $string .="\n\n    // datatables
     function json() {
-        \$this->datatables->select('".$columnall."');
-        \$this->datatables->from('".$table_name."');
+        \$this->datatables->select('" . $columnall . "');
+        \$this->datatables->from('" . $table_name . "');
         //add this line for join
-        //\$this->datatables->join('table2', '".$table_name.".field = table2.field');
-        \$this->datatables->add_column('action', anchor(site_url('".$c_url."/read/\$1'),'Read').\" | \".anchor(site_url('".$c_url."/update/\$1'),'Update').\" | \".anchor(site_url('".$c_url."/delete/\$1'),'Delete','onclick=\"javasciprt: return confirm(\\'Are You Sure ?\\')\"'), '$pk');
+        //\$this->datatables->join('table2', '" . $table_name . ".field = table2.field');
+        \$this->datatables->add_column('action', anchor(site_url('" . $c_url . "/read/\$1'),'Read').\" | \".anchor(site_url('" . $c_url . "/update/\$1'),'Update').\" | \".anchor(site_url('" . $c_url . "/delete/\$1'),'Delete','onclick=\"javasciprt: return confirm(\\'Are You Sure ?\\')\"'), '$pk');
         return \$this->datatables->generate();
     }";
 }
@@ -43,24 +43,21 @@ foreach ($all as $row) {
     $column_all[] = $row['column_name'];
 }
 $columnall = implode(",\".\n \"", $column_all);
-    
-    //GET LIST 
-$string .="\n\n    // GET_LIST_ALL".$table_name."
-    function getList".$table_name."() {
-        \$xStr = \"SELECT ".$columnall." from ".$table_name. "\";
+
+//GET LIST 
+$string .="\n\n    // GET_LIST" . $table_name . "
+    function getList" . $table_name . "() {
+        \$xStr = \"SELECT " . $columnall . " from " . $table_name . "\";
         \$query = \$this->db->query(\$xStr);
         
         return \$query;
     }";
+//GET LIST 
 
-
-    //GET LIST 
-
-
-    //GET DETAIL LIST 
-$string .="\n\n    // GET_Detail".$table_name."
-    function getDetail".$table_name."(\$x$pk) {
-        \$xStr = \"SELECT ".$columnall." from ".$table_name." WHERE $pk = '\". \$x$pk .\"'\";
+//GET DETAIL LIST 
+$string .="\n\n    // GET_Detail" . $table_name . "
+    function getDetail" . $table_name . "(\$x$pk) {
+        \$xStr = \"SELECT " . $columnall . " from " . $table_name . " WHERE $pk = '\". \$x$pk .\"'\";
         \$query = \$this->db->query(\$xStr);
         \$row = \$query->row();
         return \$row;
@@ -74,34 +71,33 @@ $columnallparam = implode(",\$x", $column_all);
 //KEPERLUAN INSERT
 $columnallinstert = implode("\n . \"','\" .\$x", $column_all);
 
-$string .="\n\n    // Insert_".$table_name."
-    function Insert".$table_name."(\$x".$columnallparam.") {
-        \$xStr = \" INSERT INTO ".$table_name."( ".$columnall." ) VALUES ( '\" . \$x".$columnallinstert. ". \"')\";
+$string .="\n\n    // Insert_" . $table_name . "
+    function Insert" . $table_name . "(\$x" . $columnallparam . ") {
+        \$xStr = \" INSERT INTO " . $table_name . "( " . $columnall . " ) VALUES ( '\" . \$x" . $columnallinstert . ". \"')\";
         \$query = \$this->db->query(\$xStr);
-        return \$$pk; 
+        return \$x$pk; 
     }";
-
 //INSERT
 
 //UPDATE
-    $string .="\n\n    // update".$table_name."
-    function Update".$table_name."(\$x".$columnallparam.") {
-        \$xStr = \" UPDATE produk SET \". ";
+$string .="\n\n    // update" . $table_name . "
+    function Update" . $table_name . "(\$x" . $columnallparam . ") {
+        \$xStr = \" UPDATE produk SET \" . ";
 
 foreach ($all as $row) {
     $string .= "\n\t\t\"" . $row['column_name'] . "= '\". \$x" . $row['column_name'] . " . \"',\" . ";
 }
-    $string .= "\"' WHERE $pk = '\". \$x$pk .\"'\";";
-    $string .= "\n \$query = \$this->db->query(\$xStr);
+$string .= "\"' WHERE $pk = '\". \$x$pk .\"'\";";
+$string .= "\n \$query = \$this->db->query(\$xStr);
         return \$x$pk;
     }";
-//UPDATE    
-
+//UPDATE   
+ 
 //DELET
 
-    $string .="\n\n    // delet".$table_name."
-    function Delet".$table_name."(\$x$pk) {
-        \$xStr = \" DELETE FROM ".$table_name." WHERE ".$table_name.".$pk = '\" . \$x$pk . \"'\";
+$string .="\n\n    // delet" . $table_name . "
+    function Delet" . $table_name . "(\$x$pk) {
+        \$xStr = \" DELETE FROM " . $table_name . " WHERE " . $table_name . ".$pk = '\" . \$x$pk . \"'\";
         \$query = \$this->db->query(\$xStr);
     }";
 //DELET
@@ -125,8 +121,8 @@ $string .="\n\n    // get all
         \$this->db->like('$pk', \$q);";
 
 foreach ($non_pk as $row) {
-    $string .= "\n\t\$this->db->or_like('" . $row['column_name'] ."', \$q);";
-}    
+    $string .= "\n\t\$this->db->or_like('" . $row['column_name'] . "', \$q);";
+}
 
 $string .= "\n\t\$this->db->from(\$this->table);
         return \$this->db->count_all_results();
@@ -138,8 +134,8 @@ $string .= "\n\t\$this->db->from(\$this->table);
         \$this->db->like('$pk', \$q);";
 
 foreach ($non_pk as $row) {
-    $string .= "\n\t\$this->db->or_like('" . $row['column_name'] ."', \$q);";
-}    
+    $string .= "\n\t\$this->db->or_like('" . $row['column_name'] . "', \$q);";
+}
 
 $string .= "\n\t\$this->db->limit(\$limit, \$start);
         return \$this->db->get(\$this->table)->result();
@@ -165,11 +161,16 @@ $string .= "\n\t\$this->db->limit(\$limit, \$start);
         \$this->db->delete(\$this->table);
     }
 
-}";
+}
+
+/* End of file $m_file */
+/* Location: ./application/models/$m_file */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator " . date('Y-m-d H:i:s') . " */
+/* http://harviacode.com */";
 
 
 
 
-$hasil_model = createFile($string, $target."models/" . $m_file);
-
+$hasil_model = createFile($string, $target . "models/" . $m_file);
 ?>

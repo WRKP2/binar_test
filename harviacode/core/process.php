@@ -94,6 +94,8 @@ if (isset($_POST['generateall']))
     $export_word = safe($_POST['export_word']);
     $export_pdf = safe($_POST['export_pdf']);
 
+    $android = safe($_POST['android']);
+    
     $table_list = $hc->table_list();
     foreach ($table_list as $row) {
 

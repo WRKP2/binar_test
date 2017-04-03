@@ -16,13 +16,13 @@ class " . $c . " extends CI_Controller
 if ($jenis_tabel <> 'reguler_table') {
     $string .= "        \n\t\$this->load->library('datatables');";
 }
-        
+
 $string .= "
     }";
 
 if ($jenis_tabel == 'reguler_table') {
-    
-$string .= "\n\n    public function index()
+
+    $string .= "\n\n    public function index()
     {
         \$q = urldecode(\$this->input->get('q', TRUE));
         \$start = intval(\$this->input->get('start'));
@@ -52,10 +52,9 @@ $string .= "\n\n    public function index()
         );
         \$this->load->view('$c_url/$v_list', \$data);
     }";
-
 } else {
-    
-$string .="\n\n    public function index()
+
+    $string .="\n\n    public function index()
     {
         \$this->load->view('$c_url/$v_list');
     } 
@@ -64,9 +63,8 @@ $string .="\n\n    public function index()
         header('Content-Type: application/json');
         echo \$this->" . $m . "->json();
     }";
-
 }
-    
+
 $string .= "\n\n    public function read(\$id) 
     {
         \$row = \$this->" . $m . "->get_by_id(\$id);
@@ -84,19 +82,16 @@ $string .= "\n\t    );
     }";
 
 //ANDROID
-    //READ
 if ($android == '1') {
     $column_all = array();
     foreach ($all as $row) {
         $column_all[] = $row['column_name'];
     }
 //keperluan parameter    
-$columnallparam = implode(",\$x", $column_all);
+    $columnallparam = implode(",\$x", $column_all);
 
-
-//=========READ=========
-$string .= "\n\n//=========READ=========
-        \n\npublic function read". $table_name ."Android() {
+    $string .= "\n\n//=========READ=========
+        \n\npublic function read" . $table_name . "Android() {
         \$this->load->helper('json'); \n
         \$xSearch = \$_POST['search']; \n";
 
@@ -106,14 +101,14 @@ $string .= "\n\n//=========READ=========
 
     $string .= "\n\n\t\t\$this->load->model('" . $m . "');
                 \n\t\t\$response = array();
-                \n\t\t\$xQuery = \$this->" . $m . "->getList".$table_name."();
+                \n\t\t\$xQuery = \$this->" . $m . "->getList" . $table_name . "();
 
                 \n\t\tforeach (\$xQuery->result() as \$row) {";
 
-foreach ($all as $row) {
-    $string .= "\n\t\t\t \$this->json_data['" . $row['column_name'] . "'] = \$row->" . $row['column_name'] . ";";
-}
-$string .= "\n\t\tarray_push(\$response, \$this->json_data); \n\t\t}
+    foreach ($all as $row) {
+        $string .= "\n\t\t\t \$this->json_data['" . $row['column_name'] . "'] = \$row->" . $row['column_name'] . ";";
+    }
+    $string .= "\n\t\tarray_push(\$response, \$this->json_data); \n\t\t}
             
             \n\t\tif (empty(\$response)) {
             \n\t\tarray_push(\$response, \$this->json_data);
@@ -121,12 +116,9 @@ $string .= "\n\t\tarray_push(\$response, \$this->json_data); \n\t\t}
         \n\t\techo json_encode($response);
     }
     \n\n//=========READ=========";
-//=========READ=========
 
-
-//=========INSERT AND UPDATE=========
     $string .= "\n\n//=========INSERT AND UPDATE=========
-        \n\npublic function simpanupdate". $table_name ."Android() {
+        \n\npublic function simpanupdate" . $table_name . "Android() {
         \$this->load->helper('json'); \n
          if (!empty(\$_POST['\$ed$pk'])) {
             \n\$x$pk = \$_POST['\$ed$pk'];
@@ -136,58 +128,55 @@ $string .= "\n\t\tarray_push(\$response, \$this->json_data); \n\t\t}
 
     //parameter
     foreach ($all as $row) {
-        if($row != $pk){
-       $string .= "\n\t\t \$x" . $row['column_name'] . " = \$_POST['ed" . $row['column_name'] . "'];";
+        if ($row['column_name'] != $pk) {
+            $string .= "\n\t\t \$x" . $row['column_name'] . " = \$_POST['ed" . $row['column_name'] . "'];";
         }
     }
 
     $string .= "\n\n\t\t\$this->load->model('" . $m . "');
-                \n\t\tif (!empty($idpegawai)) {
-                \n\t\tif ($xidproduk != '0') {
+                \n\t\tif (!empty(\$x$pk)) {
+                \n\t\tif (\$x$pk != '0') {
                 //===UPDATE===
-                \n\t\t\$xStr = \$this->" . $m . "->Update".$table_name."(\$x".$columnallparam.");";
+                \n\t\t\$xStr = \$this->" . $m . "->Update" . $table_name . "(\$x" . $columnallparam . ");";
 
 
-$string .= "\n\t\t} else {
+    $string .= "\n\t\t} else {
             //===INSERT===
-            \n\t\t\$xStr = \$this->" . $m . "->Insert".$table_name."(\$x".$columnallparam.");
+            \n\t\t\$xStr = \$this->" . $m . "->Insert" . $table_name . "(\$x" . $columnallparam . ");
             \t}
             \t\t}
-        \n\t\techo json_encode($response);
+        \n\t\techo json_encode(null);
     }
     \n\n//=========INSERT AND UPDATE=========";
-//=========INSERT AND UPDATE=========
 
-//=========DELET=========
     $string .= "\n\n//=========DELET=========
-        \n\npublic function delet". $table_name ."Android() {
+        \n\npublic function delet" . $table_name . "Android() {
         \n\t\t\$x$pk = \$_POST['\$ed$pk'];
         \$this->load->model('" . $m . "');
-        \$this->" . $m . "->Delet".$table_name."(\$x$pk);
+        \$this->" . $m . "->Delet" . $table_name . "(\$x$pk);
         \$this->load->helper('json');
         echo json_encode(null);
     }
     \n\n//=========DELET=========";
-//=========DELET=========
 
-$string .= "\n\n//=========GET DETAIL=========
-        \n\npublic function getDetail". $table_name ."Android() {
+
+    $string .= "\n\n//=========GET DETAIL=========
+        \n\npublic function getDetail" . $table_name . "Android() {
         \n\t\t\$x$pk = \$_POST['\$ed$pk'];
         \$this->load->model('" . $m . "');
-        \$this->" . $m . "->getDetail".$table_name."(\$x$pk);
+        \$this->" . $m . "->getDetail" . $table_name . "(\$x$pk);
         \$this->load->helper('json');";
 
-   foreach ($all as $row) {
-    $string .= "\n\t\t\$this->json_data['" . $row['column_name'] . "'] = \$row->" . $row['column_name'] . ";";
-}
+    foreach ($all as $row) {
+        $string .= "\n\t\t\$this->json_data['" . $row['column_name'] . "'] = \$row->" . $row['column_name'] . ";";
+    }
 
-$string .= "\n\t\techo json_encode(\$this->json_data);
+    $string .= "\n\t\techo json_encode(\$this->json_data);
 }
     \n\n//=========GET DETAIL=========";
-
 }
-    //READ
-    //ANDROID
+
+//ANDROID
 
 $string .= "\n\npublic function create() 
     {
@@ -214,7 +203,7 @@ foreach ($non_pk as $row) {
 }
 $string .= "\n\t    );
 
-            \$this->".$m."->insert(\$data);
+            \$this->" . $m . "->insert(\$data);
             \$this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('$c_url'));
         }
@@ -222,14 +211,14 @@ $string .= "\n\t    );
     
     public function update(\$id) 
     {
-        \$row = \$this->".$m."->get_by_id(\$id);
+        \$row = \$this->" . $m . "->get_by_id(\$id);
 
         if (\$row) {
             \$data = array(
                 'button' => 'Update',
                 'action' => site_url('$c_url/update_action'),";
 foreach ($all as $row) {
-    $string .= "\n\t\t'" . $row['column_name'] . "' => set_value('" . $row['column_name'] . "', \$row->". $row['column_name']."),";
+    $string .= "\n\t\t'" . $row['column_name'] . "' => set_value('" . $row['column_name'] . "', \$row->" . $row['column_name'] . "),";
 }
 $string .= "\n\t    );
             \$this->load->view('$c_url/$v_form', \$data);
@@ -249,10 +238,10 @@ $string .= "\n\t    );
             \$data = array(";
 foreach ($non_pk as $row) {
     $string .= "\n\t\t'" . $row['column_name'] . "' => \$this->input->post('" . $row['column_name'] . "',TRUE),";
-}    
+}
 $string .= "\n\t    );
 
-            \$this->".$m."->update(\$this->input->post('$pk', TRUE), \$data);
+            \$this->" . $m . "->update(\$this->input->post('$pk', TRUE), \$data);
             \$this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('$c_url'));
         }
@@ -260,10 +249,10 @@ $string .= "\n\t    );
     
     public function delete(\$id) 
     {
-        \$row = \$this->".$m."->get_by_id(\$id);
+        \$row = \$this->" . $m . "->get_by_id(\$id);
 
         if (\$row) {
-            \$this->".$m."->delete(\$id);
+            \$this->" . $m . "->delete(\$id);
             \$this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('$c_url'));
         } else {
@@ -276,8 +265,8 @@ $string .= "\n\t    );
     {";
 foreach ($non_pk as $row) {
     $int = $row3['data_type'] == 'int' || $row['data_type'] == 'double' || $row['data_type'] == 'decimal' ? '|numeric' : '';
-    $string .= "\n\t\$this->form_validation->set_rules('".$row['column_name']."', '".  strtolower(label($row['column_name']))."', 'trim|required$int');";
-}    
+    $string .= "\n\t\$this->form_validation->set_rules('" . $row['column_name'] . "', '" . strtolower(label($row['column_name'])) . "', 'trim|required$int');";
+}
 $string .= "\n\n\t\$this->form_validation->set_rules('$pk', '$pk', 'trim');";
 $string .= "\n\t\$this->form_validation->set_error_delimiters('<span class=\"text-danger\">', '</span>');
     }";
@@ -305,21 +294,21 @@ if ($export_excel == '1') {
 
         \$kolomhead = 0;
         xlsWriteLabel(\$tablehead, \$kolomhead++, \"No\");";
-foreach ($non_pk as $row) {
+    foreach ($non_pk as $row) {
         $column_name = label($row['column_name']);
         $string .= "\n\txlsWriteLabel(\$tablehead, \$kolomhead++, \"$column_name\");";
-}
-$string .= "\n\n\tforeach (\$this->" . $m . "->get_all() as \$data) {
+    }
+    $string .= "\n\n\tforeach (\$this->" . $m . "->get_all() as \$data) {
             \$kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber(\$tablebody, \$kolombody++, \$nourut);";
-foreach ($non_pk as $row) {
+    foreach ($non_pk as $row) {
         $column_name = $row['column_name'];
         $xlsWrite = $row['data_type'] == 'int' || $row['data_type'] == 'double' || $row['data_type'] == 'decimal' ? 'xlsWriteNumber' : 'xlsWriteLabel';
         $string .= "\n\t    " . $xlsWrite . "(\$tablebody, \$kolombody++, \$data->$column_name);";
-}
-$string .= "\n\n\t    \$tablebody++;
+    }
+    $string .= "\n\n\t    \$tablebody++;
             \$nourut++;
         }
 
@@ -339,7 +328,7 @@ if ($export_word == '1') {
             'start' => 0
         );
         
-        \$this->load->view('" . $c_url ."/". $v_doc . "',\$data);
+        \$this->load->view('" . $c_url . "/" . $v_doc . "',\$data);
     }";
 }
 
@@ -352,7 +341,7 @@ if ($export_pdf == '1') {
         );
         
         ini_set('memory_limit', '32M');
-        \$html = \$this->load->view('" . $c_url ."/". $v_pdf . "', \$data, true);
+        \$html = \$this->load->view('" . $c_url . "/" . $v_pdf . "', \$data, true);
         \$this->load->library('pdf');
         \$pdf = \$this->pdf->load();
         \$pdf->WriteHTML(\$html);
@@ -360,8 +349,14 @@ if ($export_pdf == '1') {
     }";
 }
 
+$string .= "\n\n}\n\n/* End of file $c_file */
+/* Location: ./application/controllers/$c_file */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator " . date('Y-m-d H:i:s') . " */
+/* http://harviacode.com */";
+
+
 
 
 $hasil_controller = createFile($string, $target . "controllers/" . $c_file);
-
 ?>
