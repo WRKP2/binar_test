@@ -3,7 +3,7 @@
 $string = "<!doctype html>
 <html>
     <head>
-        <title>harviacode.com - codeigniter crud generator</title>
+        <title>".ucfirst($table_name)." List</title>
         <link rel=\"stylesheet\" href=\"<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>\"/>
         <style>
             .word-table {
