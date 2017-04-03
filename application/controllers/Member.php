@@ -48,18 +48,13 @@ class Member extends CI_Controller
         $row = $this->Member_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'idx' => $row->idx,
-		'Nama' => $row->Nama,
-		'Alamat' => $row->Alamat,
-		'NoTelpon' => $row->NoTelpon,
-		'idtoken' => $row->idtoken,
-		'email' => $row->email,
-		'tglinsert' => $row->tglinsert,
-		'isblokir' => $row->isblokir,
-		'idjenismember' => $row->idjenismember,
-		'password' => $row->password,
-		'photoUrl' => $row->photoUrl,
-		'tokenmember' => $row->tokenmember,
+		'nama_member' => $row->nama_member,
+		'alamat_member' => $row->alamat_member,
+		'kota' => $row->kota,
+		'tglLahir_member' => $row->tglLahir_member,
+		'email_member' => $row->email_member,
+		'noTelp_member' => $row->noTelp_member,
+		'id_member' => $row->id_member,
 	    );
             $this->load->view('member/member_read', $data);
         } else {
@@ -73,18 +68,13 @@ public function create()
         $data = array(
             'button' => 'Create',
             'action' => site_url('member/create_action'),
-	    'idx' => set_value('idx'),
-	    'Nama' => set_value('Nama'),
-	    'Alamat' => set_value('Alamat'),
-	    'NoTelpon' => set_value('NoTelpon'),
-	    'idtoken' => set_value('idtoken'),
-	    'email' => set_value('email'),
-	    'tglinsert' => set_value('tglinsert'),
-	    'isblokir' => set_value('isblokir'),
-	    'idjenismember' => set_value('idjenismember'),
-	    'password' => set_value('password'),
-	    'photoUrl' => set_value('photoUrl'),
-	    'tokenmember' => set_value('tokenmember'),
+	    'nama_member' => set_value('nama_member'),
+	    'alamat_member' => set_value('alamat_member'),
+	    'kota' => set_value('kota'),
+	    'tglLahir_member' => set_value('tglLahir_member'),
+	    'email_member' => set_value('email_member'),
+	    'noTelp_member' => set_value('noTelp_member'),
+	    'id_member' => set_value('id_member'),
 	);
         $this->load->view('member/member_form', $data);
     }
@@ -97,17 +87,12 @@ public function create()
             $this->create();
         } else {
             $data = array(
-		'Nama' => $this->input->post('Nama',TRUE),
-		'Alamat' => $this->input->post('Alamat',TRUE),
-		'NoTelpon' => $this->input->post('NoTelpon',TRUE),
-		'idtoken' => $this->input->post('idtoken',TRUE),
-		'email' => $this->input->post('email',TRUE),
-		'tglinsert' => $this->input->post('tglinsert',TRUE),
-		'isblokir' => $this->input->post('isblokir',TRUE),
-		'idjenismember' => $this->input->post('idjenismember',TRUE),
-		'password' => $this->input->post('password',TRUE),
-		'photoUrl' => $this->input->post('photoUrl',TRUE),
-		'tokenmember' => $this->input->post('tokenmember',TRUE),
+		'nama_member' => $this->input->post('nama_member',TRUE),
+		'alamat_member' => $this->input->post('alamat_member',TRUE),
+		'kota' => $this->input->post('kota',TRUE),
+		'tglLahir_member' => $this->input->post('tglLahir_member',TRUE),
+		'email_member' => $this->input->post('email_member',TRUE),
+		'noTelp_member' => $this->input->post('noTelp_member',TRUE),
 	    );
 
             $this->Member_model->insert($data);
@@ -124,18 +109,13 @@ public function create()
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('member/update_action'),
-		'idx' => set_value('idx', $row->idx),
-		'Nama' => set_value('Nama', $row->Nama),
-		'Alamat' => set_value('Alamat', $row->Alamat),
-		'NoTelpon' => set_value('NoTelpon', $row->NoTelpon),
-		'idtoken' => set_value('idtoken', $row->idtoken),
-		'email' => set_value('email', $row->email),
-		'tglinsert' => set_value('tglinsert', $row->tglinsert),
-		'isblokir' => set_value('isblokir', $row->isblokir),
-		'idjenismember' => set_value('idjenismember', $row->idjenismember),
-		'password' => set_value('password', $row->password),
-		'photoUrl' => set_value('photoUrl', $row->photoUrl),
-		'tokenmember' => set_value('tokenmember', $row->tokenmember),
+		'nama_member' => set_value('nama_member', $row->nama_member),
+		'alamat_member' => set_value('alamat_member', $row->alamat_member),
+		'kota' => set_value('kota', $row->kota),
+		'tglLahir_member' => set_value('tglLahir_member', $row->tglLahir_member),
+		'email_member' => set_value('email_member', $row->email_member),
+		'noTelp_member' => set_value('noTelp_member', $row->noTelp_member),
+		'id_member' => set_value('id_member', $row->id_member),
 	    );
             $this->load->view('member/member_form', $data);
         } else {
@@ -149,23 +129,18 @@ public function create()
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('idx', TRUE));
+            $this->update($this->input->post('id_member', TRUE));
         } else {
             $data = array(
-		'Nama' => $this->input->post('Nama',TRUE),
-		'Alamat' => $this->input->post('Alamat',TRUE),
-		'NoTelpon' => $this->input->post('NoTelpon',TRUE),
-		'idtoken' => $this->input->post('idtoken',TRUE),
-		'email' => $this->input->post('email',TRUE),
-		'tglinsert' => $this->input->post('tglinsert',TRUE),
-		'isblokir' => $this->input->post('isblokir',TRUE),
-		'idjenismember' => $this->input->post('idjenismember',TRUE),
-		'password' => $this->input->post('password',TRUE),
-		'photoUrl' => $this->input->post('photoUrl',TRUE),
-		'tokenmember' => $this->input->post('tokenmember',TRUE),
+		'nama_member' => $this->input->post('nama_member',TRUE),
+		'alamat_member' => $this->input->post('alamat_member',TRUE),
+		'kota' => $this->input->post('kota',TRUE),
+		'tglLahir_member' => $this->input->post('tglLahir_member',TRUE),
+		'email_member' => $this->input->post('email_member',TRUE),
+		'noTelp_member' => $this->input->post('noTelp_member',TRUE),
 	    );
 
-            $this->Member_model->update($this->input->post('idx', TRUE), $data);
+            $this->Member_model->update($this->input->post('id_member', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('member'));
         }
@@ -187,19 +162,14 @@ public function create()
 
     public function _rules() 
     {
-	$this->form_validation->set_rules('Nama', 'nama', 'trim|required');
-	$this->form_validation->set_rules('Alamat', 'alamat', 'trim|required');
-	$this->form_validation->set_rules('NoTelpon', 'notelpon', 'trim|required');
-	$this->form_validation->set_rules('idtoken', 'idtoken', 'trim|required');
-	$this->form_validation->set_rules('email', 'email', 'trim|required');
-	$this->form_validation->set_rules('tglinsert', 'tglinsert', 'trim|required');
-	$this->form_validation->set_rules('isblokir', 'isblokir', 'trim|required');
-	$this->form_validation->set_rules('idjenismember', 'idjenismember', 'trim|required');
-	$this->form_validation->set_rules('password', 'password', 'trim|required');
-	$this->form_validation->set_rules('photoUrl', 'photourl', 'trim|required');
-	$this->form_validation->set_rules('tokenmember', 'tokenmember', 'trim|required');
+	$this->form_validation->set_rules('nama_member', 'nama member', 'trim|required');
+	$this->form_validation->set_rules('alamat_member', 'alamat member', 'trim|required');
+	$this->form_validation->set_rules('kota', 'kota', 'trim|required');
+	$this->form_validation->set_rules('tglLahir_member', 'tgllahir member', 'trim|required');
+	$this->form_validation->set_rules('email_member', 'email member', 'trim|required');
+	$this->form_validation->set_rules('noTelp_member', 'notelp member', 'trim|required');
 
-	$this->form_validation->set_rules('idx', 'idx', 'trim');
+	$this->form_validation->set_rules('id_member', 'id_member', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
@@ -208,5 +178,5 @@ public function create()
 /* End of file Member.php */
 /* Location: ./application/controllers/Member.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:13 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-03 09:17:32 */
 /* http://harviacode.com */

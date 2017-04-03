@@ -7,7 +7,7 @@ class Member_model extends CI_Model
 {
 
     public $table = 'member';
-    public $id = 'idx';
+    public $id = 'id_member';
     public $order = 'DESC';
 
     function __construct()
@@ -17,93 +17,68 @@ class Member_model extends CI_Model
 
     // GET_LIST_ALLmember
     function getListmember() {
-        $xStr = "SELECT idx,".
- "Nama,".
- "Alamat,".
- "NoTelpon,".
- "idtoken,".
- "email,".
- "tglinsert,".
- "isblokir,".
- "idjenismember,".
- "password,".
- "photoUrl,".
- "tokenmember from member";
+        $xStr = "SELECT nama_member,".
+ "alamat_member,".
+ "kota,".
+ "tglLahir_member,".
+ "email_member,".
+ "noTelp_member,".
+ "id_member from member";
         $query = $this->db->query($xStr);
         
         return $query;
     }
 
     // GET_Detailmember
-    function getDetailmember($xidx) {
-        $xStr = "SELECT idx,".
- "Nama,".
- "Alamat,".
- "NoTelpon,".
- "idtoken,".
- "email,".
- "tglinsert,".
- "isblokir,".
- "idjenismember,".
- "password,".
- "photoUrl,".
- "tokenmember from member WHERE idx = '". $xidx ."'";
+    function getDetailmember($xid_member) {
+        $xStr = "SELECT nama_member,".
+ "alamat_member,".
+ "kota,".
+ "tglLahir_member,".
+ "email_member,".
+ "noTelp_member,".
+ "id_member from member WHERE id_member = '". $xid_member ."'";
         $query = $this->db->query($xStr);
         $row = $query->row();
         return $row;
     }
 
     // Insert_member
-    function Insertmember($xidx,$xNama,$xAlamat,$xNoTelpon,$xidtoken,$xemail,$xtglinsert,$xisblokir,$xidjenismember,$xpassword,$xphotoUrl,$xtokenmember) {
-        $xStr = " INSERT INTO member( idx,".
- "Nama,".
- "Alamat,".
- "NoTelpon,".
- "idtoken,".
- "email,".
- "tglinsert,".
- "isblokir,".
- "idjenismember,".
- "password,".
- "photoUrl,".
- "tokenmember ) VALUES ( '" . $xidx
- . "','" .$xNama
- . "','" .$xAlamat
- . "','" .$xNoTelpon
- . "','" .$xidtoken
- . "','" .$xemail
- . "','" .$xtglinsert
- . "','" .$xisblokir
- . "','" .$xidjenismember
- . "','" .$xpassword
- . "','" .$xphotoUrl
- . "','" .$xtokenmember. "')";
+    function Insertmember($xnama_member,$xalamat_member,$xkota,$xtglLahir_member,$xemail_member,$xnoTelp_member,$xid_member) {
+        $xStr = " INSERT INTO member( nama_member,".
+ "alamat_member,".
+ "kota,".
+ "tglLahir_member,".
+ "email_member,".
+ "noTelp_member,".
+ "id_member ) VALUES ( '" . $xnama_member
+ . "','" .$xalamat_member
+ . "','" .$xkota
+ . "','" .$xtglLahir_member
+ . "','" .$xemail_member
+ . "','" .$xnoTelp_member
+ . "','" .$xid_member. "')";
         $query = $this->db->query($xStr);
-        return $idx; 
+        return $id_member; 
     }
 
     // updatemember
-    function Updatemember($xidx,$xNama,$xAlamat,$xNoTelpon,$xidtoken,$xemail,$xtglinsert,$xisblokir,$xidjenismember,$xpassword,$xphotoUrl,$xtokenmember) {
+    function Updatemember($xnama_member,$xalamat_member,$xkota,$xtglLahir_member,$xemail_member,$xnoTelp_member,$xid_member) {
         $xStr = " UPDATE produk SET ". 
-		"idx= '". $xidx . "'," . 
-		"Nama= '". $xNama . "'," . 
-		"Alamat= '". $xAlamat . "'," . 
-		"NoTelpon= '". $xNoTelpon . "'," . 
-		"idtoken= '". $xidtoken . "'," . 
-		"email= '". $xemail . "'," . 
-		"tglinsert= '". $xtglinsert . "'," . 
-		"isblokir= '". $xisblokir . "'," . 
-		"idjenismember= '". $xidjenismember . "'," . 
-		"password= '". $xpassword . "'," . 
-		"photoUrl= '". $xphotoUrl . "'," . 
-		"tokenmember= '". $xtokenmember . "'," . "' WHERE idx = '". $xidx ."'";
+		"nama_member= '". $xnama_member . "'," . 
+		"alamat_member= '". $xalamat_member . "'," . 
+		"kota= '". $xkota . "'," . 
+		"tglLahir_member= '". $xtglLahir_member . "'," . 
+		"email_member= '". $xemail_member . "'," . 
+		"noTelp_member= '". $xnoTelp_member . "'," . 
+		"id_member= '". $xid_member . "'," . "' WHERE id_member = '". $xid_member ."'";
  $query = $this->db->query($xStr);
-        return $xidx;
+        return $xid_member;
     }
 
     // deletmember
-    function Deletmember($xidx) {
-        $xStr = " DELETE FROM member WHERE member.idx = '" . $xidx . "'";
+    function Deletmember($xid_member) {
+        $xStr = " DELETE FROM member WHERE member.id_member = '" . $xid_member . "'";
         $query = $this->db->query($xStr);
     }
 
@@ -123,18 +98,13 @@ class Member_model extends CI_Model
     
     // get total rows
     function total_rows($q = NULL) {
-        $this->db->like('idx', $q);
-	$this->db->or_like('Nama', $q);
-	$this->db->or_like('Alamat', $q);
-	$this->db->or_like('NoTelpon', $q);
-	$this->db->or_like('idtoken', $q);
-	$this->db->or_like('email', $q);
-	$this->db->or_like('tglinsert', $q);
-	$this->db->or_like('isblokir', $q);
-	$this->db->or_like('idjenismember', $q);
-	$this->db->or_like('password', $q);
-	$this->db->or_like('photoUrl', $q);
-	$this->db->or_like('tokenmember', $q);
+        $this->db->like('id_member', $q);
+	$this->db->or_like('nama_member', $q);
+	$this->db->or_like('alamat_member', $q);
+	$this->db->or_like('kota', $q);
+	$this->db->or_like('tglLahir_member', $q);
+	$this->db->or_like('email_member', $q);
+	$this->db->or_like('noTelp_member', $q);
 	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
@@ -142,18 +112,13 @@ class Member_model extends CI_Model
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL) {
         $this->db->order_by($this->id, $this->order);
-        $this->db->like('idx', $q);
-	$this->db->or_like('Nama', $q);
-	$this->db->or_like('Alamat', $q);
-	$this->db->or_like('NoTelpon', $q);
-	$this->db->or_like('idtoken', $q);
-	$this->db->or_like('email', $q);
-	$this->db->or_like('tglinsert', $q);
-	$this->db->or_like('isblokir', $q);
-	$this->db->or_like('idjenismember', $q);
-	$this->db->or_like('password', $q);
-	$this->db->or_like('photoUrl', $q);
-	$this->db->or_like('tokenmember', $q);
+        $this->db->like('id_member', $q);
+	$this->db->or_like('nama_member', $q);
+	$this->db->or_like('alamat_member', $q);
+	$this->db->or_like('kota', $q);
+	$this->db->or_like('tglLahir_member', $q);
+	$this->db->or_like('email_member', $q);
+	$this->db->or_like('noTelp_member', $q);
 	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
@@ -183,5 +148,5 @@ class Member_model extends CI_Model
 /* End of file Member_model.php */
 /* Location: ./application/models/Member_model.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:13 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-03 09:17:32 */
 /* http://harviacode.com */
