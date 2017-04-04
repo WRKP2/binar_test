@@ -73,6 +73,174 @@ class Transaksi extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readtransaksiAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['idbooking'] = "";
+		 $this->json_data['tglbooking'] = "";
+		 $this->json_data['tglbatalbooking'] = "";
+		 $this->json_data['keteranganbatal'] = "";
+		 $this->json_data['harganormal'] = "";
+		 $this->json_data['hargadiscount'] = "";
+		 $this->json_data['idvoucher'] = "";
+		 $this->json_data['idmember'] = "";
+		 $this->json_data['idpegawai'] = "";
+		 $this->json_data['spesialrequest'] = "";
+		 $this->json_data['tglupdate'] = "";
+		 $this->json_data['idjenisbayar'] = "";
+		 $this->json_data['tglbayar'] = "";
+		 $this->json_data['hargadibayar'] = "";
+		 $this->json_data['isfinal'] = "";
+		 $this->json_data['nominalvoucher'] = "";
+
+		$this->load->model('Transaksi_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Transaksi_model->getListtransaksi();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['idbooking'] = $row->idbooking;
+			 $this->json_data['tglbooking'] = $row->tglbooking;
+			 $this->json_data['tglbatalbooking'] = $row->tglbatalbooking;
+			 $this->json_data['keteranganbatal'] = $row->keteranganbatal;
+			 $this->json_data['harganormal'] = $row->harganormal;
+			 $this->json_data['hargadiscount'] = $row->hargadiscount;
+			 $this->json_data['idvoucher'] = $row->idvoucher;
+			 $this->json_data['idmember'] = $row->idmember;
+			 $this->json_data['idpegawai'] = $row->idpegawai;
+			 $this->json_data['spesialrequest'] = $row->spesialrequest;
+			 $this->json_data['tglupdate'] = $row->tglupdate;
+			 $this->json_data['idjenisbayar'] = $row->idjenisbayar;
+			 $this->json_data['tglbayar'] = $row->tglbayar;
+			 $this->json_data['hargadibayar'] = $row->hargadibayar;
+			 $this->json_data['isfinal'] = $row->isfinal;
+			 $this->json_data['nominalvoucher'] = $row->nominalvoucher;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdatetransaksiAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xidbooking = $_POST['edidbooking'];
+		 $xtglbooking = $_POST['edtglbooking'];
+		 $xtglbatalbooking = $_POST['edtglbatalbooking'];
+		 $xketeranganbatal = $_POST['edketeranganbatal'];
+		 $xharganormal = $_POST['edharganormal'];
+		 $xhargadiscount = $_POST['edhargadiscount'];
+		 $xidvoucher = $_POST['edidvoucher'];
+		 $xidmember = $_POST['edidmember'];
+		 $xidpegawai = $_POST['edidpegawai'];
+		 $xspesialrequest = $_POST['edspesialrequest'];
+		 $xtglupdate = $_POST['edtglupdate'];
+		 $xidjenisbayar = $_POST['edidjenisbayar'];
+		 $xtglbayar = $_POST['edtglbayar'];
+		 $xhargadibayar = $_POST['edhargadibayar'];
+		 $xisfinal = $_POST['edisfinal'];
+		 $xnominalvoucher = $_POST['ednominalvoucher'];
+
+		$this->load->model('Transaksi_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Transaksi_model->Updatetransaksi($xidx,$xidbooking,$xtglbooking,$xtglbatalbooking,$xketeranganbatal,$xharganormal,$xhargadiscount,$xidvoucher,$xidmember,$xidpegawai,$xspesialrequest,$xtglupdate,$xidjenisbayar,$xtglbayar,$xhargadibayar,$xisfinal,$xnominalvoucher);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Transaksi_model->Inserttransaksi($xidx,$xidbooking,$xtglbooking,$xtglbatalbooking,$xketeranganbatal,$xharganormal,$xhargadiscount,$xidvoucher,$xidmember,$xidpegawai,$xspesialrequest,$xtglupdate,$xidjenisbayar,$xtglbayar,$xhargadibayar,$xisfinal,$xnominalvoucher);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function delettransaksiAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Transaksi_model');
+        $this->Transaksi_model->Delettransaksi($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailtransaksiAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Transaksi_model');
+        $this->Transaksi_model->getDetailtransaksi($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['idbooking'] = $row->idbooking;
+		$this->json_data['tglbooking'] = $row->tglbooking;
+		$this->json_data['tglbatalbooking'] = $row->tglbatalbooking;
+		$this->json_data['keteranganbatal'] = $row->keteranganbatal;
+		$this->json_data['harganormal'] = $row->harganormal;
+		$this->json_data['hargadiscount'] = $row->hargadiscount;
+		$this->json_data['idvoucher'] = $row->idvoucher;
+		$this->json_data['idmember'] = $row->idmember;
+		$this->json_data['idpegawai'] = $row->idpegawai;
+		$this->json_data['spesialrequest'] = $row->spesialrequest;
+		$this->json_data['tglupdate'] = $row->tglupdate;
+		$this->json_data['idjenisbayar'] = $row->idjenisbayar;
+		$this->json_data['tglbayar'] = $row->tglbayar;
+		$this->json_data['hargadibayar'] = $row->hargadibayar;
+		$this->json_data['isfinal'] = $row->isfinal;
+		$this->json_data['nominalvoucher'] = $row->nominalvoucher;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -235,8 +403,3 @@ public function create()
 
 }
 
-/* End of file Transaksi.php */
-/* Location: ./application/controllers/Transaksi.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:19 */
-/* http://harviacode.com */

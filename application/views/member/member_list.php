@@ -64,12 +64,17 @@
         <table class="table table-bordered table-striped table-hover" style="margin-bottom: 10px">
             <tr>
                 <th>No</th>
-		<th>Nama Member</th>
-		<th>Alamat Member</th>
-		<th>Kota</th>
-		<th>TglLahir Member</th>
-		<th>Email Member</th>
-		<th>NoTelp Member</th>
+		<th>Nama</th>
+		<th>Alamat</th>
+		<th>NoTelpon</th>
+		<th>Idtoken</th>
+		<th>Email</th>
+		<th>Tglinsert</th>
+		<th>Isblokir</th>
+		<th>Idjenismember</th>
+		<th>Password</th>
+		<th>PhotoUrl</th>
+		<th>Tokenmember</th>
 		<th>Action</th>
             </tr><?php
             foreach ($member_data as $member)
@@ -77,19 +82,24 @@
                 ?>
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
-			<td><?php echo $member->nama_member ?></td>
-			<td><?php echo $member->alamat_member ?></td>
-			<td><?php echo $member->kota ?></td>
-			<td><?php echo $member->tglLahir_member ?></td>
-			<td><?php echo $member->email_member ?></td>
-			<td><?php echo $member->noTelp_member ?></td>
+			<td><?php echo $member->Nama ?></td>
+			<td><?php echo $member->Alamat ?></td>
+			<td><?php echo $member->NoTelpon ?></td>
+			<td><?php echo $member->idtoken ?></td>
+			<td><?php echo $member->email ?></td>
+			<td><?php echo $member->tglinsert ?></td>
+			<td><?php echo $member->isblokir ?></td>
+			<td><?php echo $member->idjenismember ?></td>
+			<td><?php echo $member->password ?></td>
+			<td><?php echo $member->photoUrl ?></td>
+			<td><?php echo $member->tokenmember ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 
-				echo anchor(site_url('member/read/'.$member->id_member),'Read'); 
+				echo anchor(site_url('member/read/'.$member->idx),'Read'); 
 				echo ' | '; 
-				echo anchor(site_url('member/update/'.$member->id_member),'Update'); 
+				echo anchor(site_url('member/update/'.$member->idx),'Update'); 
 				echo ' | '; 
-				echo anchor(site_url('member/delete/'.$member->id_member),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+				echo anchor(site_url('member/delete/'.$member->idx),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 				?>
 			</td>
 		</tr>

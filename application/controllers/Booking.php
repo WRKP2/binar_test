@@ -78,6 +78,194 @@ class Booking extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readbookingAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['tglbooking'] = "";
+		 $this->json_data['idproduk'] = "";
+		 $this->json_data['iddetailproduk'] = "";
+		 $this->json_data['idkategoriproduk'] = "";
+		 $this->json_data['idmember'] = "";
+		 $this->json_data['tglperuntukandari'] = "";
+		 $this->json_data['tglperuntukansampai'] = "";
+		 $this->json_data['jmldewasa'] = "";
+		 $this->json_data['jmlanak'] = "";
+		 $this->json_data['jmlhewan'] = "";
+		 $this->json_data['keterangantambahn'] = "";
+		 $this->json_data['jmltransfer'] = "";
+		 $this->json_data['idjenispembayaran'] = "";
+		 $this->json_data['nomorkartu'] = "";
+		 $this->json_data['tgltransfer'] = "";
+		 $this->json_data['tglinsert'] = "";
+		 $this->json_data['tglupdate'] = "";
+		 $this->json_data['status'] = "";
+		 $this->json_data['harga'] = "";
+		 $this->json_data['hargadiscount'] = "";
+		 $this->json_data['jmlhari'] = "";
+
+		$this->load->model('Booking_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Booking_model->getListbooking();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['tglbooking'] = $row->tglbooking;
+			 $this->json_data['idproduk'] = $row->idproduk;
+			 $this->json_data['iddetailproduk'] = $row->iddetailproduk;
+			 $this->json_data['idkategoriproduk'] = $row->idkategoriproduk;
+			 $this->json_data['idmember'] = $row->idmember;
+			 $this->json_data['tglperuntukandari'] = $row->tglperuntukandari;
+			 $this->json_data['tglperuntukansampai'] = $row->tglperuntukansampai;
+			 $this->json_data['jmldewasa'] = $row->jmldewasa;
+			 $this->json_data['jmlanak'] = $row->jmlanak;
+			 $this->json_data['jmlhewan'] = $row->jmlhewan;
+			 $this->json_data['keterangantambahn'] = $row->keterangantambahn;
+			 $this->json_data['jmltransfer'] = $row->jmltransfer;
+			 $this->json_data['idjenispembayaran'] = $row->idjenispembayaran;
+			 $this->json_data['nomorkartu'] = $row->nomorkartu;
+			 $this->json_data['tgltransfer'] = $row->tgltransfer;
+			 $this->json_data['tglinsert'] = $row->tglinsert;
+			 $this->json_data['tglupdate'] = $row->tglupdate;
+			 $this->json_data['status'] = $row->status;
+			 $this->json_data['harga'] = $row->harga;
+			 $this->json_data['hargadiscount'] = $row->hargadiscount;
+			 $this->json_data['jmlhari'] = $row->jmlhari;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdatebookingAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xtglbooking = $_POST['edtglbooking'];
+		 $xidproduk = $_POST['edidproduk'];
+		 $xiddetailproduk = $_POST['ediddetailproduk'];
+		 $xidkategoriproduk = $_POST['edidkategoriproduk'];
+		 $xidmember = $_POST['edidmember'];
+		 $xtglperuntukandari = $_POST['edtglperuntukandari'];
+		 $xtglperuntukansampai = $_POST['edtglperuntukansampai'];
+		 $xjmldewasa = $_POST['edjmldewasa'];
+		 $xjmlanak = $_POST['edjmlanak'];
+		 $xjmlhewan = $_POST['edjmlhewan'];
+		 $xketerangantambahn = $_POST['edketerangantambahn'];
+		 $xjmltransfer = $_POST['edjmltransfer'];
+		 $xidjenispembayaran = $_POST['edidjenispembayaran'];
+		 $xnomorkartu = $_POST['ednomorkartu'];
+		 $xtgltransfer = $_POST['edtgltransfer'];
+		 $xtglinsert = $_POST['edtglinsert'];
+		 $xtglupdate = $_POST['edtglupdate'];
+		 $xstatus = $_POST['edstatus'];
+		 $xharga = $_POST['edharga'];
+		 $xhargadiscount = $_POST['edhargadiscount'];
+		 $xjmlhari = $_POST['edjmlhari'];
+
+		$this->load->model('Booking_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Booking_model->Updatebooking($xidx,$xtglbooking,$xidproduk,$xiddetailproduk,$xidkategoriproduk,$xidmember,$xtglperuntukandari,$xtglperuntukansampai,$xjmldewasa,$xjmlanak,$xjmlhewan,$xketerangantambahn,$xjmltransfer,$xidjenispembayaran,$xnomorkartu,$xtgltransfer,$xtglinsert,$xtglupdate,$xstatus,$xharga,$xhargadiscount,$xjmlhari);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Booking_model->Insertbooking($xidx,$xtglbooking,$xidproduk,$xiddetailproduk,$xidkategoriproduk,$xidmember,$xtglperuntukandari,$xtglperuntukansampai,$xjmldewasa,$xjmlanak,$xjmlhewan,$xketerangantambahn,$xjmltransfer,$xidjenispembayaran,$xnomorkartu,$xtgltransfer,$xtglinsert,$xtglupdate,$xstatus,$xharga,$xhargadiscount,$xjmlhari);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletbookingAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Booking_model');
+        $this->Booking_model->Deletbooking($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailbookingAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Booking_model');
+        $this->Booking_model->getDetailbooking($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['tglbooking'] = $row->tglbooking;
+		$this->json_data['idproduk'] = $row->idproduk;
+		$this->json_data['iddetailproduk'] = $row->iddetailproduk;
+		$this->json_data['idkategoriproduk'] = $row->idkategoriproduk;
+		$this->json_data['idmember'] = $row->idmember;
+		$this->json_data['tglperuntukandari'] = $row->tglperuntukandari;
+		$this->json_data['tglperuntukansampai'] = $row->tglperuntukansampai;
+		$this->json_data['jmldewasa'] = $row->jmldewasa;
+		$this->json_data['jmlanak'] = $row->jmlanak;
+		$this->json_data['jmlhewan'] = $row->jmlhewan;
+		$this->json_data['keterangantambahn'] = $row->keterangantambahn;
+		$this->json_data['jmltransfer'] = $row->jmltransfer;
+		$this->json_data['idjenispembayaran'] = $row->idjenispembayaran;
+		$this->json_data['nomorkartu'] = $row->nomorkartu;
+		$this->json_data['tgltransfer'] = $row->tgltransfer;
+		$this->json_data['tglinsert'] = $row->tglinsert;
+		$this->json_data['tglupdate'] = $row->tglupdate;
+		$this->json_data['status'] = $row->status;
+		$this->json_data['harga'] = $row->harga;
+		$this->json_data['hargadiscount'] = $row->hargadiscount;
+		$this->json_data['jmlhari'] = $row->jmlhari;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -265,8 +453,3 @@ public function create()
 
 }
 
-/* End of file Booking.php */
-/* Location: ./application/controllers/Booking.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:07 */
-/* http://harviacode.com */

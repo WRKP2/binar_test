@@ -349,7 +349,7 @@ if ($export_pdf == '1') {
     }";
 }
 
-$string .= "\n\n}\n\n/";
+$string .= "\n\n}\n\n";
 
 
 

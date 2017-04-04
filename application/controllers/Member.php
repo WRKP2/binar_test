@@ -48,13 +48,18 @@ class Member extends CI_Controller
         $row = $this->Member_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'nama_member' => $row->nama_member,
-		'alamat_member' => $row->alamat_member,
-		'kota' => $row->kota,
-		'tglLahir_member' => $row->tglLahir_member,
-		'email_member' => $row->email_member,
-		'noTelp_member' => $row->noTelp_member,
-		'id_member' => $row->id_member,
+		'idx' => $row->idx,
+		'Nama' => $row->Nama,
+		'Alamat' => $row->Alamat,
+		'NoTelpon' => $row->NoTelpon,
+		'idtoken' => $row->idtoken,
+		'email' => $row->email,
+		'tglinsert' => $row->tglinsert,
+		'isblokir' => $row->isblokir,
+		'idjenismember' => $row->idjenismember,
+		'password' => $row->password,
+		'photoUrl' => $row->photoUrl,
+		'tokenmember' => $row->tokenmember,
 	    );
             $this->load->view('member/member_read', $data);
         } else {
@@ -63,18 +68,171 @@ class Member extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readmemberAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['Nama'] = "";
+		 $this->json_data['Alamat'] = "";
+		 $this->json_data['NoTelpon'] = "";
+		 $this->json_data['idtoken'] = "";
+		 $this->json_data['email'] = "";
+		 $this->json_data['tglinsert'] = "";
+		 $this->json_data['isblokir'] = "";
+		 $this->json_data['idjenismember'] = "";
+		 $this->json_data['password'] = "";
+		 $this->json_data['photoUrl'] = "";
+		 $this->json_data['tokenmember'] = "";
+
+		$this->load->model('Member_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Member_model->getListmember();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['Nama'] = $row->Nama;
+			 $this->json_data['Alamat'] = $row->Alamat;
+			 $this->json_data['NoTelpon'] = $row->NoTelpon;
+			 $this->json_data['idtoken'] = $row->idtoken;
+			 $this->json_data['email'] = $row->email;
+			 $this->json_data['tglinsert'] = $row->tglinsert;
+			 $this->json_data['isblokir'] = $row->isblokir;
+			 $this->json_data['idjenismember'] = $row->idjenismember;
+			 $this->json_data['password'] = $row->password;
+			 $this->json_data['photoUrl'] = $row->photoUrl;
+			 $this->json_data['tokenmember'] = $row->tokenmember;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdatememberAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xNama = $_POST['edNama'];
+		 $xAlamat = $_POST['edAlamat'];
+		 $xNoTelpon = $_POST['edNoTelpon'];
+		 $xidtoken = $_POST['edidtoken'];
+		 $xemail = $_POST['edemail'];
+		 $xtglinsert = $_POST['edtglinsert'];
+		 $xisblokir = $_POST['edisblokir'];
+		 $xidjenismember = $_POST['edidjenismember'];
+		 $xpassword = $_POST['edpassword'];
+		 $xphotoUrl = $_POST['edphotoUrl'];
+		 $xtokenmember = $_POST['edtokenmember'];
+
+		$this->load->model('Member_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Member_model->Updatemember($xidx,$xNama,$xAlamat,$xNoTelpon,$xidtoken,$xemail,$xtglinsert,$xisblokir,$xidjenismember,$xpassword,$xphotoUrl,$xtokenmember);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Member_model->Insertmember($xidx,$xNama,$xAlamat,$xNoTelpon,$xidtoken,$xemail,$xtglinsert,$xisblokir,$xidjenismember,$xpassword,$xphotoUrl,$xtokenmember);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletmemberAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Member_model');
+        $this->Member_model->Deletmember($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailmemberAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Member_model');
+        $this->Member_model->getDetailmember($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['Nama'] = $row->Nama;
+		$this->json_data['Alamat'] = $row->Alamat;
+		$this->json_data['NoTelpon'] = $row->NoTelpon;
+		$this->json_data['idtoken'] = $row->idtoken;
+		$this->json_data['email'] = $row->email;
+		$this->json_data['tglinsert'] = $row->tglinsert;
+		$this->json_data['isblokir'] = $row->isblokir;
+		$this->json_data['idjenismember'] = $row->idjenismember;
+		$this->json_data['password'] = $row->password;
+		$this->json_data['photoUrl'] = $row->photoUrl;
+		$this->json_data['tokenmember'] = $row->tokenmember;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
             'button' => 'Create',
             'action' => site_url('member/create_action'),
-	    'nama_member' => set_value('nama_member'),
-	    'alamat_member' => set_value('alamat_member'),
-	    'kota' => set_value('kota'),
-	    'tglLahir_member' => set_value('tglLahir_member'),
-	    'email_member' => set_value('email_member'),
-	    'noTelp_member' => set_value('noTelp_member'),
-	    'id_member' => set_value('id_member'),
+	    'idx' => set_value('idx'),
+	    'Nama' => set_value('Nama'),
+	    'Alamat' => set_value('Alamat'),
+	    'NoTelpon' => set_value('NoTelpon'),
+	    'idtoken' => set_value('idtoken'),
+	    'email' => set_value('email'),
+	    'tglinsert' => set_value('tglinsert'),
+	    'isblokir' => set_value('isblokir'),
+	    'idjenismember' => set_value('idjenismember'),
+	    'password' => set_value('password'),
+	    'photoUrl' => set_value('photoUrl'),
+	    'tokenmember' => set_value('tokenmember'),
 	);
         $this->load->view('member/member_form', $data);
     }
@@ -87,12 +245,17 @@ public function create()
             $this->create();
         } else {
             $data = array(
-		'nama_member' => $this->input->post('nama_member',TRUE),
-		'alamat_member' => $this->input->post('alamat_member',TRUE),
-		'kota' => $this->input->post('kota',TRUE),
-		'tglLahir_member' => $this->input->post('tglLahir_member',TRUE),
-		'email_member' => $this->input->post('email_member',TRUE),
-		'noTelp_member' => $this->input->post('noTelp_member',TRUE),
+		'Nama' => $this->input->post('Nama',TRUE),
+		'Alamat' => $this->input->post('Alamat',TRUE),
+		'NoTelpon' => $this->input->post('NoTelpon',TRUE),
+		'idtoken' => $this->input->post('idtoken',TRUE),
+		'email' => $this->input->post('email',TRUE),
+		'tglinsert' => $this->input->post('tglinsert',TRUE),
+		'isblokir' => $this->input->post('isblokir',TRUE),
+		'idjenismember' => $this->input->post('idjenismember',TRUE),
+		'password' => $this->input->post('password',TRUE),
+		'photoUrl' => $this->input->post('photoUrl',TRUE),
+		'tokenmember' => $this->input->post('tokenmember',TRUE),
 	    );
 
             $this->Member_model->insert($data);
@@ -109,13 +272,18 @@ public function create()
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('member/update_action'),
-		'nama_member' => set_value('nama_member', $row->nama_member),
-		'alamat_member' => set_value('alamat_member', $row->alamat_member),
-		'kota' => set_value('kota', $row->kota),
-		'tglLahir_member' => set_value('tglLahir_member', $row->tglLahir_member),
-		'email_member' => set_value('email_member', $row->email_member),
-		'noTelp_member' => set_value('noTelp_member', $row->noTelp_member),
-		'id_member' => set_value('id_member', $row->id_member),
+		'idx' => set_value('idx', $row->idx),
+		'Nama' => set_value('Nama', $row->Nama),
+		'Alamat' => set_value('Alamat', $row->Alamat),
+		'NoTelpon' => set_value('NoTelpon', $row->NoTelpon),
+		'idtoken' => set_value('idtoken', $row->idtoken),
+		'email' => set_value('email', $row->email),
+		'tglinsert' => set_value('tglinsert', $row->tglinsert),
+		'isblokir' => set_value('isblokir', $row->isblokir),
+		'idjenismember' => set_value('idjenismember', $row->idjenismember),
+		'password' => set_value('password', $row->password),
+		'photoUrl' => set_value('photoUrl', $row->photoUrl),
+		'tokenmember' => set_value('tokenmember', $row->tokenmember),
 	    );
             $this->load->view('member/member_form', $data);
         } else {
@@ -129,18 +297,23 @@ public function create()
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id_member', TRUE));
+            $this->update($this->input->post('idx', TRUE));
         } else {
             $data = array(
-		'nama_member' => $this->input->post('nama_member',TRUE),
-		'alamat_member' => $this->input->post('alamat_member',TRUE),
-		'kota' => $this->input->post('kota',TRUE),
-		'tglLahir_member' => $this->input->post('tglLahir_member',TRUE),
-		'email_member' => $this->input->post('email_member',TRUE),
-		'noTelp_member' => $this->input->post('noTelp_member',TRUE),
+		'Nama' => $this->input->post('Nama',TRUE),
+		'Alamat' => $this->input->post('Alamat',TRUE),
+		'NoTelpon' => $this->input->post('NoTelpon',TRUE),
+		'idtoken' => $this->input->post('idtoken',TRUE),
+		'email' => $this->input->post('email',TRUE),
+		'tglinsert' => $this->input->post('tglinsert',TRUE),
+		'isblokir' => $this->input->post('isblokir',TRUE),
+		'idjenismember' => $this->input->post('idjenismember',TRUE),
+		'password' => $this->input->post('password',TRUE),
+		'photoUrl' => $this->input->post('photoUrl',TRUE),
+		'tokenmember' => $this->input->post('tokenmember',TRUE),
 	    );
 
-            $this->Member_model->update($this->input->post('id_member', TRUE), $data);
+            $this->Member_model->update($this->input->post('idx', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('member'));
         }
@@ -162,21 +335,21 @@ public function create()
 
     public function _rules() 
     {
-	$this->form_validation->set_rules('nama_member', 'nama member', 'trim|required');
-	$this->form_validation->set_rules('alamat_member', 'alamat member', 'trim|required');
-	$this->form_validation->set_rules('kota', 'kota', 'trim|required');
-	$this->form_validation->set_rules('tglLahir_member', 'tgllahir member', 'trim|required');
-	$this->form_validation->set_rules('email_member', 'email member', 'trim|required');
-	$this->form_validation->set_rules('noTelp_member', 'notelp member', 'trim|required');
+	$this->form_validation->set_rules('Nama', 'nama', 'trim|required');
+	$this->form_validation->set_rules('Alamat', 'alamat', 'trim|required');
+	$this->form_validation->set_rules('NoTelpon', 'notelpon', 'trim|required');
+	$this->form_validation->set_rules('idtoken', 'idtoken', 'trim|required');
+	$this->form_validation->set_rules('email', 'email', 'trim|required');
+	$this->form_validation->set_rules('tglinsert', 'tglinsert', 'trim|required');
+	$this->form_validation->set_rules('isblokir', 'isblokir', 'trim|required');
+	$this->form_validation->set_rules('idjenismember', 'idjenismember', 'trim|required');
+	$this->form_validation->set_rules('password', 'password', 'trim|required');
+	$this->form_validation->set_rules('photoUrl', 'photourl', 'trim|required');
+	$this->form_validation->set_rules('tokenmember', 'tokenmember', 'trim|required');
 
-	$this->form_validation->set_rules('id_member', 'id_member', 'trim');
+	$this->form_validation->set_rules('idx', 'idx', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
 }
 
-/* End of file Member.php */
-/* Location: ./application/controllers/Member.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-03 09:17:32 */
-/* http://harviacode.com */

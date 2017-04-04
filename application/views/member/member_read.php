@@ -31,14 +31,19 @@
 
         <h2 style="margin-top:0px">Member Read</h2>
         <table class="table table-bordered table-striped table-hover">
-	    <tr><td>Nama Member</td><td><?php echo $nama_member; ?></td></tr>
-	    <tr><td>Alamat Member</td><td><?php echo $alamat_member; ?></td></tr>
-	    <tr><td>Kota</td><td><?php echo $kota; ?></td></tr>
-	    <tr><td>TglLahir Member</td><td><?php echo $tglLahir_member; ?></td></tr>
-	    <tr><td>Email Member</td><td><?php echo $email_member; ?></td></tr>
-	    <tr><td>NoTelp Member</td><td><?php echo $noTelp_member; ?></td></tr>
+	    <tr><td>Nama</td><td><?php echo $Nama; ?></td></tr>
+	    <tr><td>Alamat</td><td><?php echo $Alamat; ?></td></tr>
+	    <tr><td>NoTelpon</td><td><?php echo $NoTelpon; ?></td></tr>
+	    <tr><td>Idtoken</td><td><?php echo $idtoken; ?></td></tr>
+	    <tr><td>Email</td><td><?php echo $email; ?></td></tr>
+	    <tr><td>Tglinsert</td><td><?php echo $tglinsert; ?></td></tr>
+	    <tr><td>Isblokir</td><td><?php echo $isblokir; ?></td></tr>
+	    <tr><td>Idjenismember</td><td><?php echo $idjenismember; ?></td></tr>
+	    <tr><td>Password</td><td><?php echo $password; ?></td></tr>
+	    <tr><td>PhotoUrl</td><td><?php echo $photoUrl; ?></td></tr>
+	    <tr><td>Tokenmember</td><td><?php echo $tokenmember; ?></td></tr>
 	</table>
-	    <a href="<?php echo site_url('member') ?>" class="btn btn-default" style="float: right;">Cancel</a>
+	    <a href="<?php echo site_url('member') ?>" class="btn btn-default" style="float: center;">Cancel</a>
 
 <!-- ADMINLTE-->
     </div>

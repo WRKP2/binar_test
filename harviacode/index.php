@@ -7,7 +7,7 @@ require_once 'core/process.php';
 <!doctype html>
 <html>
     <head>
-        <title>Harviacode Codeigniter CRUD Generator</title>
+        <title>Codeigniter CRUD Generator</title>
         <link rel="stylesheet" href="core/bootstrap.min.css"/>
         <style>
             body{
@@ -125,7 +125,7 @@ require_once 'core/process.php';
                 ?>
             </div>
             <div class="col-md-9">
-                <h3 style="margin-top: 0px">Codeigniter CRUD Generator 1.4 by <a target="_blank" href="http://harviacode.com">harviacode.com</a></h3>
+                <h3 style="margin-top: 0px">Codeigniter CRUD Generator 1.4</h3>
                 <p><strong>About :</strong></p>
                 <p>
                     Codeigniter CRUD Generator is a simple tool to auto generate model, controller and view from your table. This tool will boost your
@@ -133,9 +133,7 @@ require_once 'core/process.php';
                     This CRUD Generator using bootstrap 3 style. You still need to modify the result code for more customization.
                 </p>
                 <small>* generate textarea and text input only</small>
-                <p>
-                    Please visit and like <a target="_blank" href="http://harviacode.com"><b>harviacode.com</b></a> for more info and PHP tutorials.
-                </p>
+                
                 <p><strong>Preparation before using this CRUD Generator (Important) :</strong></p>
                 <ul>
                     <li>On application/config/autoload.php, load database library, session library and url helper</li>
@@ -216,7 +214,7 @@ require_once 'core/process.php';
                     </li>
                 </ul>
 
-                <p><strong>&COPY; 2015 <a target="_blank" href="http://harviacode.com">harviacode.com</a></strong></p>
+                <p><strong>&COPY; 2015 <a target="_blank" href="http://harviacode.com">harvia</a></strong></p>
             </div>
         </div>
         <script type="text/javascript">

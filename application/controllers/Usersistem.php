@@ -72,6 +72,170 @@ class Usersistem extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readusersistemAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['npp'] = "";
+		 $this->json_data['Nama'] = "";
+		 $this->json_data['alamat'] = "";
+		 $this->json_data['NoTelpon'] = "";
+		 $this->json_data['user'] = "";
+		 $this->json_data['password'] = "";
+		 $this->json_data['statuspeg'] = "";
+		 $this->json_data['photo'] = "";
+		 $this->json_data['email'] = "";
+		 $this->json_data['ym'] = "";
+		 $this->json_data['isaktif'] = "";
+		 $this->json_data['idusergroup'] = "";
+		 $this->json_data['idkabupaten'] = "";
+		 $this->json_data['idpropinsi'] = "";
+		 $this->json_data['imehp'] = "";
+
+		$this->load->model('Usersistem_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Usersistem_model->getListusersistem();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['npp'] = $row->npp;
+			 $this->json_data['Nama'] = $row->Nama;
+			 $this->json_data['alamat'] = $row->alamat;
+			 $this->json_data['NoTelpon'] = $row->NoTelpon;
+			 $this->json_data['user'] = $row->user;
+			 $this->json_data['password'] = $row->password;
+			 $this->json_data['statuspeg'] = $row->statuspeg;
+			 $this->json_data['photo'] = $row->photo;
+			 $this->json_data['email'] = $row->email;
+			 $this->json_data['ym'] = $row->ym;
+			 $this->json_data['isaktif'] = $row->isaktif;
+			 $this->json_data['idusergroup'] = $row->idusergroup;
+			 $this->json_data['idkabupaten'] = $row->idkabupaten;
+			 $this->json_data['idpropinsi'] = $row->idpropinsi;
+			 $this->json_data['imehp'] = $row->imehp;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdateusersistemAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xnpp = $_POST['ednpp'];
+		 $xNama = $_POST['edNama'];
+		 $xalamat = $_POST['edalamat'];
+		 $xNoTelpon = $_POST['edNoTelpon'];
+		 $xuser = $_POST['eduser'];
+		 $xpassword = $_POST['edpassword'];
+		 $xstatuspeg = $_POST['edstatuspeg'];
+		 $xphoto = $_POST['edphoto'];
+		 $xemail = $_POST['edemail'];
+		 $xym = $_POST['edym'];
+		 $xisaktif = $_POST['edisaktif'];
+		 $xidusergroup = $_POST['edidusergroup'];
+		 $xidkabupaten = $_POST['edidkabupaten'];
+		 $xidpropinsi = $_POST['edidpropinsi'];
+		 $ximehp = $_POST['edimehp'];
+
+		$this->load->model('Usersistem_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Usersistem_model->Updateusersistem($xidx,$xnpp,$xNama,$xalamat,$xNoTelpon,$xuser,$xpassword,$xstatuspeg,$xphoto,$xemail,$xym,$xisaktif,$xidusergroup,$xidkabupaten,$xidpropinsi,$ximehp);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Usersistem_model->Insertusersistem($xidx,$xnpp,$xNama,$xalamat,$xNoTelpon,$xuser,$xpassword,$xstatuspeg,$xphoto,$xemail,$xym,$xisaktif,$xidusergroup,$xidkabupaten,$xidpropinsi,$ximehp);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletusersistemAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Usersistem_model');
+        $this->Usersistem_model->Deletusersistem($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailusersistemAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Usersistem_model');
+        $this->Usersistem_model->getDetailusersistem($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['npp'] = $row->npp;
+		$this->json_data['Nama'] = $row->Nama;
+		$this->json_data['alamat'] = $row->alamat;
+		$this->json_data['NoTelpon'] = $row->NoTelpon;
+		$this->json_data['user'] = $row->user;
+		$this->json_data['password'] = $row->password;
+		$this->json_data['statuspeg'] = $row->statuspeg;
+		$this->json_data['photo'] = $row->photo;
+		$this->json_data['email'] = $row->email;
+		$this->json_data['ym'] = $row->ym;
+		$this->json_data['isaktif'] = $row->isaktif;
+		$this->json_data['idusergroup'] = $row->idusergroup;
+		$this->json_data['idkabupaten'] = $row->idkabupaten;
+		$this->json_data['idpropinsi'] = $row->idpropinsi;
+		$this->json_data['imehp'] = $row->imehp;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -229,8 +393,3 @@ public function create()
 
 }
 
-/* End of file Usersistem.php */
-/* Location: ./application/controllers/Usersistem.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:20 */
-/* http://harviacode.com */

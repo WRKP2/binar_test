@@ -72,6 +72,170 @@ class Voucher extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readvoucherAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['voucher'] = "";
+		 $this->json_data['nominal'] = "";
+		 $this->json_data['prosentase'] = "";
+		 $this->json_data['tglberlakudari'] = "";
+		 $this->json_data['tglberlakusampai'] = "";
+		 $this->json_data['idmember'] = "";
+		 $this->json_data['isterpakai'] = "";
+		 $this->json_data['tglpakai'] = "";
+		 $this->json_data['linkimage'] = "";
+		 $this->json_data['idproduk'] = "";
+		 $this->json_data['jumlahmaxpengguna'] = "";
+		 $this->json_data['penjelasan'] = "";
+		 $this->json_data['idjenisvoucher'] = "";
+		 $this->json_data['aktifjmlrekomendasi'] = "";
+		 $this->json_data['dayvoucher'] = "";
+
+		$this->load->model('Voucher_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Voucher_model->getListvoucher();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['voucher'] = $row->voucher;
+			 $this->json_data['nominal'] = $row->nominal;
+			 $this->json_data['prosentase'] = $row->prosentase;
+			 $this->json_data['tglberlakudari'] = $row->tglberlakudari;
+			 $this->json_data['tglberlakusampai'] = $row->tglberlakusampai;
+			 $this->json_data['idmember'] = $row->idmember;
+			 $this->json_data['isterpakai'] = $row->isterpakai;
+			 $this->json_data['tglpakai'] = $row->tglpakai;
+			 $this->json_data['linkimage'] = $row->linkimage;
+			 $this->json_data['idproduk'] = $row->idproduk;
+			 $this->json_data['jumlahmaxpengguna'] = $row->jumlahmaxpengguna;
+			 $this->json_data['penjelasan'] = $row->penjelasan;
+			 $this->json_data['idjenisvoucher'] = $row->idjenisvoucher;
+			 $this->json_data['aktifjmlrekomendasi'] = $row->aktifjmlrekomendasi;
+			 $this->json_data['dayvoucher'] = $row->dayvoucher;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdatevoucherAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xvoucher = $_POST['edvoucher'];
+		 $xnominal = $_POST['ednominal'];
+		 $xprosentase = $_POST['edprosentase'];
+		 $xtglberlakudari = $_POST['edtglberlakudari'];
+		 $xtglberlakusampai = $_POST['edtglberlakusampai'];
+		 $xidmember = $_POST['edidmember'];
+		 $xisterpakai = $_POST['edisterpakai'];
+		 $xtglpakai = $_POST['edtglpakai'];
+		 $xlinkimage = $_POST['edlinkimage'];
+		 $xidproduk = $_POST['edidproduk'];
+		 $xjumlahmaxpengguna = $_POST['edjumlahmaxpengguna'];
+		 $xpenjelasan = $_POST['edpenjelasan'];
+		 $xidjenisvoucher = $_POST['edidjenisvoucher'];
+		 $xaktifjmlrekomendasi = $_POST['edaktifjmlrekomendasi'];
+		 $xdayvoucher = $_POST['eddayvoucher'];
+
+		$this->load->model('Voucher_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Voucher_model->Updatevoucher($xidx,$xvoucher,$xnominal,$xprosentase,$xtglberlakudari,$xtglberlakusampai,$xidmember,$xisterpakai,$xtglpakai,$xlinkimage,$xidproduk,$xjumlahmaxpengguna,$xpenjelasan,$xidjenisvoucher,$xaktifjmlrekomendasi,$xdayvoucher);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Voucher_model->Insertvoucher($xidx,$xvoucher,$xnominal,$xprosentase,$xtglberlakudari,$xtglberlakusampai,$xidmember,$xisterpakai,$xtglpakai,$xlinkimage,$xidproduk,$xjumlahmaxpengguna,$xpenjelasan,$xidjenisvoucher,$xaktifjmlrekomendasi,$xdayvoucher);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletvoucherAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Voucher_model');
+        $this->Voucher_model->Deletvoucher($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailvoucherAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Voucher_model');
+        $this->Voucher_model->getDetailvoucher($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['voucher'] = $row->voucher;
+		$this->json_data['nominal'] = $row->nominal;
+		$this->json_data['prosentase'] = $row->prosentase;
+		$this->json_data['tglberlakudari'] = $row->tglberlakudari;
+		$this->json_data['tglberlakusampai'] = $row->tglberlakusampai;
+		$this->json_data['idmember'] = $row->idmember;
+		$this->json_data['isterpakai'] = $row->isterpakai;
+		$this->json_data['tglpakai'] = $row->tglpakai;
+		$this->json_data['linkimage'] = $row->linkimage;
+		$this->json_data['idproduk'] = $row->idproduk;
+		$this->json_data['jumlahmaxpengguna'] = $row->jumlahmaxpengguna;
+		$this->json_data['penjelasan'] = $row->penjelasan;
+		$this->json_data['idjenisvoucher'] = $row->idjenisvoucher;
+		$this->json_data['aktifjmlrekomendasi'] = $row->aktifjmlrekomendasi;
+		$this->json_data['dayvoucher'] = $row->dayvoucher;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -229,8 +393,3 @@ public function create()
 
 }
 
-/* End of file Voucher.php */
-/* Location: ./application/controllers/Voucher.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:20 */
-/* http://harviacode.com */

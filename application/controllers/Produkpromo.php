@@ -68,6 +68,154 @@ class Produkpromo extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readprodukpromoAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['idproduk'] = "";
+		 $this->json_data['tglawalpromo'] = "";
+		 $this->json_data['tglakhirpromo'] = "";
+		 $this->json_data['isaktif'] = "";
+		 $this->json_data['idmemberpengaju'] = "";
+		 $this->json_data['isbayarpromo'] = "";
+		 $this->json_data['tglbayarpromo'] = "";
+		 $this->json_data['ketpromo'] = "";
+		 $this->json_data['tglinsert'] = "";
+		 $this->json_data['tglupdate'] = "";
+		 $this->json_data['idpegawai'] = "";
+
+		$this->load->model('Produkpromo_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Produkpromo_model->getListprodukpromo();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['idproduk'] = $row->idproduk;
+			 $this->json_data['tglawalpromo'] = $row->tglawalpromo;
+			 $this->json_data['tglakhirpromo'] = $row->tglakhirpromo;
+			 $this->json_data['isaktif'] = $row->isaktif;
+			 $this->json_data['idmemberpengaju'] = $row->idmemberpengaju;
+			 $this->json_data['isbayarpromo'] = $row->isbayarpromo;
+			 $this->json_data['tglbayarpromo'] = $row->tglbayarpromo;
+			 $this->json_data['ketpromo'] = $row->ketpromo;
+			 $this->json_data['tglinsert'] = $row->tglinsert;
+			 $this->json_data['tglupdate'] = $row->tglupdate;
+			 $this->json_data['idpegawai'] = $row->idpegawai;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdateprodukpromoAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xidproduk = $_POST['edidproduk'];
+		 $xtglawalpromo = $_POST['edtglawalpromo'];
+		 $xtglakhirpromo = $_POST['edtglakhirpromo'];
+		 $xisaktif = $_POST['edisaktif'];
+		 $xidmemberpengaju = $_POST['edidmemberpengaju'];
+		 $xisbayarpromo = $_POST['edisbayarpromo'];
+		 $xtglbayarpromo = $_POST['edtglbayarpromo'];
+		 $xketpromo = $_POST['edketpromo'];
+		 $xtglinsert = $_POST['edtglinsert'];
+		 $xtglupdate = $_POST['edtglupdate'];
+		 $xidpegawai = $_POST['edidpegawai'];
+
+		$this->load->model('Produkpromo_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Produkpromo_model->Updateprodukpromo($xidx,$xidproduk,$xtglawalpromo,$xtglakhirpromo,$xisaktif,$xidmemberpengaju,$xisbayarpromo,$xtglbayarpromo,$xketpromo,$xtglinsert,$xtglupdate,$xidpegawai);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Produkpromo_model->Insertprodukpromo($xidx,$xidproduk,$xtglawalpromo,$xtglakhirpromo,$xisaktif,$xidmemberpengaju,$xisbayarpromo,$xtglbayarpromo,$xketpromo,$xtglinsert,$xtglupdate,$xidpegawai);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletprodukpromoAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Produkpromo_model');
+        $this->Produkpromo_model->Deletprodukpromo($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailprodukpromoAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Produkpromo_model');
+        $this->Produkpromo_model->getDetailprodukpromo($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['idproduk'] = $row->idproduk;
+		$this->json_data['tglawalpromo'] = $row->tglawalpromo;
+		$this->json_data['tglakhirpromo'] = $row->tglakhirpromo;
+		$this->json_data['isaktif'] = $row->isaktif;
+		$this->json_data['idmemberpengaju'] = $row->idmemberpengaju;
+		$this->json_data['isbayarpromo'] = $row->isbayarpromo;
+		$this->json_data['tglbayarpromo'] = $row->tglbayarpromo;
+		$this->json_data['ketpromo'] = $row->ketpromo;
+		$this->json_data['tglinsert'] = $row->tglinsert;
+		$this->json_data['tglupdate'] = $row->tglupdate;
+		$this->json_data['idpegawai'] = $row->idpegawai;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -205,8 +353,3 @@ public function create()
 
 }
 
-/* End of file Produkpromo.php */
-/* Location: ./application/controllers/Produkpromo.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:16 */
-/* http://harviacode.com */

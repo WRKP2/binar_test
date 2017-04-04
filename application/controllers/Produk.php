@@ -90,6 +90,242 @@ class Produk extends CI_Controller
         }
     }
 
+//=========READ=========
+        
+
+public function readprodukAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['JudulProduk'] = "";
+		 $this->json_data['idKategoriProduk'] = "";
+		 $this->json_data['idmember'] = "";
+		 $this->json_data['Keterangan'] = "";
+		 $this->json_data['phonekontak'] = "";
+		 $this->json_data['NamaKontak'] = "";
+		 $this->json_data['DiskripsiProduk'] = "";
+		 $this->json_data['mapaddress'] = "";
+		 $this->json_data['buka'] = "";
+		 $this->json_data['tutup'] = "";
+		 $this->json_data['rate'] = "";
+		 $this->json_data['ratediscount'] = "";
+		 $this->json_data['rancode'] = "";
+		 $this->json_data['tglinsert'] = "";
+		 $this->json_data['tglupdate'] = "";
+		 $this->json_data['idpegawai'] = "";
+		 $this->json_data['kapasitas'] = "";
+		 $this->json_data['standartpemakaian'] = "";
+		 $this->json_data['idsatuan'] = "";
+		 $this->json_data['Token'] = "";
+		 $this->json_data['city'] = "";
+		 $this->json_data['kabupaten'] = "";
+		 $this->json_data['state'] = "";
+		 $this->json_data['isberbayar'] = "";
+		 $this->json_data['tglterakhirbayar'] = "";
+		 $this->json_data['star'] = "";
+		 $this->json_data['isverifikasi'] = "";
+		 $this->json_data['tglverifikasi'] = "";
+		 $this->json_data['idpemverifikasi'] = "";
+		 $this->json_data['isaktif'] = "";
+		 $this->json_data['lskategori'] = "";
+		 $this->json_data['menutext'] = "";
+		 $this->json_data['kategoritext'] = "";
+
+		$this->load->model('Produk_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Produk_model->getListproduk();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['JudulProduk'] = $row->JudulProduk;
+			 $this->json_data['idKategoriProduk'] = $row->idKategoriProduk;
+			 $this->json_data['idmember'] = $row->idmember;
+			 $this->json_data['Keterangan'] = $row->Keterangan;
+			 $this->json_data['phonekontak'] = $row->phonekontak;
+			 $this->json_data['NamaKontak'] = $row->NamaKontak;
+			 $this->json_data['DiskripsiProduk'] = $row->DiskripsiProduk;
+			 $this->json_data['mapaddress'] = $row->mapaddress;
+			 $this->json_data['buka'] = $row->buka;
+			 $this->json_data['tutup'] = $row->tutup;
+			 $this->json_data['rate'] = $row->rate;
+			 $this->json_data['ratediscount'] = $row->ratediscount;
+			 $this->json_data['rancode'] = $row->rancode;
+			 $this->json_data['tglinsert'] = $row->tglinsert;
+			 $this->json_data['tglupdate'] = $row->tglupdate;
+			 $this->json_data['idpegawai'] = $row->idpegawai;
+			 $this->json_data['kapasitas'] = $row->kapasitas;
+			 $this->json_data['standartpemakaian'] = $row->standartpemakaian;
+			 $this->json_data['idsatuan'] = $row->idsatuan;
+			 $this->json_data['Token'] = $row->Token;
+			 $this->json_data['city'] = $row->city;
+			 $this->json_data['kabupaten'] = $row->kabupaten;
+			 $this->json_data['state'] = $row->state;
+			 $this->json_data['isberbayar'] = $row->isberbayar;
+			 $this->json_data['tglterakhirbayar'] = $row->tglterakhirbayar;
+			 $this->json_data['star'] = $row->star;
+			 $this->json_data['isverifikasi'] = $row->isverifikasi;
+			 $this->json_data['tglverifikasi'] = $row->tglverifikasi;
+			 $this->json_data['idpemverifikasi'] = $row->idpemverifikasi;
+			 $this->json_data['isaktif'] = $row->isaktif;
+			 $this->json_data['lskategori'] = $row->lskategori;
+			 $this->json_data['menutext'] = $row->menutext;
+			 $this->json_data['kategoritext'] = $row->kategoritext;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode();
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdateprodukAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['$edidx'])) {
+            
+$xidx = $_POST['$edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xJudulProduk = $_POST['edJudulProduk'];
+		 $xidKategoriProduk = $_POST['edidKategoriProduk'];
+		 $xidmember = $_POST['edidmember'];
+		 $xKeterangan = $_POST['edKeterangan'];
+		 $xphonekontak = $_POST['edphonekontak'];
+		 $xNamaKontak = $_POST['edNamaKontak'];
+		 $xDiskripsiProduk = $_POST['edDiskripsiProduk'];
+		 $xmapaddress = $_POST['edmapaddress'];
+		 $xbuka = $_POST['edbuka'];
+		 $xtutup = $_POST['edtutup'];
+		 $xrate = $_POST['edrate'];
+		 $xratediscount = $_POST['edratediscount'];
+		 $xrancode = $_POST['edrancode'];
+		 $xtglinsert = $_POST['edtglinsert'];
+		 $xtglupdate = $_POST['edtglupdate'];
+		 $xidpegawai = $_POST['edidpegawai'];
+		 $xkapasitas = $_POST['edkapasitas'];
+		 $xstandartpemakaian = $_POST['edstandartpemakaian'];
+		 $xidsatuan = $_POST['edidsatuan'];
+		 $xToken = $_POST['edToken'];
+		 $xcity = $_POST['edcity'];
+		 $xkabupaten = $_POST['edkabupaten'];
+		 $xstate = $_POST['edstate'];
+		 $xisberbayar = $_POST['edisberbayar'];
+		 $xtglterakhirbayar = $_POST['edtglterakhirbayar'];
+		 $xstar = $_POST['edstar'];
+		 $xisverifikasi = $_POST['edisverifikasi'];
+		 $xtglverifikasi = $_POST['edtglverifikasi'];
+		 $xidpemverifikasi = $_POST['edidpemverifikasi'];
+		 $xisaktif = $_POST['edisaktif'];
+		 $xlskategori = $_POST['edlskategori'];
+		 $xmenutext = $_POST['edmenutext'];
+		 $xkategoritext = $_POST['edkategoritext'];
+
+		$this->load->model('Produk_model');
+                
+		if (!empty($xidx)) {
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Produk_model->Updateproduk($xidx,$xJudulProduk,$xidKategoriProduk,$xidmember,$xKeterangan,$xphonekontak,$xNamaKontak,$xDiskripsiProduk,$xmapaddress,$xbuka,$xtutup,$xrate,$xratediscount,$xrancode,$xtglinsert,$xtglupdate,$xidpegawai,$xkapasitas,$xstandartpemakaian,$xidsatuan,$xToken,$xcity,$xkabupaten,$xstate,$xisberbayar,$xtglterakhirbayar,$xstar,$xisverifikasi,$xtglverifikasi,$xidpemverifikasi,$xisaktif,$xlskategori,$xmenutext,$xkategoritext);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Produk_model->Insertproduk($xidx,$xJudulProduk,$xidKategoriProduk,$xidmember,$xKeterangan,$xphonekontak,$xNamaKontak,$xDiskripsiProduk,$xmapaddress,$xbuka,$xtutup,$xrate,$xratediscount,$xrancode,$xtglinsert,$xtglupdate,$xidpegawai,$xkapasitas,$xstandartpemakaian,$xidsatuan,$xToken,$xcity,$xkabupaten,$xstate,$xisberbayar,$xtglterakhirbayar,$xstar,$xisverifikasi,$xtglverifikasi,$xidpemverifikasi,$xisaktif,$xlskategori,$xmenutext,$xkategoritext);
+            	}
+            		}
+        
+		echo json_encode(null);
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletprodukAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Produk_model');
+        $this->Produk_model->Deletproduk($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailprodukAndroid() {
+        
+		$xidx = $_POST['$edidx'];
+        $this->load->model('Produk_model');
+        $this->Produk_model->getDetailproduk($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['JudulProduk'] = $row->JudulProduk;
+		$this->json_data['idKategoriProduk'] = $row->idKategoriProduk;
+		$this->json_data['idmember'] = $row->idmember;
+		$this->json_data['Keterangan'] = $row->Keterangan;
+		$this->json_data['phonekontak'] = $row->phonekontak;
+		$this->json_data['NamaKontak'] = $row->NamaKontak;
+		$this->json_data['DiskripsiProduk'] = $row->DiskripsiProduk;
+		$this->json_data['mapaddress'] = $row->mapaddress;
+		$this->json_data['buka'] = $row->buka;
+		$this->json_data['tutup'] = $row->tutup;
+		$this->json_data['rate'] = $row->rate;
+		$this->json_data['ratediscount'] = $row->ratediscount;
+		$this->json_data['rancode'] = $row->rancode;
+		$this->json_data['tglinsert'] = $row->tglinsert;
+		$this->json_data['tglupdate'] = $row->tglupdate;
+		$this->json_data['idpegawai'] = $row->idpegawai;
+		$this->json_data['kapasitas'] = $row->kapasitas;
+		$this->json_data['standartpemakaian'] = $row->standartpemakaian;
+		$this->json_data['idsatuan'] = $row->idsatuan;
+		$this->json_data['Token'] = $row->Token;
+		$this->json_data['city'] = $row->city;
+		$this->json_data['kabupaten'] = $row->kabupaten;
+		$this->json_data['state'] = $row->state;
+		$this->json_data['isberbayar'] = $row->isberbayar;
+		$this->json_data['tglterakhirbayar'] = $row->tglterakhirbayar;
+		$this->json_data['star'] = $row->star;
+		$this->json_data['isverifikasi'] = $row->isverifikasi;
+		$this->json_data['tglverifikasi'] = $row->tglverifikasi;
+		$this->json_data['idpemverifikasi'] = $row->idpemverifikasi;
+		$this->json_data['isaktif'] = $row->isaktif;
+		$this->json_data['lskategori'] = $row->lskategori;
+		$this->json_data['menutext'] = $row->menutext;
+		$this->json_data['kategoritext'] = $row->kategoritext;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -337,8 +573,3 @@ public function create()
 
 }
 
-/* End of file Produk.php */
-/* Location: ./application/controllers/Produk.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-04-02 15:37:15 */
-/* http://harviacode.com */
