@@ -2,8 +2,11 @@
 <html>
     <head>
         <title>Marketingproduk List</title>
+        <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
+        <link rel="stylesheet" href="<?php echo base_url('assets/datatables/dataTables.bootstrap.css') ?>"/>
+        <link rel="stylesheet" href="<?php echo base_url('assets/datatables/dataTables.bootstrap.css') ?>"/>
         
-        <!-- ADMINLTE-->
+ <!-- ADMINLTE-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
@@ -17,97 +20,137 @@
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- ADMINLTE-->
-
+        
+        <style>
+            .dataTables_wrapper {
+                min-height: 500px
+            }
+            
+            .dataTables_processing {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                margin-left: -50%;
+                margin-top: -25px;
+                padding-top: 20px;
+                text-align: center;
+                font-size: 1.2em;
+                color:grey;
+            }
+            
+        </style>
     </head>
     <body>
-
-    <!-- ADMINLTE-->
-    <?php
+    
+<!-- ADMINLTE-->
+     <?php
         $this->load->view('template/topbar');
         $this->load->view('template/sidebar');
     ?>
     <div style="padding:15px">
-    <!-- ADMINLTE-->
+<!-- ADMINLTE-->
 
-        <h2 style="margin-top:0px">Marketingproduk List</h2>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
-                <?php echo anchor(site_url('marketingproduk/create'),'Create', 'class="btn btn-primary"'); ?>
+                <h2 style="margin-top:0px">Marketingproduk List</h2>
             </div>
             <div class="col-md-4 text-center">
-                <div style="margin-top: 8px" id="message">
+                <div style="margin-top: 4px"  id="message">
                     <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
                 </div>
             </div>
-            <div class="col-md-1 text-right">
-            </div>
-            <div class="col-md-3 text-right">
-                <form action="<?php echo site_url('marketingproduk/index'); ?>" class="form-inline" method="get">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
-                        <span class="input-group-btn">
-                            <?php 
-                                if ($q <> '')
-                                {
-                                    ?>
-                                    <a href="<?php echo site_url('marketingproduk'); ?>" class="btn btn-default">Reset</a>
-                                    <?php
-                                }
-                            ?>
-                          <button class="btn btn-primary" type="submit">Search</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
+            <div class="col-md-4 text-right">
+                <?php echo anchor(site_url('marketingproduk/create'), 'Create', 'class="btn btn-primary"'); ?>
+	    </div>
         </div>
-        <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover" style="margin-bottom: 10px">
-            <tr>
-                <th>No</th>
-		<th>Idmember</th>
-		<th>Idproduk</th>
-		<th>Tgldaftar</th>
-		<th>Action</th>
-            </tr><?php
-            foreach ($marketingproduk_data as $marketingproduk)
-            {
-                ?>
+         <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" id="mytable">
+            <thead>
                 <tr>
-			<td width="80px"><?php echo ++$start ?></td>
-			<td><?php echo $marketingproduk->idmember ?></td>
-			<td><?php echo $marketingproduk->idproduk ?></td>
-			<td><?php echo $marketingproduk->tgldaftar ?></td>
-			<td style="text-align:center" width="200px">
-				<?php 
-				echo anchor(site_url('marketingproduk/read/'.$marketingproduk->idx),'Read'); 
-				echo ' | '; 
-				echo anchor(site_url('marketingproduk/update/'.$marketingproduk->idx),'Update'); 
-				echo ' | '; 
-				echo anchor(site_url('marketingproduk/delete/'.$marketingproduk->idx),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-				?>
-			</td>
-		</tr>
-                <?php
-            }
-            ?>
+                    <th width="80px">No</th>
+		    <th>Idmember</th>
+		    <th>Idproduk</th>
+		    <th>Tgldaftar</th>
+		    <th width="200px">Action</th>
+                </tr>
+            </thead>
+	    
         </table>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
-	    </div>
-            <div class="col-md-6 text-right">
-                <?php echo $pagination ?>
-            </div>
+        
+        <!-- ADMINLTE-->
         </div>
+           </div><!-- /.content-wrapper -->
 
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+    </footer>
+    </div><!--./wrapper -->
     <!-- ADMINLTE-->
-    </div>
 
-        <?php
-            $this->load->view('template/js');
-        ?>
-    <!-- ADMINLTE-->
+    <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
+    <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
+    <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
+    {
+    return {
+    "iStart": oSettings._iDisplayStart,
+            "iEnd": oSettings.fnDisplayEnd(),
+            "iLength": oSettings._iDisplayLength,
+            "iTotal": oSettings.fnRecordsTotal(),
+            "iFilteredTotal": oSettings.fnRecordsDisplay(),
+            "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+            "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+    };
+    };
+    var t = $("#mytable").dataTable({
+            initComplete: function() {
+            var api = this.api();
+            $('#mytable_filter input')
+                    .off('.DT')
+                    .on('keyup.DT', function(e) {
+                    if (e.keyCode == 13) {
+                    api.search(this.value).draw();
+                    }
+                    });
+            },
+            oLanguage: {
+            sProcessing: "loading..."
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {"url": "marketingproduk/json", "type": "POST"},
+                    columns: [
+                    {
+                    "data": "idx",
+                            "orderable": false
+                    }, {"data": "idmember"},{"data": "idproduk"},{"data": "tgldaftar"},
+                    {
+                    "data" : "action",
+                            "orderable": false,
+                            "className" : "text-center"
+                    }
+                    ],
+                    order: [[0, 'desc']],
+                    rowCallback: function(row, data, iDisplayIndex) {
+                    var info = this.fnPagingInfo();
+                    var page = info.iPage;
+                    var length = info.iLength;
+                    var index = page * length + (iDisplayIndex + 1);
+                    $('td:eq(0)', row).html(index);
+                    }
+            });
+    });
+</script>
 
-    </body>
+    <!-- AdminLTE App -->
+    <script src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/js/app.min.js') ?>" type="text/javascript"></script>
+    
+</body>
 </html>

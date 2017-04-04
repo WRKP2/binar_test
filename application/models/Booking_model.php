@@ -15,6 +15,16 @@ class Booking_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,tglbooking,idproduk,iddetailproduk,idkategoriproduk,idmember,tglperuntukandari,tglperuntukansampai,jmldewasa,jmlanak,jmlhewan,keterangantambahn,jmltransfer,idjenispembayaran,nomorkartu,tgltransfer,tglinsert,tglupdate,status,harga,hargadiscount,jmlhari');
+        $this->datatables->from('booking');
+        //add this line for join
+        //$this->datatables->join('table2', 'booking.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('booking/read/$1'),'Read')." | ".anchor(site_url('booking/update/$1'),'Update')." | ".anchor(site_url('booking/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTbooking
     function getListbooking() {
         $xStr = "SELECT idx,".

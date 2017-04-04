@@ -15,6 +15,16 @@ class Transaksi_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idbooking,tglbooking,tglbatalbooking,keteranganbatal,harganormal,hargadiscount,idvoucher,idmember,idpegawai,spesialrequest,tglupdate,idjenisbayar,tglbayar,hargadibayar,isfinal,nominalvoucher');
+        $this->datatables->from('transaksi');
+        //add this line for join
+        //$this->datatables->join('table2', 'transaksi.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('transaksi/read/$1'),'Read')." | ".anchor(site_url('transaksi/update/$1'),'Update')." | ".anchor(site_url('transaksi/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTtransaksi
     function getListtransaksi() {
         $xStr = "SELECT idx,".

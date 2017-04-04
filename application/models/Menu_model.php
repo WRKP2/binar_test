@@ -15,6 +15,16 @@ class Menu_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idmenu,nmmenu,tipemenu,idkomponen,iduser,parentmenu,urlci,urut,jmlgambar,settingform,idaplikasi,isumum');
+        $this->datatables->from('menu');
+        //add this line for join
+        //$this->datatables->join('table2', 'menu.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('menu/read/$1'),'Read')." | ".anchor(site_url('menu/update/$1'),'Update')." | ".anchor(site_url('menu/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idmenu');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTmenu
     function getListmenu() {
         $xStr = "SELECT idmenu,".

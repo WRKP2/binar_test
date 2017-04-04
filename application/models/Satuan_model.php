@@ -15,6 +15,16 @@ class Satuan_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,satuan');
+        $this->datatables->from('satuan');
+        //add this line for join
+        //$this->datatables->join('table2', 'satuan.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('satuan/read/$1'),'Read')." | ".anchor(site_url('satuan/update/$1'),'Update')." | ".anchor(site_url('satuan/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTsatuan
     function getListsatuan() {
         $xStr = "SELECT idx,".

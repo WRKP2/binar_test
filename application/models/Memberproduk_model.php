@@ -15,6 +15,16 @@ class Memberproduk_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idproduk,idmember,tgljadimember,isfromrekomendasi,idreveral');
+        $this->datatables->from('memberproduk');
+        //add this line for join
+        //$this->datatables->join('table2', 'memberproduk.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('memberproduk/read/$1'),'Read')." | ".anchor(site_url('memberproduk/update/$1'),'Update')." | ".anchor(site_url('memberproduk/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTmemberproduk
     function getListmemberproduk() {
         $xStr = "SELECT idx,".

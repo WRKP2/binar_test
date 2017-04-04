@@ -15,6 +15,16 @@ class Fasilitasproduk_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idjenisfasilitas,idproduk,tglinsert,idmemberinsert');
+        $this->datatables->from('fasilitasproduk');
+        //add this line for join
+        //$this->datatables->join('table2', 'fasilitasproduk.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('fasilitasproduk/read/$1'),'Read')." | ".anchor(site_url('fasilitasproduk/update/$1'),'Update')." | ".anchor(site_url('fasilitasproduk/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTfasilitasproduk
     function getListfasilitasproduk() {
         $xStr = "SELECT idx,".

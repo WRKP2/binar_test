@@ -15,6 +15,16 @@ class Jenispoint_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,jenispoint');
+        $this->datatables->from('jenispoint');
+        //add this line for join
+        //$this->datatables->join('table2', 'jenispoint.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('jenispoint/read/$1'),'Read')." | ".anchor(site_url('jenispoint/update/$1'),'Update')." | ".anchor(site_url('jenispoint/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTjenispoint
     function getListjenispoint() {
         $xStr = "SELECT idx,".

@@ -15,6 +15,16 @@ class Detailproduk_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idproduk,idkategoriproduk,juduldetailproduk,diskripsiproduk,rate,ratediscount,rancode,tglinsert,tglupdate,idpegawai,kapasitas,standartpemakaian,standart,idsatuan,isfavorit,idmember');
+        $this->datatables->from('detailproduk');
+        //add this line for join
+        //$this->datatables->join('table2', 'detailproduk.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('detailproduk/read/$1'),'Read')." | ".anchor(site_url('detailproduk/update/$1'),'Update')." | ".anchor(site_url('detailproduk/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTdetailproduk
     function getListdetailproduk() {
         $xStr = "SELECT idx,".

@@ -15,6 +15,16 @@ class Jenisvoucher_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,jenisvoucher,keterangan');
+        $this->datatables->from('jenisvoucher');
+        //add this line for join
+        //$this->datatables->join('table2', 'jenisvoucher.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('jenisvoucher/read/$1'),'Read')." | ".anchor(site_url('jenisvoucher/update/$1'),'Update')." | ".anchor(site_url('jenisvoucher/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTjenisvoucher
     function getListjenisvoucher() {
         $xStr = "SELECT idx,".

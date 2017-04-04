@@ -15,6 +15,16 @@ class Inboxfcm_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idmember,judul,message,tglmessage,isterbaca,idmenuandroid');
+        $this->datatables->from('inboxfcm');
+        //add this line for join
+        //$this->datatables->join('table2', 'inboxfcm.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('inboxfcm/read/$1'),'Read')." | ".anchor(site_url('inboxfcm/update/$1'),'Update')." | ".anchor(site_url('inboxfcm/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTinboxfcm
     function getListinboxfcm() {
         $xStr = "SELECT idx,".

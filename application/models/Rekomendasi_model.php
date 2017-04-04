@@ -15,6 +15,16 @@ class Rekomendasi_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idproduk,idperekomendasi,idmemberyangdirekomendasi,tglrekomendassi,longlatacept,issetujurekom');
+        $this->datatables->from('rekomendasi');
+        //add this line for join
+        //$this->datatables->join('table2', 'rekomendasi.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('rekomendasi/read/$1'),'Read')." | ".anchor(site_url('rekomendasi/update/$1'),'Update')." | ".anchor(site_url('rekomendasi/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTrekomendasi
     function getListrekomendasi() {
         $xStr = "SELECT idx,".

@@ -15,6 +15,16 @@ class Voucher_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,voucher,nominal,prosentase,tglberlakudari,tglberlakusampai,idmember,isterpakai,tglpakai,linkimage,idproduk,jumlahmaxpengguna,penjelasan,idjenisvoucher,aktifjmlrekomendasi,dayvoucher');
+        $this->datatables->from('voucher');
+        //add this line for join
+        //$this->datatables->join('table2', 'voucher.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('voucher/read/$1'),'Read')." | ".anchor(site_url('voucher/update/$1'),'Update')." | ".anchor(site_url('voucher/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTvoucher
     function getListvoucher() {
         $xStr = "SELECT idx,".

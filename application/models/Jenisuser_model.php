@@ -15,6 +15,16 @@ class Jenisuser_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,jenisuser,keterangan');
+        $this->datatables->from('jenisuser');
+        //add this line for join
+        //$this->datatables->join('table2', 'jenisuser.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('jenisuser/read/$1'),'Read')." | ".anchor(site_url('jenisuser/update/$1'),'Update')." | ".anchor(site_url('jenisuser/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTjenisuser
     function getListjenisuser() {
         $xStr = "SELECT idx,".

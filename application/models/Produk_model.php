@@ -15,6 +15,16 @@ class Produk_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,JudulProduk,idKategoriProduk,idmember,Keterangan,phonekontak,NamaKontak,DiskripsiProduk,mapaddress,buka,tutup,rate,ratediscount,rancode,tglinsert,tglupdate,idpegawai,kapasitas,standartpemakaian,idsatuan,Token,city,kabupaten,state,isberbayar,tglterakhirbayar,star,isverifikasi,tglverifikasi,idpemverifikasi,isaktif,lskategori,menutext,kategoritext');
+        $this->datatables->from('produk');
+        //add this line for join
+        //$this->datatables->join('table2', 'produk.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('produk/read/$1'),'Read')." | ".anchor(site_url('produk/update/$1'),'Update')." | ".anchor(site_url('produk/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTproduk
     function getListproduk() {
         $xStr = "SELECT idx,".

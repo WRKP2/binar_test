@@ -9,38 +9,18 @@ class Jeniskategoridetail extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Jeniskategoridetail_model');
-        $this->load->library('form_validation');
+        $this->load->library('form_validation');        
+	$this->load->library('datatables');
     }
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
-        
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'jeniskategoridetail/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'jeniskategoridetail/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'jeniskategoridetail/index.html';
-            $config['first_url'] = base_url() . 'jeniskategoridetail/index.html';
-        }
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Jeniskategoridetail_model->total_rows($q);
-        $jeniskategoridetail = $this->Jeniskategoridetail_model->get_limit_data($config['per_page'], $start, $q);
-
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'jeniskategoridetail_data' => $jeniskategoridetail,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
-        $this->load->view('jeniskategoridetail/jeniskategoridetail_list', $data);
+        $this->load->view('jeniskategoridetail/jeniskategoridetail_list');
+    } 
+    
+    public function json() {
+        header('Content-Type: application/json');
+        echo $this->Jeniskategoridetail_model->json();
     }
 
     public function read($id) 

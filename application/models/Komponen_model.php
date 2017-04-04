@@ -15,6 +15,16 @@ class Komponen_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idkomponen,NmKomponen,isshow');
+        $this->datatables->from('komponen');
+        //add this line for join
+        //$this->datatables->join('table2', 'komponen.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('komponen/read/$1'),'Read')." | ".anchor(site_url('komponen/update/$1'),'Update')." | ".anchor(site_url('komponen/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idkomponen');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTkomponen
     function getListkomponen() {
         $xStr = "SELECT idkomponen,".

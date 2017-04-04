@@ -15,6 +15,16 @@ class Jenispembayaran_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,jenispembayaran,jenispembayaranING');
+        $this->datatables->from('jenispembayaran');
+        //add this line for join
+        //$this->datatables->join('table2', 'jenispembayaran.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('jenispembayaran/read/$1'),'Read')." | ".anchor(site_url('jenispembayaran/update/$1'),'Update')." | ".anchor(site_url('jenispembayaran/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTjenispembayaran
     function getListjenispembayaran() {
         $xStr = "SELECT idx,".

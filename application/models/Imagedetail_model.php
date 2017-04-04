@@ -15,6 +15,16 @@ class Imagedetail_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,iddetailproduk,idkategoriproduk,linkimage,keteranganimage,rancode,tglinsert,tglupdate,idpegawai,idproduk,isprofile');
+        $this->datatables->from('imagedetail');
+        //add this line for join
+        //$this->datatables->join('table2', 'imagedetail.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('imagedetail/read/$1'),'Read')." | ".anchor(site_url('imagedetail/update/$1'),'Update')." | ".anchor(site_url('imagedetail/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTimagedetail
     function getListimagedetail() {
         $xStr = "SELECT idx,".

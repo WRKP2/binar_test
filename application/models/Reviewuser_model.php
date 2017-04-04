@@ -15,6 +15,16 @@ class Reviewuser_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idmember,idproduk,review,star,tglreview');
+        $this->datatables->from('reviewuser');
+        //add this line for join
+        //$this->datatables->join('table2', 'reviewuser.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('reviewuser/read/$1'),'Read')." | ".anchor(site_url('reviewuser/update/$1'),'Update')." | ".anchor(site_url('reviewuser/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTreviewuser
     function getListreviewuser() {
         $xStr = "SELECT idx,".

@@ -15,6 +15,16 @@ class Usersistem_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,npp,Nama,alamat,NoTelpon,user,password,statuspeg,photo,email,ym,isaktif,idusergroup,idkabupaten,idpropinsi,imehp');
+        $this->datatables->from('usersistem');
+        //add this line for join
+        //$this->datatables->join('table2', 'usersistem.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('usersistem/read/$1'),'Read')." | ".anchor(site_url('usersistem/update/$1'),'Update')." | ".anchor(site_url('usersistem/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTusersistem
     function getListusersistem() {
         $xStr = "SELECT idx,".

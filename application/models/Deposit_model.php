@@ -15,6 +15,16 @@ class Deposit_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idmember,tgltrx,saldoawal,saldomasuk,saldokeluar,saldoakhir,keterangansistem');
+        $this->datatables->from('deposit');
+        //add this line for join
+        //$this->datatables->join('table2', 'deposit.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('deposit/read/$1'),'Read')." | ".anchor(site_url('deposit/update/$1'),'Update')." | ".anchor(site_url('deposit/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTdeposit
     function getListdeposit() {
         $xStr = "SELECT idx,".

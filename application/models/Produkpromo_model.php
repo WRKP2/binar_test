@@ -15,6 +15,16 @@ class Produkpromo_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idproduk,tglawalpromo,tglakhirpromo,isaktif,idmemberpengaju,isbayarpromo,tglbayarpromo,ketpromo,tglinsert,tglupdate,idpegawai');
+        $this->datatables->from('produkpromo');
+        //add this line for join
+        //$this->datatables->join('table2', 'produkpromo.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('produkpromo/read/$1'),'Read')." | ".anchor(site_url('produkpromo/update/$1'),'Update')." | ".anchor(site_url('produkpromo/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTprodukpromo
     function getListprodukpromo() {
         $xStr = "SELECT idx,".

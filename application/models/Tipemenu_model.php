@@ -15,6 +15,16 @@ class Tipemenu_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idTipeMenu,NmTipeMenu');
+        $this->datatables->from('tipemenu');
+        //add this line for join
+        //$this->datatables->join('table2', 'tipemenu.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('tipemenu/read/$1'),'Read')." | ".anchor(site_url('tipemenu/update/$1'),'Update')." | ".anchor(site_url('tipemenu/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), '');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTtipemenu
     function getListtipemenu() {
         $xStr = "SELECT idTipeMenu,".

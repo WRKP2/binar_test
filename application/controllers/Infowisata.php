@@ -9,38 +9,18 @@ class Infowisata extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Infowisata_model');
-        $this->load->library('form_validation');
+        $this->load->library('form_validation');        
+	$this->load->library('datatables');
     }
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
-        
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'infowisata/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'infowisata/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'infowisata/index.html';
-            $config['first_url'] = base_url() . 'infowisata/index.html';
-        }
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Infowisata_model->total_rows($q);
-        $infowisata = $this->Infowisata_model->get_limit_data($config['per_page'], $start, $q);
-
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'infowisata_data' => $infowisata,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
-        $this->load->view('infowisata/infowisata_list', $data);
+        $this->load->view('infowisata/infowisata_list');
+    } 
+    
+    public function json() {
+        header('Content-Type: application/json');
+        echo $this->Infowisata_model->json();
     }
 
     public function read($id) 

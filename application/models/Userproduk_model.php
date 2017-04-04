@@ -15,6 +15,16 @@ class Userproduk_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idmember,idproduk,idjenisuser,tglinsert,idpengadd');
+        $this->datatables->from('userproduk');
+        //add this line for join
+        //$this->datatables->join('table2', 'userproduk.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('userproduk/read/$1'),'Read')." | ".anchor(site_url('userproduk/update/$1'),'Update')." | ".anchor(site_url('userproduk/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTuserproduk
     function getListuserproduk() {
         $xStr = "SELECT idx,".

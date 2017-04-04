@@ -9,38 +9,18 @@ class Reviewuser extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Reviewuser_model');
-        $this->load->library('form_validation');
+        $this->load->library('form_validation');        
+	$this->load->library('datatables');
     }
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
-        
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'reviewuser/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'reviewuser/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'reviewuser/index.html';
-            $config['first_url'] = base_url() . 'reviewuser/index.html';
-        }
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Reviewuser_model->total_rows($q);
-        $reviewuser = $this->Reviewuser_model->get_limit_data($config['per_page'], $start, $q);
-
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'reviewuser_data' => $reviewuser,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
-        $this->load->view('reviewuser/reviewuser_list', $data);
+        $this->load->view('reviewuser/reviewuser_list');
+    } 
+    
+    public function json() {
+        header('Content-Type: application/json');
+        echo $this->Reviewuser_model->json();
     }
 
     public function read($id) 

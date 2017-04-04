@@ -15,6 +15,16 @@ class Kritiksaran_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,idmember,Saran,tglsaran');
+        $this->datatables->from('kritiksaran');
+        //add this line for join
+        //$this->datatables->join('table2', 'kritiksaran.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('kritiksaran/read/$1'),'Read')." | ".anchor(site_url('kritiksaran/update/$1'),'Update')." | ".anchor(site_url('kritiksaran/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTkritiksaran
     function getListkritiksaran() {
         $xStr = "SELECT idx,".

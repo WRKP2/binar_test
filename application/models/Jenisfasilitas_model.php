@@ -15,6 +15,16 @@ class Jenisfasilitas_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,jenisfasilitas,imgfasilitas');
+        $this->datatables->from('jenisfasilitas');
+        //add this line for join
+        //$this->datatables->join('table2', 'jenisfasilitas.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('jenisfasilitas/read/$1'),'Read')." | ".anchor(site_url('jenisfasilitas/update/$1'),'Update')." | ".anchor(site_url('jenisfasilitas/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTjenisfasilitas
     function getListjenisfasilitas() {
         $xStr = "SELECT idx,".
