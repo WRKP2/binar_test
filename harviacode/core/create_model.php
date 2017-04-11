@@ -102,6 +102,15 @@ $string .="\n\n    // delet" . $table_name . "
     }";
 //DELET
 
+//lastindeks
+ $string .= "\nfunction getLastIndex" . $table_name . "(){ 
+        \$xStr = \"SELECT " . $columnall . " from " . $table_name . " order by idx DESC limit 1 \";
+        \$query = \$this->db->query(\$xStr);
+        \$row = \$query->row();
+        return \$row;
+    }";
+//lastindeks
+ 
 $string .="\n\n    // get all
     function get_all()
     {

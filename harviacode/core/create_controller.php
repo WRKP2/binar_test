@@ -134,7 +134,7 @@ if ($android == '1') {
     }
 
     $string .= "\n\n\t\t\$this->load->model('" . $m . "');
-                \n\t\tif (!empty(\$x$pk)) {
+                \$response = array();
                 \n\t\tif (\$x$pk != '0') {
                 //===UPDATE===
                 \n\t\t\$xStr = \$this->" . $m . "->Update" . $table_name . "(\$x" . $columnallparam . ");";
@@ -144,8 +144,18 @@ if ($android == '1') {
             //===INSERT===
             \n\t\t\$xStr = \$this->" . $m . "->Insert" . $table_name . "(\$x" . $columnallparam . ");
             \t}
-            \t\t}
-        \n\t\techo json_encode(null);
+            
+         \n\t\t\$row = \$this->" . $m . "->getLastIndex" . $table_name . "();";
+
+
+    foreach ($all as $row) {
+        $string .= "\n\t\t\t \$this->json_data['" . $row['column_name'] . "'] = \$row->" . $row['column_name'] . ";";
+    }
+
+    $string .= "\n array_push(\$response, \$this->json_data);
+
+        \n\t\t echo json_encode(\$response);
+  
     }
     \n\n//=========INSERT AND UPDATE=========";
 

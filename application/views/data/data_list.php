@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>User List</title>
+        <title>Data List</title>
         <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
         <link rel="stylesheet" href="<?php echo base_url('assets/datatables/dataTables.bootstrap.css') ?>"/>
         <link rel="stylesheet" href="<?php echo base_url('assets/datatables/dataTables.bootstrap.css') ?>"/>
@@ -53,7 +53,7 @@
 
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
-                <h2 style="margin-top:0px">User List</h2>
+                <h2 style="margin-top:0px">Data List</h2>
             </div>
             <div class="col-md-4 text-center">
                 <div style="margin-top: 4px"  id="message">
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="col-md-4 text-right">
-                <?php echo anchor(site_url('user/create'), 'Create', 'class="btn btn-primary"'); ?>
+                <?php echo anchor(site_url('data/create'), 'Create', 'class="btn btn-primary"'); ?>
 	    </div>
         </div>
          <div class="table-responsive">
@@ -69,10 +69,10 @@
             <thead>
                 <tr>
                     <th width="80px">No</th>
+		    <th>ID</th>
 		    <th>Nama</th>
-		    <th>Alamat</th>
-		    <th>User</th>
-		    <th>Password</th>
+		    <th>Asal</th>
+		    <th>Gabung</th>
 		    <th width="200px">Action</th>
                 </tr>
             </thead>
@@ -126,12 +126,12 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "user/json", "type": "POST"},
+            ajax: {"url": "data/json", "type": "POST"},
                     columns: [
                     {
-                    "data": "idx",
+                    "data": "no",
                             "orderable": false
-                    }, {"data": "nama"},{"data": "alamat"},{"data": "user"},{"data": "password"},
+                    }, {"data": "ID"},{"data": "nama"},{"data": "asal"},{"data": "gabung"},
                     {
                     "data" : "action",
                             "orderable": false,

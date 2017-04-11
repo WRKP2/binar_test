@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>User Read</title>
+        <title>Data Read</title>
         
         <!-- ADMINLTE-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -29,14 +29,14 @@
     <div style="padding:15px">
 <!-- ADMINLTE-->
 
-        <h2 style="margin-top:0px">User Read</h2>
+        <h2 style="margin-top:0px">Data Read</h2>
         <table class="table table-bordered table-striped table-hover">
+	    <tr><td>ID</td><td><?php echo $ID; ?></td></tr>
 	    <tr><td>Nama</td><td><?php echo $nama; ?></td></tr>
-	    <tr><td>Alamat</td><td><?php echo $alamat; ?></td></tr>
-	    <tr><td>User</td><td><?php echo $user; ?></td></tr>
-	    <tr><td>Password</td><td><?php echo $password; ?></td></tr>
+	    <tr><td>Asal</td><td><?php echo $asal; ?></td></tr>
+	    <tr><td>Gabung</td><td><?php echo $gabung; ?></td></tr>
 	</table>
-	    <a href="<?php echo site_url('user') ?>" class="btn btn-default" style="float: center;">Cancel</a>
+	    <a href="<?php echo site_url('data') ?>" class="btn btn-default" style="float: center;">Cancel</a>
 
 <!-- ADMINLTE-->
     </div>

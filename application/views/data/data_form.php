@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>User Read</title>
+        <title>Data Create</title>
         
         <!-- ADMINLTE-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -22,29 +22,42 @@
     <body>
 
 <!-- ADMINLTE-->
-    <?php
+     <?php
         $this->load->view('template/topbar');
         $this->load->view('template/sidebar');
     ?>
     <div style="padding:15px">
 <!-- ADMINLTE-->
 
-        <h2 style="margin-top:0px">User Read</h2>
-        <table class="table table-bordered table-striped table-hover">
-	    <tr><td>Nama</td><td><?php echo $nama; ?></td></tr>
-	    <tr><td>Alamat</td><td><?php echo $alamat; ?></td></tr>
-	    <tr><td>User</td><td><?php echo $user; ?></td></tr>
-	    <tr><td>Password</td><td><?php echo $password; ?></td></tr>
-	</table>
-	    <a href="<?php echo site_url('user') ?>" class="btn btn-default" style="float: center;">Cancel</a>
+        <h2 style="margin-top:0px">Data <?php echo $button ?></h2>
+        <form action="<?php echo $action; ?>" method="post">
+	    <div class="form-group">
+            <label for="varchar">ID <?php echo form_error('ID') ?></label>
+            <input type="text" class="form-control" name="ID" id="ID" placeholder="ID" value="<?php echo $ID; ?>" />
+        </div>
+	    <div class="form-group">
+            <label for="varchar">Nama <?php echo form_error('nama') ?></label>
+            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama" value="<?php echo $nama; ?>" />
+        </div>
+	    <div class="form-group">
+            <label for="varchar">Asal <?php echo form_error('asal') ?></label>
+            <input type="text" class="form-control" name="asal" id="asal" placeholder="Asal" value="<?php echo $asal; ?>" />
+        </div>
+	    <div class="form-group">
+            <label for="date">Gabung <?php echo form_error('gabung') ?></label>
+            <input type="text" class="form-control" name="gabung" id="gabung" placeholder="Gabung" value="<?php echo $gabung; ?>" />
+        </div>
+	    <input type="hidden" name="no" value="<?php echo $no; ?>" /> 
+	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
+	    <a href="<?php echo site_url('data') ?>" class="btn btn-default">Cancel</a>
+	</form>
 
 <!-- ADMINLTE-->
-    </div>
-
+</div>
         <?php
             $this->load->view('template/js');
         ?>
 <!-- ADMINLTE-->
 
-        </body>
+    </body>
 </html>
