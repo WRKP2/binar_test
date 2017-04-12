@@ -112,6 +112,8 @@ if (isset($_POST['generateall']))
         $v_pdf = $table_name . "_pdf";
         
         $filejava = ucfirst($table_name) . 'CLASS';
+        $filejavalayoutisi = ucfirst($table_name) . 'isi';
+        $filejavalayoutlist = ucfirst($table_name) . 'list';
 
         // url
         $c_url = strtolower($c);
@@ -125,14 +127,21 @@ if (isset($_POST['generateall']))
         $v_doc_file = $v_doc . '.php';
         $v_pdf_file = $v_pdf . '.php';
 
-        $filejava_file = $filejava . '.java';
-
+        $filejava_file_dataclass = $filejava . '.java';
+        $filejava_layout_isi = $filejavalayoutisi . '.xml';
+        $filejava_layout_list = $filejavalayoutlist . '.xml';
+        
         // read setting
         $get_setting = readJSON('core/settingjson.cfg');
         $target = $get_setting->target;
         if (!file_exists($target . "views/" . $c_url))
         {
             mkdir($target . "views/" . $c_url, 0777, true);
+        }
+        
+         if (!file_exists($target . "java/" . $c_url))
+        {
+            mkdir($target . "java/" . $c_url, 0777, true);
         }
 
         $pk = $hc->primary_field($table_name);
@@ -162,7 +171,9 @@ if (isset($_POST['generateall']))
         $export_pdf == 1 ? include 'core/create_pdf_library.php' : '';
         $export_pdf == 1 ? include 'core/create_view_list_pdf.php' : '';
         
-        $fileandroid == 1 ? include 'core/create_dataclass.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_dataclass.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_layout_isi.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_layout_list.php' : '';
 
         $hasil[] = $hasil_controller;
         $hasil[] = $hasil_model;
@@ -171,6 +182,9 @@ if (isset($_POST['generateall']))
         $hasil[] = $hasil_view_read;
         $hasil[] = $hasil_view_doc;
         $hasil[] = $hasil_CLASS;
+        $hasil[] = $hasil_java_layout_isi;
+        $hasil[] = $hasil_java_layout_list;
+
     }
 
     $hasil[] = $hasil_config_pagination;

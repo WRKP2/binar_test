@@ -17,5 +17,6 @@ $string .= "\n\n}\n\n";
 
 
 
-$hasil_CLASS = createFile($string, $target . "controllers/" . $filejava_file);
+//$hasil_CLASS = createFile($string, $target . "controllers/" . $filejava_file);
+$hasil_view_form = createFile($string, $target."java/" . $c_url . "/" . $filejava_file_dataclass);
 ?>
