@@ -111,9 +111,11 @@ if (isset($_POST['generateall']))
         $v_doc = $table_name . "_doc";
         $v_pdf = $table_name . "_pdf";
         
-        $filejava = ucfirst($table_name) . 'CLASS';
-        $filejavalayoutisi = ucfirst($table_name) . 'isi';
-        $filejavalayoutlist = ucfirst($table_name) . 'list';
+        $filejavaCLASS = ucfirst($table_name) . 'CLASS';
+        $filejavalayoutisi = strtolower($table_name) . 'isi';
+        $filejavalayoutlist = strtolower($table_name) . 'list';
+        $filejavaActivityIsi = 'Isi'.ucfirst($table_name) . 'Activity';
+
 
         // url
         $c_url = strtolower($c);
@@ -127,9 +129,10 @@ if (isset($_POST['generateall']))
         $v_doc_file = $v_doc . '.php';
         $v_pdf_file = $v_pdf . '.php';
 
-        $filejava_file_dataclass = $filejava . '.java';
+        $filejava_file_dataclass = $filejavaCLASS . '.java';
         $filejava_layout_isi = $filejavalayoutisi . '.xml';
         $filejava_layout_list = $filejavalayoutlist . '.xml';
+        $filejava_activity_isi = $filejavaActivityIsi. '.java';
         
         // read setting
         $get_setting = readJSON('core/settingjson.cfg');
@@ -174,6 +177,7 @@ if (isset($_POST['generateall']))
         $fileandroid == 1 ? include 'core/create_java_dataclass.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_isi.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_list.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_activity_isi.php' : '';
 
         $hasil[] = $hasil_controller;
         $hasil[] = $hasil_model;
@@ -181,10 +185,11 @@ if (isset($_POST['generateall']))
         $hasil[] = $hasil_view_form;
         $hasil[] = $hasil_view_read;
         $hasil[] = $hasil_view_doc;
+        
         $hasil[] = $hasil_CLASS;
         $hasil[] = $hasil_java_layout_isi;
         $hasil[] = $hasil_java_layout_list;
-
+        $hasil[] = $hasil_java_actifity_isi;
     }
 
     $hasil[] = $hasil_config_pagination;
