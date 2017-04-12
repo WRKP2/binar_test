@@ -77,7 +77,17 @@ require_once 'core/process.php';
                                 Build Android Fuction
                             </label>
                         </div>
-                    </div>    
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <?php $fileandroid = isset($_POST['fileandroid']) ? $_POST['fileandroid'] : ''; ?>
+                            <label>
+                                <input type="checkbox" name="fileandroid" value="1" <?php echo $fileandroid == '1' ? 'checked' : '' ?>>
+                                Build Java Android File
+                            </label>
+                        </div>
+                    </div>  
                     <!-- untuk android -->    
 
                     <div class="form-group">

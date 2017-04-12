@@ -96,6 +96,9 @@ if (isset($_POST['generateall']))
 
     $android = safe($_POST['android']);
     
+    $fileandroid = safe($_POST['fileandroid']);
+
+    
     $table_list = $hc->table_list();
     foreach ($table_list as $row) {
 
@@ -107,6 +110,8 @@ if (isset($_POST['generateall']))
         $v_form = $table_name . "_form";
         $v_doc = $table_name . "_doc";
         $v_pdf = $table_name . "_pdf";
+        
+        $filejava = ucfirst($table_name) . 'CLASS';
 
         // url
         $c_url = strtolower($c);
@@ -119,6 +124,8 @@ if (isset($_POST['generateall']))
         $v_form_file = $v_form . '.php';
         $v_doc_file = $v_doc . '.php';
         $v_pdf_file = $v_pdf . '.php';
+
+        $filejava_file = $filejava . '.java';
 
         // read setting
         $get_setting = readJSON('core/settingjson.cfg');
@@ -142,6 +149,11 @@ if (isset($_POST['generateall']))
             include 'core/create_view_list_datatables.php';
             include 'core/create_libraries_datatables.php';
         }
+        
+        if($fileandroid == '1'){
+            include 'core/create_dataclass.php';            
+        }
+        
         include 'core/create_view_form.php';
         include 'core/create_view_read.php';
 
@@ -149,6 +161,8 @@ if (isset($_POST['generateall']))
         $export_word == 1 ? include 'core/create_view_list_doc.php' : '';
         $export_pdf == 1 ? include 'core/create_pdf_library.php' : '';
         $export_pdf == 1 ? include 'core/create_view_list_pdf.php' : '';
+        
+        $fileandroid == 1 ? include 'core/create_dataclass.php' : '';
 
         $hasil[] = $hasil_controller;
         $hasil[] = $hasil_model;
@@ -156,6 +170,7 @@ if (isset($_POST['generateall']))
         $hasil[] = $hasil_view_form;
         $hasil[] = $hasil_view_read;
         $hasil[] = $hasil_view_doc;
+        $hasil[] = $hasil_CLASS;
     }
 
     $hasil[] = $hasil_config_pagination;
