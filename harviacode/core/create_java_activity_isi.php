@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.mgkuliner.R;
-import org.mgkuliner.umum.Config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -57,11 +55,11 @@ $string .= "\n Bundle b = getIntent().getExtras();
             if(b!=null) {
             String json".$filejavaActivityIsi." = b.getString(\"json".$filejavaActivityIsi."\");
             Gson gson = new Gson();".
-            $filejavaCLASS." ". strtolower($filejavaActivityIsi)." = gson.fromJson(json".$filejavaActivityIsi.", ".$filejavaCLASS.".class);";
+            $filejavaCLASS." ". $filejavaActivityIsi." = gson.fromJson(json".$filejavaActivityIsi.", ".$filejavaCLASS.".class);";
 
 foreach ($all as $row) {
     if ($row['column_name'] != $pk) {
-        $string .= "\n ed" . $row['column_name'] . ".setText(". strtolower($filejavaActivityIsi).".get" . $row['column_name'] . "());";
+        $string .= "\n ed" . $row['column_name'] . ".setText(". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "());";
     }
 }
 

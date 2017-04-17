@@ -7,9 +7,9 @@ foreach ($all as $row) {
 }
 
 foreach ($all as $row) {
-    $string .= "\n\npublic String get" . ucfirst($row['column_name']) . "(){ return " . $row['column_name'] . "};";
+    $string .= "\n\npublic String get" . ucfirst($row['column_name']) . "(){ return " . $row['column_name'] . ";}";
     $string .= "\n\npublic void set" . ucfirst($row['column_name']) . "(String " . $row['column_name'] . "){ "
-            . "this." . $row['column_name'] . " = " . $row['column_name'] . "};";
+            . "this." . $row['column_name'] . " = " . $row['column_name'] . ";}";
 }
 
 $string .= "\n\n}\n\n";

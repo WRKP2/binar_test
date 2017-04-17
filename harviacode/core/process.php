@@ -115,6 +115,7 @@ if (isset($_POST['generateall']))
         $filejavalayoutisi = strtolower($table_name) . 'isi';
         $filejavalayoutlist = strtolower($table_name) . 'list';
         $filejavaActivityIsi = 'Isi'.ucfirst($table_name) . 'Activity';
+        $filejavaActivityList = 'List'.ucfirst($table_name).'Activity';
 
 
         // url
@@ -133,6 +134,7 @@ if (isset($_POST['generateall']))
         $filejava_layout_isi = $filejavalayoutisi . '.xml';
         $filejava_layout_list = $filejavalayoutlist . '.xml';
         $filejava_activity_isi = $filejavaActivityIsi. '.java';
+        $filejava_activity_list = $filejavaActivityList. '.java';
         
         // read setting
         $get_setting = readJSON('core/settingjson.cfg');
@@ -178,6 +180,7 @@ if (isset($_POST['generateall']))
         $fileandroid == 1 ? include 'core/create_java_layout_isi.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_list.php' : '';
         $fileandroid == 1 ? include 'core/create_java_activity_isi.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_activity_list.php' : '';
 
         $hasil[] = $hasil_controller;
         $hasil[] = $hasil_model;
@@ -190,7 +193,9 @@ if (isset($_POST['generateall']))
         $hasil[] = $hasil_java_layout_isi;
         $hasil[] = $hasil_java_layout_list;
         $hasil[] = $hasil_java_actifity_isi;
-    }
+        $hasil[] = $hasil_java_actifity_list;
+
+        }
 
     $hasil[] = $hasil_config_pagination;
     $hasil[] = $hasil_exportexcel;
