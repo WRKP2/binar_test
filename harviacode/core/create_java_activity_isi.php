@@ -54,6 +54,7 @@ foreach ($all as $row) {
 $string .= "\n Bundle b = getIntent().getExtras();
             if(b!=null) {
             String json".$filejavaActivityIsi." = b.getString(\"json".$filejavaActivityIsi."\");
+            Log.d(\" json".$filejavaActivityIsi."\", json".$filejavaActivityIsi." );  
             Gson gson = new Gson();".
             $filejavaCLASS." ". $filejavaActivityIsi." = gson.fromJson(json".$filejavaActivityIsi.", ".$filejavaCLASS.".class);";
 
@@ -63,7 +64,7 @@ foreach ($all as $row) {
     }
 }
 
-$string .= "\n}"
+$string .= "\n\n\n\n}"
         . "btnsimpan".$filejavaActivityIsi." = (Button) findViewById(R.id.btnsimpan);
            btnsimpan".$filejavaActivityIsi.".setOnClickListener(new View.OnClickListener() {
             @Override

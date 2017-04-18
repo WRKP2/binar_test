@@ -35,15 +35,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ".$filejavaActivityList." extends AppCompatActivity {";
+public class " . $filejavaActivityList . " extends AppCompatActivity {";
 
 //foreach ($all as $row) {
 //        $string .= "\nprivate EditText ed" . $row['column_name'] . ";";
 //        $string .= "\nprivate String s" . $row['column_name'] . ";";
 //}
 
- $string .= " private ArrayList<".$filejavaCLASS."> xLsItem = null;
-    private Adapter".$filejavaActivityList." adapter;
+$string .= " \n private ArrayList<" . $filejavaCLASS . "> xLsItem = null;
+    private Adapter" . $filejavaActivityList . " adapter;
     private RecyclerView rv;
     private Boolean isStarted = false;
     private Boolean isVisible = false;
@@ -61,7 +61,7 @@ public class ".$filejavaActivityList." extends AppCompatActivity {";
 $string .= "\n @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.".$filejavalayoutlist.");
+        setContentView(R.layout." . $filejavalayoutlist . ");
         progress = new ProgressDialog(this);
         progress.setMessage(\"Tunggu Sedang Memproses ...\");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -69,22 +69,35 @@ $string .= "\n @Override
 
 $string .= "\n Bundle b = getIntent().getExtras();
             if(b!=null) {
-            String json".$filejavaActivityList." = b.getString(\"json".$filejavaActivityList."\");
-            Gson gson = new Gson();".
-            $filejavaCLASS." ". $filejavaActivityList." = gson.fromJson(json".$filejavaActivityList.", ".$filejavaCLASS.".class);";
+            String json" . $filejavaActivityList . " = b.getString(\"json" . $filejavaActivityList . "\");
+            Gson gson = new Gson();" .
+        $filejavaCLASS . " " . $filejavaActivityList . " = gson.fromJson(json" . $filejavaActivityList . ", " . $filejavaCLASS . ".class);";
 
 $string .= "\n}"
         . "\n\n
             rv = (RecyclerView) findViewById(R.id.rv_recycler);
             rv.setHasFixedSize(true);
-            xLsItem = new ArrayList<".$filejavaCLASS.">();
+            xLsItem = new ArrayList<" . $filejavaCLASS . ">();
             llm = new LinearLayoutManager(this);";
 
-$string .= "\n new list".$filejavaActivityList."(\"\").execute(); 
+$string .= "\n new list" . $filejavaActivityList . "(\"\").execute(); 
             rv.addOnItemTouchListener(new RecyclerTouchListener(this, rv, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                \n" . $filejavaCLASS . " " . strtolower($filejavaCLASS) . " = xLsItem.get(position);
+                if (!" . strtolower($filejavaCLASS) . ".getIdx().trim().equals(\"\")) {
+                    Intent intent = new Intent(" . $filejavaActivityList . ".this, " . $filejavaActivityIsi . ".class);
+                    Gson gson=new Gson();
+                    String json" . $filejavaActivityIsi . " = gson.toJson(" . strtolower($filejavaCLASS) . ");
+                    intent.putExtra(\"json" . $filejavaActivityIsi . "\", json" . $filejavaActivityIsi . ");
+                    Toast.makeText(getApplication(), \"OnKlik\", Toast.LENGTH_LONG).show();
 
+                    Log.d(\"json" . $filejavaActivityIsi . "\", json" . $filejavaActivityIsi . ".toString());
+                    startActivity(intent);
+
+                } else{
+                    Toast.makeText(getApplication(), \"Data Not Found\", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -141,18 +154,18 @@ $string .= " \n@Override
         {
             String message=data.getStringExtra(\"MESSAGE\");
             if(message.equals(\"Y\")){
-                new list".$filejavaActivityList."(\"\").execute();
+                new list" . $filejavaActivityList . "(\"\").execute();
             }
 
         }
     }";
 
-$string .= "\n public class list".$filejavaActivityList." extends AsyncTask<Void, Void, ArrayList<".$filejavaCLASS.">> {
+$string .= "\n public class list" . $filejavaActivityList . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
 
-        private ArrayList<".$filejavaCLASS."> listdataCombo;
+        private ArrayList<" . $filejavaCLASS . "> listdataCombo;
             private String isearch;
 
-        list".$filejavaActivityList."(String search) {
+        list" . $filejavaActivityList . "(String search) {
             this.isearch = search;
         }
 
@@ -164,7 +177,7 @@ $string .= "\n public class list".$filejavaActivityList." extends AsyncTask<Void
         }
 
         @Override
-        protected ArrayList<".$filejavaCLASS."> doInBackground(Void... params) {
+        protected ArrayList<" . $filejavaCLASS . "> doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
             Gson gson = new Gson();
@@ -172,7 +185,7 @@ $string .= "\n public class list".$filejavaActivityList." extends AsyncTask<Void
             BufferedReader bufreader = null;
             URL url = null;
             try {
-            url = new URL(Config.SERVER_PHP + \"".$c."/read" . $table_name . "Android/\");
+            url = new URL(Config.SERVER_PHP + \"" . $c . "/read" . $table_name . "Android/\");
                 HttpURLConnection urlConnection = null;
                 try {
                     urlConnection = (HttpURLConnection) url.openConnection();
@@ -212,7 +225,7 @@ $string .= ";"
 //                    }
 //                    Log.d(\"Data hasil Search \", \"> \" + Sresponse+\"\");
 
-                    listdataCombo = gson.fromJson(bufreader, new TypeToken<List<".$filejavaCLASS.">>() {
+                    listdataCombo = gson.fromJson(bufreader, new TypeToken<List<" . $filejavaCLASS . ">>() {
                     }.getType());
 
                 } catch (IOException e) {
@@ -227,7 +240,7 @@ $string .= ";"
         }";
 
 $string .= "\n @Override
-        protected void onPostExecute(final ArrayList<".$filejavaCLASS."> xlistDataCombo) {
+        protected void onPostExecute(final ArrayList<" . $filejavaCLASS . "> xlistDataCombo) {
              if ((progress != null) && progress.isShowing())
                 progress.dismiss();
                 posisiOnLOngClick=-1;
@@ -237,7 +250,7 @@ $string .= "\n @Override
                     xLsItem.clear();
                     xLsItem.addAll(xlistDataCombo);
 
-                   SetList".$filejavaActivityList."();
+                   SetList" . $filejavaActivityList . "();
 
                 }
             }
@@ -252,19 +265,19 @@ $string .= "\n @Override
         }
     } ";
 
-$string .= " \npublic void SetList".$filejavaActivityList."() {
-        adapter = new Adapter".$filejavaActivityList."(xLsItem, new Adapter".$filejavaActivityList.".MyAdapterListener() 
+$string .= " \npublic void SetList" . $filejavaActivityList . "() {
+        adapter = new Adapter" . $filejavaActivityList . "(xLsItem); 
         rv.setAdapter(adapter);
         rv.setLayoutManager(llm);
 
     }";
 
-$string .= " public class Delete".$filejavaActivityList." extends AsyncTask<Void, Void, ArrayList<".$filejavaCLASS.">> {
-        private ArrayList<".$filejavaCLASS."> Listproduk;
-        private String i".$pk.";
+$string .= " public class Delete" . $filejavaActivityList . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
+        private ArrayList<" . $filejavaCLASS . "> Listproduk;
+        private String i" . $pk . ";
 
-        Delete".$filejavaActivityList."(String x".$pk.") {
-            i".$pk." = x".$pk.";
+        Delete" . $filejavaActivityList . "(String x" . $pk . ") {
+            i" . $pk . " = x" . $pk . ";
         }
         @Override
         protected void onPreExecute() {
@@ -275,7 +288,7 @@ $string .= " public class Delete".$filejavaActivityList." extends AsyncTask<Void
         }
 
         @Override
-        protected ArrayList<".$filejavaCLASS."> doInBackground(Void... params) {
+        protected ArrayList<" . $filejavaCLASS . "> doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
 
@@ -284,7 +297,7 @@ $string .= " public class Delete".$filejavaActivityList." extends AsyncTask<Void
 
             try {
 
-                url = new URL(Config.SERVER_PHP + \"".$c."/delet" . $table_name . "Android/\");
+                url = new URL(Config.SERVER_PHP + \"" . $c . "/delet" . $table_name . "Android/\");
                 HttpURLConnection urlConnection = null;
                 try {
                     urlConnection = (HttpURLConnection) url.openConnection();
@@ -296,7 +309,7 @@ $string .= " public class Delete".$filejavaActivityList." extends AsyncTask<Void
 
 
                     Uri.Builder builder = new Uri.Builder()
-                            .appendQueryParameter(\"edidx\", i".$pk.");
+                            .appendQueryParameter(\"edidx\", i" . $pk . ");
                     String query = builder.build().getEncodedQuery();
 
                     OutputStream os = urlConnection.getOutputStream();
@@ -347,11 +360,11 @@ $string .= " public class Delete".$filejavaActivityList." extends AsyncTask<Void
         }
 
         @Override
-        protected void onPostExecute(final ArrayList<".$filejavaCLASS."> listSize) {
+        protected void onPostExecute(final ArrayList<" . $filejavaCLASS . "> listSize) {
             if ((progress != null) && progress.isShowing())
                 progress.dismiss();
             
-            new list".$filejavaActivityList."(\"\").execute();
+            new list" . $filejavaActivityList . "(\"\").execute();
 
         }
 

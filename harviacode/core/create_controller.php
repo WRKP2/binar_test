@@ -113,15 +113,15 @@ if ($android == '1') {
             \n\t\tif (empty(\$response)) {
             \n\t\tarray_push(\$response, \$this->json_data);
         \n\t\t} \n
-        \n\t\techo json_encode($response);
+        \n\t\techo json_encode(\$response);
     }
     \n\n//=========READ=========";
 
     $string .= "\n\n//=========INSERT AND UPDATE=========
         \n\npublic function simpanupdate" . $table_name . "Android() {
         \$this->load->helper('json'); \n
-         if (!empty(\$_POST['\$ed$pk'])) {
-            \n\$x$pk = \$_POST['\$ed$pk'];
+         if (!empty(\$_POST['ed$pk'])) {
+            \n\$x$pk = \$_POST['ed$pk'];
         \n} else {
             \n\$x$pk = '0';
         \n}";
@@ -161,7 +161,7 @@ if ($android == '1') {
 
     $string .= "\n\n//=========DELET=========
         \n\npublic function delet" . $table_name . "Android() {
-        \n\t\t\$x$pk = \$_POST['\$ed$pk'];
+        \n\t\t\$x$pk = \$_POST['ed$pk'];
         \$this->load->model('" . $m . "');
         \$this->" . $m . "->Delet" . $table_name . "(\$x$pk);
         \$this->load->helper('json');
@@ -172,7 +172,7 @@ if ($android == '1') {
 
     $string .= "\n\n//=========GET DETAIL=========
         \n\npublic function getDetail" . $table_name . "Android() {
-        \n\t\t\$x$pk = \$_POST['\$ed$pk'];
+        \n\t\t\$x$pk = \$_POST['ed$pk'];
         \$this->load->model('" . $m . "');
         \$this->" . $m . "->getDetail" . $table_name . "(\$x$pk);
         \$this->load->helper('json');";

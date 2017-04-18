@@ -53,7 +53,6 @@ $string .="\n\n    // GET_LIST" . $table_name . "
         return \$query;
     }";
 //GET LIST 
-
 //GET DETAIL LIST 
 $string .="\n\n    // GET_Detail" . $table_name . "
     function getDetail" . $table_name . "(\$x$pk) {
@@ -63,7 +62,6 @@ $string .="\n\n    // GET_Detail" . $table_name . "
         return \$row;
     }";
 //GET DETAIL LIST
-
 //untuk keperluan prameternya
 $columnallparam = implode(",\$x", $column_all);
 
@@ -78,11 +76,10 @@ $string .="\n\n    // Insert_" . $table_name . "
         return \$x$pk; 
     }";
 //INSERT
-
 //UPDATE
 $string .="\n\n    // update" . $table_name . "
     function Update" . $table_name . "(\$x" . $columnallparam . ") {
-        \$xStr = \" UPDATE produk SET \" . ";
+        \$xStr = \" UPDATE " . $table_name . " SET \" . ";
 
 foreach ($all as $row) {
     $string .= "\n\t\t\"" . $row['column_name'] . "= '\". \$x" . $row['column_name'] . " . \"',\" . ";
@@ -92,7 +89,6 @@ $string .= "\n \$query = \$this->db->query(\$xStr);
         return \$x$pk;
     }";
 //UPDATE   
- 
 //DELET
 
 $string .="\n\n    // delet" . $table_name . "
@@ -101,16 +97,15 @@ $string .="\n\n    // delet" . $table_name . "
         \$query = \$this->db->query(\$xStr);
     }";
 //DELET
-
 //lastindeks
- $string .= "\nfunction getLastIndex" . $table_name . "(){ 
+$string .= "\nfunction getLastIndex" . $table_name . "(){ 
         \$xStr = \"SELECT " . $columnall . " from " . $table_name . " order by idx DESC limit 1 \";
         \$query = \$this->db->query(\$xStr);
         \$row = \$query->row();
         return \$row;
     }";
 //lastindeks
- 
+
 $string .="\n\n    // get all
     function get_all()
     {
