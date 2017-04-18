@@ -13,6 +13,16 @@ class User_model extends CI_Model {
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('idx,nama,alamat,user,password');
+        $this->datatables->from('user');
+        //add this line for join
+        //$this->datatables->join('table2', 'user.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('user/read/$1'), 'Read') . " | " . anchor(site_url('user/update/$1'), 'Update') . " | " . anchor(site_url('user/delete/$1'), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idx');
+        return $this->datatables->generate();
+    }
+
     // GET_LISTuser
     function getListuser() {
         $xStr = "SELECT idx," .
@@ -59,7 +69,7 @@ class User_model extends CI_Model {
                 "nama= '" . $xnama . "'," .
                 "alamat= '" . $xalamat . "'," .
                 "user= '" . $xuser . "'," .
-                "password= '" . $xpassword . "'," . "' WHERE idx = '" . $xidx . "'";
+                "password= '" . $xpassword . "'" . " WHERE idx = '" . $xidx . "'";
         $query = $this->db->query($xStr);
         return $xidx;
     }

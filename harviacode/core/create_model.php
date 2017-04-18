@@ -82,9 +82,13 @@ $string .="\n\n    // update" . $table_name . "
         \$xStr = \" UPDATE " . $table_name . " SET \" . ";
 
 foreach ($all as $row) {
+    if($row['column_name'] != end($column_all)){
     $string .= "\n\t\t\"" . $row['column_name'] . "= '\". \$x" . $row['column_name'] . " . \"',\" . ";
+    } else {
+            $string .= "\n\t\t\"" . $row['column_name'] . "= '\". \$x" . $row['column_name'] . " . \"'\" . ";
+    }
 }
-$string .= "\"' WHERE $pk = '\". \$x$pk .\"'\";";
+$string .= "\" WHERE $pk = '\". \$x$pk .\"'\";";
 $string .= "\n \$query = \$this->db->query(\$xStr);
         return \$x$pk;
     }";

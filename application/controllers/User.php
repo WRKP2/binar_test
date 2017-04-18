@@ -9,36 +9,16 @@ class User extends CI_Controller {
         parent::__construct();
         $this->load->model('User_model');
         $this->load->library('form_validation');
+        $this->load->library('datatables');
     }
 
     public function index() {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
+        $this->load->view('user/user_list');
+    }
 
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'user/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'user/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'user/index.html';
-            $config['first_url'] = base_url() . 'user/index.html';
-        }
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->User_model->total_rows($q);
-        $user = $this->User_model->get_limit_data($config['per_page'], $start, $q);
-
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'user_data' => $user,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
-        $this->load->view('user/user_list', $data);
+    public function json() {
+        header('Content-Type: application/json');
+        echo $this->User_model->json();
     }
 
     public function read($id) {

@@ -55,13 +55,15 @@ $string .= "\n Bundle b = getIntent().getExtras();
             if(b!=null) {
             String json".$filejavaActivityIsi." = b.getString(\"json".$filejavaActivityIsi."\");
             Log.d(\" json".$filejavaActivityIsi."\", json".$filejavaActivityIsi." );  
-            Gson gson = new Gson();".
+            Gson gson = new Gson();\n".
             $filejavaCLASS." ". $filejavaActivityIsi." = gson.fromJson(json".$filejavaActivityIsi.", ".$filejavaCLASS.".class);";
 
 foreach ($all as $row) {
     if ($row['column_name'] != $pk) {
-        $string .= "\n ed" . $row['column_name'] . ".setText(". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "());";
-    }
+        $string .= "\n\n\n ed" . $row['column_name'] . ".setText(". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "());";
+    } else {
+         $string .= "\ns" . $row['column_name'] . "= ". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . " ;";
+    } 
 }
 
 $string .= "\n\n\n\n}"
@@ -71,7 +73,9 @@ $string .= "\n\n\n\n}"
             public void onClick(View view) {\n";
 
 foreach ($all as $row) {
+        if ($row['column_name'] != $pk) {
         $string .= "\n s" . $row['column_name'] . "= ed" . $row['column_name'] . ".getText().toString();";
+        }
 }
 
 $string .= "\n new Simpan".$filejavaActivityIsi."(null).execute(); 
