@@ -9,18 +9,38 @@ class Data extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Data_model');
-        $this->load->library('form_validation');        
-	$this->load->library('datatables');
+        $this->load->library('form_validation');
     }
 
     public function index()
     {
-        $this->load->view('data/data_list');
-    } 
-    
-    public function json() {
-        header('Content-Type: application/json');
-        echo $this->Data_model->json();
+        $q = urldecode($this->input->get('q', TRUE));
+        $start = intval($this->input->get('start'));
+        
+        if ($q <> '') {
+            $config['base_url'] = base_url() . 'data/index.html?q=' . urlencode($q);
+            $config['first_url'] = base_url() . 'data/index.html?q=' . urlencode($q);
+        } else {
+            $config['base_url'] = base_url() . 'data/index.html';
+            $config['first_url'] = base_url() . 'data/index.html';
+        }
+
+        $config['per_page'] = 10;
+        $config['page_query_string'] = TRUE;
+        $config['total_rows'] = $this->Data_model->total_rows($q);
+        $data = $this->Data_model->get_limit_data($config['per_page'], $start, $q);
+
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+
+        $data = array(
+            'data_data' => $data,
+            'q' => $q,
+            'pagination' => $this->pagination->create_links(),
+            'total_rows' => $config['total_rows'],
+            'start' => $start,
+        );
+        $this->load->view('data/data_list', $data);
     }
 
     public function read($id) 
@@ -38,6 +58,24 @@ class Data extends CI_Controller
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('data'));
+        }
+    }
+
+
+ //=========Autocomplete========= 
+        public function get_data_search() {
+        $q = $this->input->post('q',TRUE); 
+        $term = $_GET['term'];
+        if(!empty($term)){
+        $query = $this->Data_model->getListdataAuto($term); //query model
+        $hasilnya       =  array();
+        foreach ($query->result() as $d) {
+            $hasilnya[]     = array(
+                'label' => $d->no.'-'.$d->nama , 
+                'value' => $d->nama
+            );
+        }
+        echo json_encode($hasilnya);  
         }
     }
 

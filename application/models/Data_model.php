@@ -13,16 +13,12 @@ class Data_model extends CI_Model
     function __construct()
     {
         parent::__construct();
-    }
-
-    // datatables
-    function json() {
-        $this->datatables->select('no,ID,nama,asal,gabung');
-        $this->datatables->from('data');
-        //add this line for join
-        //$this->datatables->join('table2', 'data.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('data/read/$1'),'Read')." | ".anchor(site_url('data/update/$1'),'Update')." | ".anchor(site_url('data/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'no');
-        return $this->datatables->generate();
+    }function getListdataAuto($xdata) {
+        $xStr = "SELECT " .
+                "*" .
+                " FROM data WHERE nama like  '%" . $xdata . "%'";
+        $query = $this->db->query($xStr);
+        return $query;
     }
 
     // GET_LISTdata

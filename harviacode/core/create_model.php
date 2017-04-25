@@ -41,8 +41,20 @@ if ($jenis_tabel <> 'reguler_table') {
 $column_all = array();
 foreach ($all as $row) {
     $column_all[] = $row['column_name'];
+    if(stristr($row['column_name'], "nama") !== false){
+        $autosearchnamakolom=$row['column_name'];
+    }
 }
 $columnall = implode(",\".\n \"", $column_all);
+
+
+$string .= "function getList".$table_name."Auto(\$x".$table_name.") {
+        \$xStr = \"SELECT \" .
+                \"*\" .
+                \" FROM ".$table_name." WHERE ".$autosearchnamakolom." like  '%\" . \$x".$table_name." . \"%'\";
+        \$query = \$this->db->query(\$xStr);
+        return \$query;
+    }";
 
 //GET LIST 
 $string .="\n\n    // GET_LIST" . $table_name . "

@@ -81,6 +81,24 @@ $string .= "\n\t    );
         }
     }";
 
+//autocomplete
+ $string .= "\n\n\n //=========Autocomplete========= 
+        public function get_".$table_name."_search() {
+        \$q = \$this->input->post('q',TRUE); 
+        \$term = \$_GET['term'];
+        if(!empty(\$term)){
+        \$query = \$this->". $m ."->getList".$table_name."Auto(\$term); //query model
+        \$hasilnya       =  array();
+        foreach (\$query->result() as \$d) {
+            \$hasilnya[]     = array(
+                'label' => \$d->".$pk.".'-'.\$d->".$autosearchnamakolom." , 
+                'value' => \$d->".$autosearchnamakolom."
+            );
+        }
+        echo json_encode(\$hasilnya);  
+        }
+    }";
+
 //ANDROID
 if ($android == '1') {
     $column_all = array();

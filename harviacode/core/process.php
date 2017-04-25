@@ -23,7 +23,7 @@ if (isset($_POST['generate']))
         $m = $model <> '' ? ucfirst($model) : ucfirst($table_name) . '_model';
         $v_list = $table_name . "_list";
         $v_read = $table_name . "_read";
-        $v_form = $table_name . "_form";
+        $v_form = $table_name . "_form";   
         $v_doc = $table_name . "_doc";
         $v_pdf = $table_name . "_pdf";
 
@@ -108,9 +108,13 @@ if (isset($_POST['generateall']))
         $v_list = $table_name . "_list";
         $v_read = $table_name . "_read";
         $v_form = $table_name . "_form";
+          //autocomplete
+        $v_autocomplete = $table_name . "_autocomplete";
+        
         $v_doc = $table_name . "_doc";
         $v_pdf = $table_name . "_pdf";
         
+        //java
         $filejavaCLASS = ucfirst($table_name) . 'CLASS';
         $filejavalayoutisi = strtolower($table_name) . 'isi';
         $filejavalayoutlist = strtolower($table_name) . 'list';
@@ -127,9 +131,13 @@ if (isset($_POST['generateall']))
         $v_list_file = $v_list . '.php';
         $v_read_file = $v_read . '.php';
         $v_form_file = $v_form . '.php';
+        
+        //autocomplete
+        $v_autocomplete_file = $v_autocomplete . '.php';
+
         $v_doc_file = $v_doc . '.php';
         $v_pdf_file = $v_pdf . '.php';
-
+        //java
         $filejava_file_dataclass = $filejavaCLASS . '.java';
         $filejava_layout_isi = $filejavalayoutisi . '.xml';
         $filejava_layout_list = $filejavalayoutlist . '.xml';
@@ -155,8 +163,12 @@ if (isset($_POST['generateall']))
 
         // generate
         include 'core/create_config_pagination.php';
-        include 'core/create_controller.php';
         include 'core/create_model.php';
+        include 'core/create_controller.php';
+ 
+        //autocomplete
+        include 'core/create_view_autosearch.php';
+
         if ($jenis_tabel == 'reguler_table') {
             include 'core/create_view_list.php';
         } else {

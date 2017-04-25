@@ -19,6 +19,11 @@ $string = "<!doctype html>
              folder instead of downloading all of them to reduce the load. -->
         <link href=\"<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/skins/_all-skins.min.css') ?>\" rel=\"stylesheet\" type=\"text/css\" />
         <!-- ADMINLTE-->
+        
+        <!-- AUTOCOMPLETE-->
+        <link href=\"<?php echo base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.css') ?>\" rel=\"stylesheet\" type=\"text/css\" />
+        <script src=\"<?php echo base_url('assets/js/jquery-3.2.1.js') ?>\"></script>
+        <script src=\"<?php echo base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.js') ?>\"></script>
 
     </head>
     <body>
@@ -46,7 +51,7 @@ $string = "<!doctype html>
             <div class=\"col-md-3 text-right\">
                 <form action=\"<?php echo site_url('$c_url/index'); ?>\" class=\"form-inline\" method=\"get\">
                     <div class=\"input-group\">
-                        <input type=\"text\" class=\"form-control\" name=\"q\" value=\"<?php echo \$q; ?>\">
+                        <input type=\"text\" class=\"form-control\" name=\"q\" id=\"".$table_name."\"value=\"<?php echo \$q; ?>\">
                         <span class=\"input-group-btn\">
                             <?php 
                                 if (\$q <> '')
@@ -122,6 +127,8 @@ $string .= "\n\t    </div>
 
         <?php
             \$this->load->view('template/js');
+            \$this->load->view('". $c_url ."/".$v_autocomplete."');
+
         ?>
     <!-- ADMINLTE-->
 
