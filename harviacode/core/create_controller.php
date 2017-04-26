@@ -85,7 +85,7 @@ $string .= "\n\t    );
  $string .= "\n\n\n //=========Autocomplete========= 
         public function get_".$table_name."_search() {
         \$q = \$this->input->post('q',TRUE); 
-        \$term = \$_GET['term'];
+        \$term = \$_POST['term'];
         if(!empty(\$term)){
         \$query = \$this->". $m ."->getList".$table_name."Auto(\$term); //query model
         \$hasilnya       =  array();
@@ -109,7 +109,7 @@ if ($android == '1') {
     $columnallparam = implode(",\$x", $column_all);
 
     $string .= "\n\n//=========READ=========
-        \n\npublic function read" . $table_name . "Android() {
+        public function read" . $table_name . "Android() {
         \$this->load->helper('json'); \n
         \$xSearch = \$_POST['search']; \n";
 
