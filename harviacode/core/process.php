@@ -192,22 +192,27 @@ if (isset($_POST['generateall'])) {
             $filejavaCLASS = ucfirst($table_name) . 'CLASS';
             $filejavalayoutisi = strtolower($table_name) . 'isi';
             $filejavalayoutlist = strtolower($table_name) . 'list';
+            $filejavalayoutadapter = strtolower($table_name) . 'adapter';
             $filejavaActivityIsi = 'Isi' . ucfirst($table_name) . 'Activity';
             $filejavaActivityList = 'List' . ucfirst($table_name) . 'Activity';
+            $filejavaActivityAdapter = 'Adapter' . strtolower($table_name);
+
 
             //membentuk_file_java+ekstensi
             $filejava_file_dataclass = $filejavaCLASS . '.java';
             $filejava_layout_isi = $filejavalayoutisi . '.xml';
             $filejava_layout_list = $filejavalayoutlist . '.xml';
+            $filejava_layout_adapter = $filejavalayoutadapter . '.xml';
             $filejava_activity_isi = $filejavaActivityIsi . '.java';
             $filejava_activity_list = $filejavaActivityList . '.java';
+            $filejava_activity_adapter = $filejavaActivityAdapter . '.java';
+
 
             //membuat folder penampung
             if (!file_exists($target . "java/" . $c_url)) {
                 mkdir($target . "java/" . $c_url, 0777, true);
             }
         }
-        //===FILE ANDROID===
 
         $pk = $hc->primary_field($table_name);
         $non_pk = $hc->not_primary_field($table_name);
@@ -241,8 +246,11 @@ if (isset($_POST['generateall'])) {
         $fileandroid == 1 ? include 'core/create_java_dataclass.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_isi.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_list.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_layout_adapter.php' : '';
         $fileandroid == 1 ? include 'core/create_java_activity_isi.php' : '';
         $fileandroid == 1 ? include 'core/create_java_activity_list.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_activity_adapter.php' : '';
+
 
         $hasil[] = $hasil_controller;
         $hasil[] = $hasil_model;
@@ -253,12 +261,16 @@ if (isset($_POST['generateall'])) {
         //autocomplete
         $hasil[] = $hasil_view_autocomplete;
 
-        //file android
-        $hasil[] = $hasil_CLASS;
-        $hasil[] = $hasil_java_layout_isi;
-        $hasil[] = $hasil_java_layout_list;
-        $hasil[] = $hasil_java_actifity_isi;
-        $hasil[] = $hasil_java_actifity_list;
+        if ($fileandroid == '1') {
+            //file android
+            $hasil[] = $hasil_CLASS;
+            $hasil[] = $hasil_java_layout_isi;
+            $hasil[] = $hasil_java_layout_list;
+            $hasil[] = $hasil_java_layout_adapter;
+            $hasil[] = $hasil_java_actifity_isi;
+            $hasil[] = $hasil_java_actifity_list;
+            $hasil[] = $hasil_java_actifity_adapter;
+        }
     }
 
     $hasil[] = $hasil_config_pagination;

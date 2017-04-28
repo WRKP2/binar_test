@@ -79,6 +79,133 @@ class Data extends CI_Controller
         }
     }
 
+//=========READ=========
+        public function readdataAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['no'] = "";
+		 $this->json_data['ID'] = "";
+		 $this->json_data['nama'] = "";
+		 $this->json_data['asal'] = "";
+		 $this->json_data['gabung'] = "";
+
+		$this->load->model('Data_model');
+                
+		$response = array();
+                
+		$xQuery = $this->Data_model->getListdata();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['no'] = $row->no;
+			 $this->json_data['ID'] = $row->ID;
+			 $this->json_data['nama'] = $row->nama;
+			 $this->json_data['asal'] = $row->asal;
+			 $this->json_data['gabung'] = $row->gabung;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode($response);
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdatedataAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['edno'])) {
+            
+$xno = $_POST['edno'];
+        
+} else {
+            
+$xno = '0';
+        
+}
+		 $xID = $_POST['edID'];
+		 $xnama = $_POST['ednama'];
+		 $xasal = $_POST['edasal'];
+		 $xgabung = $_POST['edgabung'];
+
+		$this->load->model('Data_model');
+                $response = array();
+                
+		if ($xno != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->Data_model->Updatedata($xno,$xID,$xnama,$xasal,$xgabung);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->Data_model->Insertdata($xno,$xID,$xnama,$xasal,$xgabung);
+            	}
+            
+         
+		$row = $this->Data_model->getLastIndexdata();
+			 $this->json_data['no'] = $row->no;
+			 $this->json_data['ID'] = $row->ID;
+			 $this->json_data['nama'] = $row->nama;
+			 $this->json_data['asal'] = $row->asal;
+			 $this->json_data['gabung'] = $row->gabung;
+ array_push($response, $this->json_data);
+
+        
+		 echo json_encode($response);
+  
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletdataAndroid() {
+        
+		$xno = $_POST['edno'];
+        $this->load->model('Data_model');
+        $this->Data_model->Deletdata($xno);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetaildataAndroid() {
+        
+		$xno = $_POST['edno'];
+        $this->load->model('Data_model');
+        $this->Data_model->getDetaildata($xno);
+        $this->load->helper('json');
+		$this->json_data['no'] = $row->no;
+		$this->json_data['ID'] = $row->ID;
+		$this->json_data['nama'] = $row->nama;
+		$this->json_data['asal'] = $row->asal;
+		$this->json_data['gabung'] = $row->gabung;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(
@@ -170,7 +297,6 @@ public function create()
 
     public function _rules() 
     {
-//        $this->form_validation->set_message('required', 'Kolom belum diisi');
 	$this->form_validation->set_rules('ID', 'id', 'trim|required');
 	$this->form_validation->set_rules('nama', 'nama', 'trim|required');
 	$this->form_validation->set_rules('asal', 'asal', 'trim|required');

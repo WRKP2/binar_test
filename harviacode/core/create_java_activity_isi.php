@@ -62,7 +62,7 @@ foreach ($all as $row) {
     if ($row['column_name'] != $pk) {
         $string .= "\n\n\n ed" . $row['column_name'] . ".setText(". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "());";
     } else {
-         $string .= "\ns" . $row['column_name'] . "= ". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . " ;";
+         $string .= "\ns" . $row['column_name'] . "= ". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "();";
     } 
 }
 

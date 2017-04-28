@@ -79,6 +79,133 @@ class User extends CI_Controller
         }
     }
 
+//=========READ=========
+        public function readuserAndroid() {
+        $this->load->helper('json'); 
+
+        $xSearch = $_POST['search']; 
+
+		 $this->json_data['idx'] = "";
+		 $this->json_data['nama'] = "";
+		 $this->json_data['alamat'] = "";
+		 $this->json_data['user'] = "";
+		 $this->json_data['password'] = "";
+
+		$this->load->model('User_model');
+                
+		$response = array();
+                
+		$xQuery = $this->User_model->getListuser();
+
+                
+		foreach ($xQuery->result() as $row) {
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['nama'] = $row->nama;
+			 $this->json_data['alamat'] = $row->alamat;
+			 $this->json_data['user'] = $row->user;
+			 $this->json_data['password'] = $row->password;
+		array_push($response, $this->json_data); 
+		}
+            
+            
+		if (empty($response)) {
+            
+		array_push($response, $this->json_data);
+        
+		} 
+
+        
+		echo json_encode($response);
+    }
+    
+
+//=========READ=========
+
+//=========INSERT AND UPDATE=========
+        
+
+public function simpanupdateuserAndroid() {
+        $this->load->helper('json'); 
+
+         if (!empty($_POST['edidx'])) {
+            
+$xidx = $_POST['edidx'];
+        
+} else {
+            
+$xidx = '0';
+        
+}
+		 $xnama = $_POST['ednama'];
+		 $xalamat = $_POST['edalamat'];
+		 $xuser = $_POST['eduser'];
+		 $xpassword = $_POST['edpassword'];
+
+		$this->load->model('User_model');
+                $response = array();
+                
+		if ($xidx != '0') {
+                //===UPDATE===
+                
+		$xStr = $this->User_model->Updateuser($xidx,$xnama,$xalamat,$xuser,$xpassword);
+		} else {
+            //===INSERT===
+            
+		$xStr = $this->User_model->Insertuser($xidx,$xnama,$xalamat,$xuser,$xpassword);
+            	}
+            
+         
+		$row = $this->User_model->getLastIndexuser();
+			 $this->json_data['idx'] = $row->idx;
+			 $this->json_data['nama'] = $row->nama;
+			 $this->json_data['alamat'] = $row->alamat;
+			 $this->json_data['user'] = $row->user;
+			 $this->json_data['password'] = $row->password;
+ array_push($response, $this->json_data);
+
+        
+		 echo json_encode($response);
+  
+    }
+    
+
+//=========INSERT AND UPDATE=========
+
+//=========DELET=========
+        
+
+public function deletuserAndroid() {
+        
+		$xidx = $_POST['edidx'];
+        $this->load->model('User_model');
+        $this->User_model->Deletuser($xidx);
+        $this->load->helper('json');
+        echo json_encode(null);
+    }
+    
+
+//=========DELET=========
+
+//=========GET DETAIL=========
+        
+
+public function getDetailuserAndroid() {
+        
+		$xidx = $_POST['edidx'];
+        $this->load->model('User_model');
+        $this->User_model->getDetailuser($xidx);
+        $this->load->helper('json');
+		$this->json_data['idx'] = $row->idx;
+		$this->json_data['nama'] = $row->nama;
+		$this->json_data['alamat'] = $row->alamat;
+		$this->json_data['user'] = $row->user;
+		$this->json_data['password'] = $row->password;
+		echo json_encode($this->json_data);
+}
+    
+
+//=========GET DETAIL=========
+
 public function create() 
     {
         $data = array(

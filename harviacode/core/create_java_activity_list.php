@@ -43,7 +43,7 @@ public class " . $filejavaActivityList . " extends AppCompatActivity {";
 //}
 
 $string .= " \n private ArrayList<" . $filejavaCLASS . "> xLsItem = null;
-    private Adapter" . $filejavaActivityList . " adapter;
+    private " . $filejavaActivityAdapter . " ".$table_name.";
     private RecyclerView rv;
     private Boolean isStarted = false;
     private Boolean isVisible = false;
@@ -266,8 +266,8 @@ $string .= "\n @Override
     } ";
 
 $string .= " \npublic void SetList" . $filejavaActivityList . "() {
-        adapter = new Adapter" . $filejavaActivityList . "(xLsItem); 
-        rv.setAdapter(adapter);
+        ".$table_name." = new ".$filejavaActivityAdapter. "(xLsItem); 
+        rv.setAdapter(".$table_name.");
         rv.setLayoutManager(llm);
 
     }";

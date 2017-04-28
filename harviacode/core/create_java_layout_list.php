@@ -21,7 +21,7 @@ $string .= "\n\n <android.support.v7.widget.RecyclerView
 $string .= "\n\n <Button
         android:layout_width=\"match_parent\"
         android:layout_height=\"wrap_content\"
-        android:text=\"Submite\"
+        android:text=\"Tambah\"
         android:id=\"@+id/input\"/>";
 
 $string .= "\n\n </LinearLayout>";
