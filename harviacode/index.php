@@ -9,6 +9,10 @@ require_once 'core/process.php';
     <head>
         <title>Codeigniter CRUD Generator</title>
         <link rel="stylesheet" href="core/bootstrap.min.css"/>
+
+        <link href="core/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" type="text/css" />
+        <script src="core/jquery-3.2.1.js"></script>
+        <script src="core/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
         <style>
             body{
                 padding: 15px;
@@ -78,12 +82,12 @@ require_once 'core/process.php';
                             </label>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <div class="checkbox">
+
+                    <div class="form-group" >
+                        <div class="checkbox" >
                             <?php $fileandroid = isset($_POST['fileandroid']) ? $_POST['fileandroid'] : ''; ?>
-                            <label>
-                                <input type="checkbox" name="fileandroid" value="1" <?php echo $fileandroid == '1' ? 'checked' : '' ?>>
+                            <label >
+                                <input type="checkbox" name="fileandroid" id="fileandroid" value="1" <?php echo $fileandroid == '1' ? 'checked' : '' ?>>
                                 Build Java Android File
                             </label>
                         </div>
@@ -101,10 +105,10 @@ require_once 'core/process.php';
                     </div>    
 
                     <!--                    <div class="form-group">
-                                            <div class="checkbox  <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled';   ?>">
+                                            <div class="checkbox  <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled';          ?>">
                     <?php // $export_pdf = isset($_POST['export_pdf']) ? $_POST['export_pdf'] : ''; ?>
                                                 <label>
-                                                    <input type="checkbox" name="export_pdf" value="1" <?php // echo $export_pdf == '1' ? 'checked' : ''   ?>
+                                                    <input type="checkbox" name="export_pdf" value="1" <?php // echo $export_pdf == '1' ? 'checked' : ''          ?>
                     <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled'; ?>>
                                                     Export PDF
                                                 </label>
@@ -116,10 +120,16 @@ require_once 'core/process.php';
                     <div class="form-group">
                         <label>Custom Controller Name</label>
                         <input type="text" id="controller" name="controller" value="<?php echo isset($_POST['controller']) ? $_POST['controller'] : '' ?>" class="form-control" placeholder="Controller Name" />
-                    </div>
+                    </div>                    
+
                     <div class="form-group">
                         <label>Custom Model Name</label>
                         <input type="text" id="model" name="model" value="<?php echo isset($_POST['model']) ? $_POST['model'] : '' ?>" class="form-control" placeholder="Controller Name" />
+                    </div>
+                    
+                    <div class="form-group" id="nameandroid">
+                        <label>Input Android Package Name</label>
+                        <input type="text" id="controller" name="nameandroid" value="<?php echo isset($_POST['packageAndroid']) ? $_POST['packageAndroid'] : '' ?>" class="form-control" placeholder="Package Name Android" />
                     </div>
                     <input type="submit" value="Generate" name="generate" class="btn btn-primary" onclick="javascript: return confirm('This will overwrite the existing files. Continue ?')" />
                     <input type="submit" value="Generate All" name="generateall" class="btn btn-danger" onclick="javascript: return confirm('WARNING !! This will generate code for ALL TABLE and overwrite the existing files\
@@ -143,7 +153,7 @@ require_once 'core/process.php';
                     This CRUD Generator using bootstrap 3 style. You still need to modify the result code for more customization.
                 </p>
                 <small>* generate textarea and text input only</small>
-                
+
                 <p><strong>Preparation before using this CRUD Generator (Important) :</strong></p>
                 <ul>
                     <li>On application/config/autoload.php, load database library, session library and url helper</li>
@@ -178,12 +188,12 @@ require_once 'core/process.php';
                 <br>
                 <p><strong>Thanks for Support Me</strong></p>
                 <p>Buy me a cup of coffee :)</p>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="52D85QFXT57KN">
-                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                    </form>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="52D85QFXT57KN">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
                 <br>
                 <p><strong>Update</strong></p>
 
@@ -242,6 +252,14 @@ require_once 'core/process.php';
                     document.getElementById('model').value = '';
                 }
             }
+
+            $(document).ready(function () {
+                $("#nameandroid").hide();
+                $('#fileandroid').click(function () {
+                    $("#nameandroid").toggle();
+                });
+            });
+
         </script>
     </body>
 </html>

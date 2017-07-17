@@ -15,6 +15,11 @@ if (isset($_POST['generate'])) {
     $android = safe($_POST['android']);
     //java
     $fileandroid = safe($_POST['fileandroid']);
+    $packageAndroid= safe($_POST['packageAndroid']);
+    
+    if($packageAndroid == '' && $fileandroid == '1' ){
+        echo "<script type='text/javascript'>alert('Flase');</script>";
+    }
 
 
     if ($table_name <> '') {
@@ -145,6 +150,12 @@ if (isset($_POST['generateall'])) {
     $android = safe($_POST['android']);
     //java
     $fileandroid = safe($_POST['fileandroid']);
+
+    $packageAndroid= safe($_POST['packageAndroid']);
+    
+    if($packageAndroid == '' && $fileandroid == '1' ){
+        echo "<script type='text/javascript'>alert('Flase');</script>";
+    }
 
 
     $table_list = $hc->table_list();

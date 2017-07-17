@@ -51,7 +51,7 @@ $columnall = implode(",\".\n \"", $column_all);
 $string .= "function getList".$table_name."Auto(\$x".$table_name.") {
         \$xStr = \"SELECT \" .
                 \"*\" .
-                \" FROM ".$table_name." WHERE ".$autosearchnamakolom." like  '%\" . \$x".$table_name." . \"%'\";
+                \" FROM ".$table_name." WHERE "."//masukan nama kolom autocompliet (harus sama dengan control)"." like  '%\" . \$x".$table_name." . \"%'\";
         \$query = \$this->db->query(\$xStr);
         return \$query;
     }";
