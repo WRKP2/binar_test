@@ -91,8 +91,8 @@ $string .= "\n\t    );
         \$hasilnya       =  array();
         foreach (\$query->result() as \$d) {
             \$hasilnya[]     = array(
-                'label' => \$d->".$pk.".'-'.\$d->".$autosearchnamakolom." , 
-                'value' => \$d->".$autosearchnamakolom."
+                'label' => \$d->".$pk.".'-'.\$d->"."//masukan label autocompliet (harus sama dengan model)"." , 
+                'value' => \$d->"."//masukan value autocompliet (harus sama dengan model)"."
             );
         }
         echo json_encode(\$hasilnya);  
