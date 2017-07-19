@@ -91,7 +91,11 @@ $string .= "\n\t    );
         \$hasilnya       =  array();
         foreach (\$query->result() as \$d) {
             \$hasilnya[]     = array(
+<<<<<<< HEAD
                 'label' => \$d->".$pk.".'-'.\$d->"."//masukan label autocompliet (harus sama dengan model)"." , 
+=======
+                'label' => \$d->".$pk.".'-'.\$d->".",//masukan label autocompliet (harus sama dengan model)"." , 
+>>>>>>> 15dd86578eaa334cfae85f9694f63ca60c2aceaf
                 'value' => \$d->"."//masukan value autocompliet (harus sama dengan model)"."
             );
         }

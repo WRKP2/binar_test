@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/xampp2/htdocs/core2login/application/views/auth/forgot_password.php</file>
             <file>file:/C:/xampp2/htdocs/core2login/application/views/auth/create_user_2.php</file>
             <file>file:/C:/xampp2/htdocs/core2login/system/helpers/form_helper.php</file>
@@ -13,6 +14,9 @@
             <file>file:/C:/xampp2/htdocs/core2login/system/helpers/language_helper.php</file>
             <file>file:/C:/xampp2/htdocs/core2login/application/controllers/index.html</file>
             <file>file:/C:/xampp2/htdocs/core2login/application/views/auth/index.php</file>
+=======
+            <file>file:/C:/xampp2/htdocs/core2/application/controllers/Data.php</file>
+>>>>>>> 15dd86578eaa334cfae85f9694f63ca60c2aceaf
         </group>
     </open-files>
 </project-private>
