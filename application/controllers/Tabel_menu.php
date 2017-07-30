@@ -236,6 +236,15 @@ public function create()
         
         $this->load->view('tabel_menu/tabel_menu_doc',$data);
     }
+    
+//    public function menu_sidebar(){
+//        $row = $this->Tabel_menu_model->get_all();
+//        
+//        if($row){
+//            
+//        }
+//        
+//    }
 
 }
 

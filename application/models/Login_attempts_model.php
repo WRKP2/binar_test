@@ -21,67 +21,6 @@ class Login_attempts_model extends CI_Model
         return $query;
     }
 
-    // GET_LISTlogin_attempts
-    function getListlogin_attempts() {
-        $xStr = "SELECT id,".
- "ip_address,".
- "login,".
- "time from login_attempts";
-        $query = $this->db->query($xStr);
-        
-        return $query;
-    }
-
-    // GET_Detaillogin_attempts
-    function getDetaillogin_attempts($xid) {
-        $xStr = "SELECT id,".
- "ip_address,".
- "login,".
- "time from login_attempts WHERE id = '". $xid ."'";
-        $query = $this->db->query($xStr);
-        $row = $query->row();
-        return $row;
-    }
-
-    // Insert_login_attempts
-    function Insertlogin_attempts($xid,$xip_address,$xlogin,$xtime) {
-        $xStr = " INSERT INTO login_attempts( id,".
- "ip_address,".
- "login,".
- "time ) VALUES ( '" . $xid
- . "','" .$xip_address
- . "','" .$xlogin
- . "','" .$xtime. "')";
-        $query = $this->db->query($xStr);
-        return $xid; 
-    }
-
-    // updatelogin_attempts
-    function Updatelogin_attempts($xid,$xip_address,$xlogin,$xtime) {
-        $xStr = " UPDATE login_attempts SET " . 
-		"id= '". $xid . "'," . 
-		"ip_address= '". $xip_address . "'," . 
-		"login= '". $xlogin . "'," . 
-		"time= '". $xtime . "'" . " WHERE id = '". $xid ."'";
- $query = $this->db->query($xStr);
-        return $xid;
-    }
-
-    // deletlogin_attempts
-    function Deletlogin_attempts($xid) {
-        $xStr = " DELETE FROM login_attempts WHERE login_attempts.id = '" . $xid . "'";
-        $query = $this->db->query($xStr);
-    }
-function getLastIndexlogin_attempts(){ 
-        $xStr = "SELECT id,".
- "ip_address,".
- "login,".
- "time from login_attempts order by idx DESC limit 1 ";
-        $query = $this->db->query($xStr);
-        $row = $query->row();
-        return $row;
-    }
-
     // get all
     function get_all()
     {

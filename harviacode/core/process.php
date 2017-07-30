@@ -35,6 +35,13 @@ if (isset($_POST['generate'])) {
 
         //autocomplete
         $v_autocomplete = $table_name . "_autocomplete";
+        
+        //ajax
+        $v_ajax = $table_name . "_ajax";
+        
+        //css
+        $v_css = $table_name . "_css";
+
 
         // url
         $c_url = strtolower($c);
@@ -50,6 +57,13 @@ if (isset($_POST['generate'])) {
 
         //autocomplete
         $v_autocomplete_file = $v_autocomplete . '.php';
+        
+        //ajax
+        $v_ajax_file = $v_ajax. '.js';
+
+        //css
+        $v_css_file = $v_css. '.css';
+        
 
         // read setting
         $get_setting = readJSON('core/settingjson.cfg');
@@ -75,7 +89,7 @@ if (isset($_POST['generate'])) {
             $filejava_activity_isi = $filejavaActivityIsi . '.java';
             $filejava_activity_list = $filejavaActivityList . '.java';
 
-            //membuat folder penampung
+            //membuat folder penampung android
             if (!file_exists($target . "java/" . $c_url)) {
                 mkdir($target . "java/" . $c_url, 0777, true);
             }
@@ -102,6 +116,13 @@ if (isset($_POST['generate'])) {
         }
         include 'core/create_view_form.php';
         include 'core/create_view_read.php';
+        
+        //ajax
+        include 'core/create_ajax.php';
+        
+        //css
+        include 'core/create_css_datatable.php';
+
 
         $export_excel == 1 ? include 'core/create_exportexcel_helper.php' : '';
         $export_word == 1 ? include 'core/create_view_list_doc.php' : '';
@@ -128,6 +149,19 @@ if (isset($_POST['generate'])) {
 
         //autocomplete
         $hasil[] = $hasil_view_autocomplete;
+        
+        //ajax
+        if (!file_exists("..assets/ajax/")) {
+            mkdir("../assets/ajax/", 0777, true);
+        }
+        $hasil[] = $hasil_ajax;
+        
+        //css
+        if (!file_exists("..assets/css/")) {
+            mkdir("../assets/css/", 0777, true);
+        }
+//        $hasil[] = $hasil_css;
+        
 
         //file android
         $hasil[] = $hasil_CLASS;

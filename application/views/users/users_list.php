@@ -23,6 +23,7 @@
         <script src="<?php echo base_url('assets/js/jquery-3.2.1.js') ?>"></script>
         <script src="<?php echo base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.js') ?>"></script>
 
+
     </head>
     <body>
 

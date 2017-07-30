@@ -1762,7 +1762,7 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author jrmadsen67
 	 **/
-	public function set_session($user)
+	public function set_session($user) //Set Session
 	{
 
 		$this->trigger_events('pre_set_session');

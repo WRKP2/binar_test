@@ -5,7 +5,7 @@ $string = "<?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class " . $c . " extends CI_Controller
+class " . $c . " extends MY_Controller
 {
     function __construct()
     {
@@ -49,14 +49,21 @@ if ($jenis_tabel == 'reguler_table') {
             'pagination' => \$this->pagination->create_links(),
             'total_rows' => \$config['total_rows'],
             'start' => \$start,
-        );
-        \$this->load->view('$c_url/$v_list', \$data);
-    }";
+            'title' => '".$c."',
+            'js' => '".$table_name . "_ajax',
+        );";
+        
+    if ($jenis_tabel <> 'reguler_table') {
+        $string .= "    \$this->load->view('$c_url/$v_list', \$data);";
+    } else {
+        $string .= "    \$this->render('$c_url/$v_list', \$data);";
+    }
+     $string .= "}";
 } else {
 
     $string .="\n\n    public function index()
     {
-        \$this->load->view('$c_url/$v_list');
+        \$this->render('$c_url/$v_list');
     } 
     
     public function json() {
@@ -74,7 +81,7 @@ foreach ($all as $row) {
     $string .= "\n\t\t'" . $row['column_name'] . "' => \$row->" . $row['column_name'] . ",";
 }
 $string .= "\n\t    );
-            \$this->load->view('$c_url/$v_read', \$data);
+            \$this->render('$c_url/$v_read', \$data);
         } else {
             \$this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('$c_url'));
@@ -91,11 +98,7 @@ $string .= "\n\t    );
         \$hasilnya       =  array();
         foreach (\$query->result() as \$d) {
             \$hasilnya[]     = array(
-<<<<<<< HEAD
-                'label' => \$d->".$pk.".'-'.\$d->"."//masukan label autocompliet (harus sama dengan model)"." , 
-=======
-                'label' => \$d->".$pk.".'-'.\$d->".",//masukan label autocompliet (harus sama dengan model)"." , 
->>>>>>> 15dd86578eaa334cfae85f9694f63ca60c2aceaf
+                'label' => \$d->".$pk.".'-'.\$d->"."//masukan label autocompliet (harus sama dengan model)".",  
                 'value' => \$d->"."//masukan value autocompliet (harus sama dengan model)"."
             );
         }
@@ -219,7 +222,7 @@ foreach ($all as $row) {
     $string .= "\n\t    '" . $row['column_name'] . "' => set_value('" . $row['column_name'] . "'),";
 }
 $string .= "\n\t);
-        \$this->load->view('$c_url/$v_form', \$data);
+        \$this->render('$c_url/$v_form', \$data);
     }
     
     public function create_action() 
@@ -253,7 +256,7 @@ foreach ($all as $row) {
     $string .= "\n\t\t'" . $row['column_name'] . "' => set_value('" . $row['column_name'] . "', \$row->" . $row['column_name'] . "),";
 }
 $string .= "\n\t    );
-            \$this->load->view('$c_url/$v_form', \$data);
+            \$this->render('$c_url/$v_form', \$data);
         } else {
             \$this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('$c_url'));

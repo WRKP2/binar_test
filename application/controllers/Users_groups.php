@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Users_groups extends CI_Controller
+class Users_groups extends MY_Controller
 {
     function __construct()
     {
@@ -40,7 +40,7 @@ class Users_groups extends CI_Controller
             'total_rows' => $config['total_rows'],
             'start' => $start,
         );
-        $this->load->view('users_groups/users_groups_list', $data);
+        $this->render('users_groups/users_groups_list', $data);
     }
 
     public function read($id) 
@@ -52,7 +52,7 @@ class Users_groups extends CI_Controller
 		'user_id' => $row->user_id,
 		'group_id' => $row->group_id,
 	    );
-            $this->load->view('users_groups/users_groups_read', $data);
+            $this->render('users_groups/users_groups_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('users_groups'));
@@ -69,8 +69,8 @@ class Users_groups extends CI_Controller
         $hasilnya       =  array();
         foreach ($query->result() as $d) {
             $hasilnya[]     = array(
-                'label' => $d->id.'-'.$d->user_id,//masukan label autocompliet (harus sama dengan model) , 
-                'value' => $d->user_id//masukan value autocompliet (harus sama dengan model)
+                'label' => $d->id.'-'.$d->user_id,  
+                'value' => $d->user_id
             );
         }
         echo json_encode($hasilnya);  
@@ -86,7 +86,7 @@ public function create()
 	    'user_id' => set_value('user_id'),
 	    'group_id' => set_value('group_id'),
 	);
-        $this->load->view('users_groups/users_groups_form', $data);
+        $this->render('users_groups/users_groups_form', $data);
     }
     
     public function create_action() 
@@ -119,7 +119,7 @@ public function create()
 		'user_id' => set_value('user_id', $row->user_id),
 		'group_id' => set_value('group_id', $row->group_id),
 	    );
-            $this->load->view('users_groups/users_groups_form', $data);
+            $this->render('users_groups/users_groups_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('users_groups'));
@@ -165,60 +165,6 @@ public function create()
 
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-    }
-
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "users_groups.xls";
-        $judul = "users_groups";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "User Id");
-	xlsWriteLabel($tablehead, $kolomhead++, "Group Id");
-
-	foreach ($this->Users_groups_model->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->user_id);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->group_id);
-
-	    $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=users_groups.doc");
-
-        $data = array(
-            'users_groups_data' => $this->Users_groups_model->get_all(),
-            'start' => 0
-        );
-        
-        $this->load->view('users_groups/users_groups_doc',$data);
     }
 
 }

@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Login_attempts extends CI_Controller
+class Login_attempts extends MY_Controller
 {
     function __construct()
     {
@@ -40,7 +40,7 @@ class Login_attempts extends CI_Controller
             'total_rows' => $config['total_rows'],
             'start' => $start,
         );
-        $this->load->view('login_attempts/login_attempts_list', $data);
+        $this->render('login_attempts/login_attempts_list', $data);
     }
 
     public function read($id) 
@@ -53,7 +53,7 @@ class Login_attempts extends CI_Controller
 		'login' => $row->login,
 		'time' => $row->time,
 	    );
-            $this->load->view('login_attempts/login_attempts_read', $data);
+            $this->render('login_attempts/login_attempts_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('login_attempts'));
@@ -70,8 +70,8 @@ class Login_attempts extends CI_Controller
         $hasilnya       =  array();
         foreach ($query->result() as $d) {
             $hasilnya[]     = array(
-                'label' => $d->id.'-'.$d->login,//masukan label autocompliet (harus sama dengan model) , 
-                'value' => $d->login//masukan value autocompliet (harus sama dengan model)
+                'label' => $d->id.'-'.$d->login,  
+                'value' => $d->login
             );
         }
         echo json_encode($hasilnya);  
@@ -88,7 +88,7 @@ public function create()
 	    'login' => set_value('login'),
 	    'time' => set_value('time'),
 	);
-        $this->load->view('login_attempts/login_attempts_form', $data);
+        $this->render('login_attempts/login_attempts_form', $data);
     }
     
     public function create_action() 
@@ -123,7 +123,7 @@ public function create()
 		'login' => set_value('login', $row->login),
 		'time' => set_value('time', $row->time),
 	    );
-            $this->load->view('login_attempts/login_attempts_form', $data);
+            $this->render('login_attempts/login_attempts_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('login_attempts'));
@@ -171,62 +171,6 @@ public function create()
 
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-    }
-
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "login_attempts.xls";
-        $judul = "login_attempts";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Ip Address");
-	xlsWriteLabel($tablehead, $kolomhead++, "Login");
-	xlsWriteLabel($tablehead, $kolomhead++, "Time");
-
-	foreach ($this->Login_attempts_model->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->ip_address);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->login);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->time);
-
-	    $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=login_attempts.doc");
-
-        $data = array(
-            'login_attempts_data' => $this->Login_attempts_model->get_all(),
-            'start' => 0
-        );
-        
-        $this->load->view('login_attempts/login_attempts_doc',$data);
     }
 
 }

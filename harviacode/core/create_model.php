@@ -36,7 +36,15 @@ if ($jenis_tabel <> 'reguler_table') {
     }";
 }
 
+$string .= "function getList".$table_name."Auto(\$x".$table_name.") {
+        \$xStr = \"SELECT \" .
+                \"*\" .
+                \" FROM ".$table_name." WHERE "."//masukan nama kolom autocompliet (harus sama dengan control)"." like  '%\" . \$x".$table_name." . \"%'\";
+        \$query = \$this->db->query(\$xStr);
+        return \$query;
+    }";
 
+if ($android == '1') {
 // MENGGUNAKAN QUERY 
 $column_all = array();
 foreach ($all as $row) {
@@ -48,13 +56,6 @@ foreach ($all as $row) {
 $columnall = implode(",\".\n \"", $column_all);
 
 
-$string .= "function getList".$table_name."Auto(\$x".$table_name.") {
-        \$xStr = \"SELECT \" .
-                \"*\" .
-                \" FROM ".$table_name." WHERE "."//masukan nama kolom autocompliet (harus sama dengan control)"." like  '%\" . \$x".$table_name." . \"%'\";
-        \$query = \$this->db->query(\$xStr);
-        return \$query;
-    }";
 
 //GET LIST 
 $string .="\n\n    // GET_LIST" . $table_name . "
@@ -121,6 +122,8 @@ $string .= "\nfunction getLastIndex" . $table_name . "(){
         return \$row;
     }";
 //lastindeks
+// MENGGUNAKAN QUERY 
+}
 
 $string .="\n\n    // get all
     function get_all()

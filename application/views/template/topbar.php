@@ -1,5 +1,4 @@
-</head>
-<body class="skin-blue">
+<!--<body class="skin-blue">-->
     <!-- Site wrapper -->
     <div class="wrapper">
 

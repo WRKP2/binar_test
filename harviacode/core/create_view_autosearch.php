@@ -13,7 +13,16 @@ $string = "<script>
           },
           success: function( data ) {
             response( data );
-          }
+          },
+          , error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        start = xmlHttpRequest.responseText.search(\"<title>\") + 7;
+                        end = xmlHttpRequest.responseText.search(\"</title>\");
+                        errorMsg = \" ON CARI \" + xmlHttpRequest.responseText;
+                        if (start > 0 && end > 0)
+                            alert(\"Eror di \" + errorMsg + \"  [\" + xmlHttpRequest.responseText.substring(start, end) + \"]\");
+                        else
+                            alert(\"Error lain \" + errorMsg);
+                    }
         } );
       },
       minLength: 3,

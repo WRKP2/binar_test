@@ -1,40 +1,4 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Users_groups List</title>
-        
-        <!-- ADMINLTE-->
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <!-- Bootstrap 3.3.2 -->
-        <link href="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
-        <!-- Font Awesome Icons -->
-        <link href="<?php echo base_url('assets/font-awesome-4.3.0/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css" />
-        <!-- Ionicons -->
-        <link href="<?php echo base_url('assets/ionicons-2.0.1/css/ionicons.min.css') ?>" rel="stylesheet" type="text/css" />
-        <!-- Theme style -->
-        <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/AdminLTE.min.css') ?>" rel="stylesheet" type="text/css" />
-        <!-- AdminLTE Skins. Choose a skin from the css/skins 
-             folder instead of downloading all of them to reduce the load. -->
-        <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
-        <!-- ADMINLTE-->
-        
-        <!-- AUTOCOMPLETE-->
-        <link href="<?php echo base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.css') ?>" rel="stylesheet" type="text/css" />
-        <script src="<?php echo base_url('assets/js/jquery-3.2.1.js') ?>"></script>
-        <script src="<?php echo base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.js') ?>"></script>
-
-    </head>
-    <body>
-
-    <!-- ADMINLTE-->
-    <?php
-        $this->load->view('template/topbar');
-        $this->load->view('template/sidebar');
-    ?>
-    <div style="padding:15px">
-    <!-- ADMINLTE-->
-
-        <h2 style="margin-top:0px">Users_groups List</h2>
+<h2 style="margin-top:0px">Users_groups List</h2>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
                 <?php echo anchor(site_url('users_groups/create'),'Create', 'class="btn btn-primary"'); ?>
@@ -98,23 +62,9 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
-		<?php echo anchor(site_url('users_groups/excel'), 'Excel', 'class="btn btn-primary"'); ?>
-		<?php echo anchor(site_url('users_groups/word'), 'Word', 'class="btn btn-primary"'); ?>
 	    </div>
             <div class="col-md-6 text-right">
                 <?php echo $pagination ?>
             </div>
         </div>
-
-    <!-- ADMINLTE-->
-    </div>
-
-        <?php
-            $this->load->view('template/js');
-            $this->load->view('users_groups/users_groups_autocomplete');
-
-        ?>
-    <!-- ADMINLTE-->
-
-    </body>
-</html>
+   
