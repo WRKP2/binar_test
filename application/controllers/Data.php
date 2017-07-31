@@ -9,24 +9,41 @@ class Data extends MY_Controller
     {
         parent::__construct();
         $this->load->model('Data_model');
-        $this->load->library('form_validation');        
-	$this->load->library('datatables');
+        $this->load->library('form_validation');
     }
 
     public function index()
     {
+        $q = urldecode($this->input->get('q', TRUE));
+        $start = intval($this->input->get('start'));
+        
+        if ($q <> '') {
+            $config['base_url'] = base_url() . 'data/index.html?q=' . urlencode($q);
+            $config['first_url'] = base_url() . 'data/index.html?q=' . urlencode($q);
+        } else {
+            $config['base_url'] = base_url() . 'data/index.html';
+            $config['first_url'] = base_url() . 'data/index.html';
+        }
+
+        $config['per_page'] = 10;
+        $config['page_query_string'] = TRUE;
+        $config['total_rows'] = $this->Data_model->total_rows($q);
+        $data = $this->Data_model->get_limit_data($config['per_page'], $start, $q);
+
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+
         $data = array(
+            'data_data' => $data,
+            'q' => $q,
+            'pagination' => $this->pagination->create_links(),
+            'total_rows' => $config['total_rows'],
+            'start' => $start,
+            'title' => 'Data',
             'js' => 'data_ajax',
             'css_file' => 'data_css',
     
-        );
-        $this->render('data/data_list',$data );
-    } 
-    
-    public function json() {
-        header('Content-Type: application/json');
-        echo $this->Data_model->json();
-    }
+        );    $this->render('data/data_list', $data);}
 
     public function read($id) 
     {
@@ -63,133 +80,6 @@ class Data extends MY_Controller
         echo json_encode($hasilnya);  
         }
     }
-
-//=========READ=========
-        public function readdataAndroid() {
-        $this->load->helper('json'); 
-
-        $xSearch = $_POST['search']; 
-
-		 $this->json_data['no'] = "";
-		 $this->json_data['ID'] = "";
-		 $this->json_data['nama'] = "";
-		 $this->json_data['asal'] = "";
-		 $this->json_data['gabung'] = "";
-
-		$this->load->model('Data_model');
-                
-		$response = array();
-                
-		$xQuery = $this->Data_model->getListdata();
-
-                
-		foreach ($xQuery->result() as $row) {
-			 $this->json_data['no'] = $row->no;
-			 $this->json_data['ID'] = $row->ID;
-			 $this->json_data['nama'] = $row->nama;
-			 $this->json_data['asal'] = $row->asal;
-			 $this->json_data['gabung'] = $row->gabung;
-		array_push($response, $this->json_data); 
-		}
-            
-            
-		if (empty($response)) {
-            
-		array_push($response, $this->json_data);
-        
-		} 
-
-        
-		echo json_encode($response);
-    }
-    
-
-//=========READ=========
-
-//=========INSERT AND UPDATE=========
-        
-
-public function simpanupdatedataAndroid() {
-        $this->load->helper('json'); 
-
-         if (!empty($_POST['edno'])) {
-            
-$xno = $_POST['edno'];
-        
-} else {
-            
-$xno = '0';
-        
-}
-		 $xID = $_POST['edID'];
-		 $xnama = $_POST['ednama'];
-		 $xasal = $_POST['edasal'];
-		 $xgabung = $_POST['edgabung'];
-
-		$this->load->model('Data_model');
-                $response = array();
-                
-		if ($xno != '0') {
-                //===UPDATE===
-                
-		$xStr = $this->Data_model->Updatedata($xno,$xID,$xnama,$xasal,$xgabung);
-		} else {
-            //===INSERT===
-            
-		$xStr = $this->Data_model->Insertdata($xno,$xID,$xnama,$xasal,$xgabung);
-            	}
-            
-         
-		$row = $this->Data_model->getLastIndexdata();
-			 $this->json_data['no'] = $row->no;
-			 $this->json_data['ID'] = $row->ID;
-			 $this->json_data['nama'] = $row->nama;
-			 $this->json_data['asal'] = $row->asal;
-			 $this->json_data['gabung'] = $row->gabung;
- array_push($response, $this->json_data);
-
-        
-		 echo json_encode($response);
-  
-    }
-    
-
-//=========INSERT AND UPDATE=========
-
-//=========DELET=========
-        
-
-public function deletdataAndroid() {
-        
-		$xno = $_POST['edno'];
-        $this->load->model('Data_model');
-        $this->Data_model->Deletdata($xno);
-        $this->load->helper('json');
-        echo json_encode(null);
-    }
-    
-
-//=========DELET=========
-
-//=========GET DETAIL=========
-        
-
-public function getDetaildataAndroid() {
-        
-		$xno = $_POST['edno'];
-        $this->load->model('Data_model');
-        $this->Data_model->getDetaildata($xno);
-        $this->load->helper('json');
-		$this->json_data['no'] = $row->no;
-		$this->json_data['ID'] = $row->ID;
-		$this->json_data['nama'] = $row->nama;
-		$this->json_data['asal'] = $row->asal;
-		$this->json_data['gabung'] = $row->gabung;
-		echo json_encode($this->json_data);
-}
-    
-
-//=========GET DETAIL=========
 
 public function create() 
     {

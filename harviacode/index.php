@@ -129,7 +129,7 @@ require_once 'core/process.php';
                     
                     <div class="form-group" id="nameandroid">
                         <label>Input Android Package Name</label>
-                        <input type="text" id="controller" name="nameandroid" value="<?php echo isset($_POST['packageAndroid']) ? $_POST['packageAndroid'] : '' ?>" class="form-control" placeholder="Package Name Android" />
+                        <input type="text" id="packageAndroid" name="packageAndroid" value="<?php echo isset($_POST['packageAndroid']) ? $_POST['packageAndroid'] : '' ?>" class="form-control" placeholder="Package Name Android" />
                     </div>
                     <input type="submit" value="Generate" name="generate" class="btn btn-primary" onclick="javascript: return confirm('This will overwrite the existing files. Continue ?')" />
                     <input type="submit" value="Generate All" name="generateall" class="btn btn-danger" onclick="javascript: return confirm('WARNING !! This will generate code for ALL TABLE and overwrite the existing files\
