@@ -15,11 +15,12 @@ if (isset($_POST['generate'])) {
     $android = safe($_POST['android']);
     //java
     $fileandroid = safe($_POST['fileandroid']);
-    $packageAndroid= safe($_POST['packageAndroid']);
+    $packageAndroid = safe($_POST['packageAndroid']);
     
     if($packageAndroid == '' && $fileandroid == '1' ){
         echo "<script type='text/javascript'>alert('Flase');</script>";
     }
+//        echo "<script type='text/javascript'>alert('".$packageAndroid."');</script>";
 
 
     if ($table_name <> '') {
@@ -72,7 +73,18 @@ if (isset($_POST['generate'])) {
         if (!file_exists($target . "views/" . $c_url)) {
             mkdir($target . "views/" . $c_url, 0777, true);
         }
-
+        
+        //ajax
+        if (!file_exists("../assets/ajax/")) {
+            mkdir("../assets/ajax/", 0777, true);
+        }
+        
+//        css
+        if (!file_exists("../assets/css/")) {
+            mkdir("../assets/css/", 0777, true);
+        }
+        
+        
         //===FILE ANDROID===
         if ($fileandroid == '1') {
             //nama_file_java
@@ -93,6 +105,7 @@ if (isset($_POST['generate'])) {
             if (!file_exists($target . "java/" . $c_url)) {
                 mkdir($target . "java/" . $c_url, 0777, true);
             }
+            
         }
         //===FILE ANDROID===
 
@@ -150,17 +163,12 @@ if (isset($_POST['generate'])) {
         //autocomplete
         $hasil[] = $hasil_view_autocomplete;
         
+       
         //ajax
-        if (!file_exists("..assets/ajax/")) {
-            mkdir("../assets/ajax/", 0777, true);
-        }
         $hasil[] = $hasil_ajax;
-        
+
         //css
-        if (!file_exists("..assets/css/")) {
-            mkdir("../assets/css/", 0777, true);
-        }
-//        $hasil[] = $hasil_css;
+        $hasil[] = $hasil_css;
         
 
         //file android
