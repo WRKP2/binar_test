@@ -51,19 +51,22 @@ if ($jenis_tabel == 'reguler_table') {
             'start' => \$start,
             'title' => '".$c."',
             'js' => '".$table_name . "_ajax',
+            'css_file' => '".$table_name . "_css',
+    
         );";
-        
-    if ($jenis_tabel <> 'reguler_table') {
-        $string .= "    \$this->load->view('$c_url/$v_list', \$data);";
-    } else {
-        $string .= "    \$this->render('$c_url/$v_list', \$data);";
-    }
+            
+     $string .= "    \$this->render('$c_url/$v_list', \$data);";
      $string .= "}";
 } else {
 
     $string .="\n\n    public function index()
     {
-        \$this->render('$c_url/$v_list');
+        \$data = array(
+            'js' => '".$table_name . "_ajax',
+            'css_file' => '".$table_name . "_css',
+    
+        );
+        \$this->render('$c_url/$v_list',\$data );
     } 
     
     public function json() {

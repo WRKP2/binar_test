@@ -23,8 +23,13 @@
         <!-- ADMINLTE-->
 
         <!--Datatables-->
-        <?php if (isset($css)){ $helpcss="assets/css/".$css.""?>          
-        <link href="<?php echo base_url($helpcss) ?>" rel="stylesheet" type="text/css" />
+        <?php if (isset($css_file)){ $help="assets/css/".$css_file.".css";?> 
+        
+        <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
+        <link rel="stylesheet" href="<?php echo base_url('assets/datatables/dataTables.bootstrap.css') ?>"/>
+        <link rel="stylesheet" href="<?php echo base_url('assets/datatables/dataTables.bootstrap.css') ?>"/>
+        <link href="<?php echo base_url($help) ?>" rel="stylesheet" type="text/css" />
+       
         <?php }?>
 
         <!-- AUTOCOMPLETE-->
@@ -32,7 +37,8 @@
         <script src="<?php echo base_url('assets/js/jquery-3.2.1.js') ?>"></script>
         <script src="<?php echo base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.js') ?>"></script>
         
-        <?php if (isset($js)){$help="assets/ajax/".$js.".js"; ?>       
+        <!--Ajax-->
+        <?php if (isset($js)){$help="assets/ajax/".$js.".js"; ?>
         <script type="text/javascript"> var baseURL = "<?php echo base_url(); ?>";</script>
         <script script language="javascript" type="text/javascript" src="<?php echo base_url($help) ?>"></script>
         <?php }?>

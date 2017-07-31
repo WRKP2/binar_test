@@ -7,7 +7,11 @@
     <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
 </footer>
 </div><!-- ./wrapper -->
-
+        <?php if (isset($css_file)){?> 
+        <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
+        <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
+        <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
+        <?php }?>
 <!-- Bootstrap 3.3.2 JS -->
 <!--<script src="<?php //echo base_url('assets/AdminLTE-2.0.5/bootstrap/js/bootstrap.min.js')  ?>" type="text/javascript"></script>-->
 <!-- SlimScroll -->
