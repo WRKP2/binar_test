@@ -15,5 +15,5 @@ $string = ".dataTables_wrapper {
                 font-size: 1.2em;
                 color:grey;
             }";
-$hasil_css = createFile($string, "..assets/css/" . $v_css_file);
+$hasil_css = createFile($string, "../assets/css/" . $v_css_file);
 ?>
