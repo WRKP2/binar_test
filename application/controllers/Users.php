@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Users extends CI_Controller
+class Users extends MY_Controller
 {
     function __construct()
     {
@@ -39,9 +39,11 @@ class Users extends CI_Controller
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
-        );
-        $this->load->view('users/users_list', $data);
-    }
+            'title' => 'Users',
+            'js' => 'users_ajax',
+            'css_file' => 'users_css',
+    
+        );    $this->render('users/users_list', $data);}
 
     public function read($id) 
     {
@@ -66,7 +68,7 @@ class Users extends CI_Controller
 		'company' => $row->company,
 		'phone' => $row->phone,
 	    );
-            $this->load->view('users/users_read', $data);
+            $this->render('users/users_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('users'));
@@ -83,8 +85,8 @@ class Users extends CI_Controller
         $hasilnya       =  array();
         foreach ($query->result() as $d) {
             $hasilnya[]     = array(
-                'label' => $d->id.'-'.$d->name,//masukan label autocompliet (harus sama dengan model) , 
-                'value' => $d->name//masukan value autocompliet (harus sama dengan model)
+                'label' => $d->id.'-'.$d->username,  
+                'value' => $d->username
             );
         }
         echo json_encode($hasilnya);  
@@ -114,7 +116,7 @@ public function create()
 	    'company' => set_value('company'),
 	    'phone' => set_value('phone'),
 	);
-        $this->load->view('users/users_form', $data);
+        $this->render('users/users_form', $data);
     }
     
     public function create_action() 
@@ -175,7 +177,7 @@ public function create()
 		'company' => set_value('company', $row->company),
 		'phone' => set_value('phone', $row->phone),
 	    );
-            $this->load->view('users/users_form', $data);
+            $this->render('users/users_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('users'));
@@ -249,88 +251,6 @@ public function create()
 
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-    }
-
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "users.xls";
-        $judul = "users";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Ip Address");
-	xlsWriteLabel($tablehead, $kolomhead++, "Username");
-	xlsWriteLabel($tablehead, $kolomhead++, "Password");
-	xlsWriteLabel($tablehead, $kolomhead++, "Salt");
-	xlsWriteLabel($tablehead, $kolomhead++, "Email");
-	xlsWriteLabel($tablehead, $kolomhead++, "Activation Code");
-	xlsWriteLabel($tablehead, $kolomhead++, "Forgotten Password Code");
-	xlsWriteLabel($tablehead, $kolomhead++, "Forgotten Password Time");
-	xlsWriteLabel($tablehead, $kolomhead++, "Remember Code");
-	xlsWriteLabel($tablehead, $kolomhead++, "Created On");
-	xlsWriteLabel($tablehead, $kolomhead++, "Last Login");
-	xlsWriteLabel($tablehead, $kolomhead++, "Active");
-	xlsWriteLabel($tablehead, $kolomhead++, "First Name");
-	xlsWriteLabel($tablehead, $kolomhead++, "Last Name");
-	xlsWriteLabel($tablehead, $kolomhead++, "Company");
-	xlsWriteLabel($tablehead, $kolomhead++, "Phone");
-
-	foreach ($this->Users_model->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->ip_address);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->username);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->password);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->salt);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->email);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->activation_code);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->forgotten_password_code);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->forgotten_password_time);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->remember_code);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->created_on);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->last_login);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->active);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->first_name);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->last_name);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->company);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->phone);
-
-	    $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=users.doc");
-
-        $data = array(
-            'users_data' => $this->Users_model->get_all(),
-            'start' => 0
-        );
-        
-        $this->load->view('users/users_doc',$data);
     }
 
 }

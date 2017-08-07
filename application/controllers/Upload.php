@@ -65,6 +65,7 @@ class Upload extends CI_Controller
    {
       $status = "error";
       $msg = "Please enter a title";
+      
    }
     
    if ($status != "error")
@@ -84,7 +85,7 @@ class Upload extends CI_Controller
       else
       {
          $data = $this->upload->data();
-         $file_id = $this->files_model->insert_file($data['file_name'], $_POST['title']);
+         $file_id = $this->Files_model->insert_file($data['file_name'], $_POST['title']);
          if($file_id)
          {
             $status = "success";
@@ -104,13 +105,13 @@ class Upload extends CI_Controller
 
 	public function files()
 	{
-	   $files = $this->files_model->get_files();
+	   $files = $this->Files_model->get_files();
 	   $this->load->view('upload/files', array('files' => $files));
 	}
 
 	public function delete_file($file_id)
 	{
-	   if ($this->files_model->delete_file($file_id))
+	   if ($this->Files_model->delete_file($file_id))
 	   {
 	      $status = 'success';
 	      $msg = 'File successfully deleted';
