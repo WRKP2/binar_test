@@ -3,21 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/template/topbar.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/assets/ajax/myScript.js</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/harviacode/core/create_controller.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/users/users_list.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/template/sidebar.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/users/users_autocomplete.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/template/js.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/dashboard1.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/user/user_list.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/template/main.template.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/assets/ajax/ajaxusers.js</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/controllers/User.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/harviacode/core/create_view_autosearch.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/views/user/user_autocomplete.php</file>
-            <file>file:/C:/xampp2/htdocs/web_generate_v2/application/controllers/Dashboard1.php</file>
+            <file>file:/C:/xampp2/htdocs/web_generate_v4/harviacode/core/harviacode.php</file>
+            <file>file:/C:/xampp2/htdocs/web_generate_v4/harviacode/core/create_controller.php</file>
+            <file>file:/C:/xampp2/htdocs/web_generate_v4/application/models/Data_model.php</file>
+            <file>file:/C:/xampp2/htdocs/web_generate_v4/assets/ajax/data_ajax.js</file>
+            <file>file:/C:/xampp2/htdocs/web_generate_v4/application/controllers/Data.php</file>
         </group>
     </open-files>
 </project-private>

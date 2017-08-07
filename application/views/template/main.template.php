@@ -22,7 +22,7 @@
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- ADMINLTE-->
 
-        <!--Datatables-->
+        <!--CSS-->
         <?php if (isset($css_file)){ $help="assets/css/".$css_file.".css";?> 
         
         <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
