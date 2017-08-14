@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <button id="save">Load User</button>
+        <div id="loading"></div>
+        <script>
+            $('#save').click(function () {
+                // add loading image to div
+                $('#loading').html('<img src="http://preloaders.net/preloaders/287/Filling%20broken%20ring.gif"> loading...');
+
+                // run ajax request
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "https://api.github.com/users/jveldboom",
+                    success: function (d) {
+                        // replace div's content with returned data
+                        // $('#loading').html('<img src="'+d.avatar_url+'"><br>'+d.login);
+                        // setTimeout added to show loading
+                        setTimeout(function () {
+                            $('#loading').html('<img src="' + d.avatar_url + '"><br>' + d.login);
+                        }, 2000);
+                    }
+                });
+            });
+        </script>
+    </body>
+
+
+</html>

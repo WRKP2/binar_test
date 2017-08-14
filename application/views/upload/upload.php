@@ -6,6 +6,7 @@
    <script src="<?php echo base_url()?>js/ajaxfileupload.js"></script>
    <script script language="javascript" type="text/javascript" src="<?php echo base_url("assets/ajax/site.js") ?>"></script>
    <script script language="javascript" type="text/javascript" src="<?php echo base_url("assets/js/ajaxfileupload.js") ?>"></script>
+   <script script language="javascript" type="text/javascript" src="<?php echo base_url("assets/ajax/fileupload.js") ?>"></script>
    <link href="<?php echo base_url("assets/css/style.css") ?>" rel="stylesheet" type="text/css" />
 
 </head>
@@ -20,6 +21,9 @@
  
       <input type="submit" name="submit" id="submit" />
    </form>
+   
+   <div id="loading"></div>
+   
    <h2>Files</h2>
    <div id="files"></div>
 </body>
