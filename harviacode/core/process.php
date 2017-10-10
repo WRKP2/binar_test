@@ -12,14 +12,14 @@ if (isset($_POST['generate'])) {
     $controller = safe($_POST['controller']);
     $model = safe($_POST['model']);
 
-    $android = safe($_POST['android']);
+//    $android = safe($_POST['android']);
     //java
     $fileandroid = safe($_POST['fileandroid']);
-    $packageAndroid = safe($_POST['packageAndroid']);
-    
-    if($packageAndroid == '' && $fileandroid == '1' ){
-        echo "<script type='text/javascript'>alert('Flase');</script>";
-    }
+
+
+//    if ($packageAndroid == '' && $fileandroid == '1') {
+//        echo "<script type='text/javascript'>alert('Flase');</script>";
+//    }
 //        echo "<script type='text/javascript'>alert('".$packageAndroid."');</script>";
 
 
@@ -36,10 +36,10 @@ if (isset($_POST['generate'])) {
 
         //autocomplete
         $v_autocomplete = $table_name . "_autocomplete";
-        
+
         //ajax
         $v_ajax = $table_name . "_ajax";
-        
+
         //css
         $v_css = $table_name . "_css";
 
@@ -58,13 +58,13 @@ if (isset($_POST['generate'])) {
 
         //autocomplete
         $v_autocomplete_file = $v_autocomplete . '.php';
-        
+
         //ajax
-        $v_ajax_file = $v_ajax. '.js';
+        $v_ajax_file = $v_ajax . '.js';
 
         //css
-        $v_css_file = $v_css. '.css';
-        
+        $v_css_file = $v_css . '.css';
+
 
         // read setting
         $get_setting = readJSON('core/settingjson.cfg');
@@ -73,39 +73,49 @@ if (isset($_POST['generate'])) {
         if (!file_exists($target . "views/" . $c_url)) {
             mkdir($target . "views/" . $c_url, 0777, true);
         }
-        
+
         //ajax
         if (!file_exists("../assets/ajax/")) {
             mkdir("../assets/ajax/", 0777, true);
         }
-        
+
 //        css
         if (!file_exists("../assets/css/")) {
             mkdir("../assets/css/", 0777, true);
         }
-        
-        
+
+
         //===FILE ANDROID===
         if ($fileandroid == '1') {
+            //nama paket
+            $packageAndroid = safe($_POST['packageAndroid']);
+//            if ($packageAndroid <> '') {
             //nama_file_java
             $filejavaCLASS = ucfirst($table_name) . 'CLASS';
             $filejavalayoutisi = strtolower($table_name) . 'isi';
             $filejavalayoutlist = strtolower($table_name) . 'list';
+            $filejavalayoutadapter = strtolower($table_name) . 'adapter';
             $filejavaActivityIsi = 'Isi' . ucfirst($table_name) . 'Activity';
             $filejavaActivityList = 'List' . ucfirst($table_name) . 'Activity';
+            $filejavaActivityAdapter = 'Adapter' . strtolower($table_name);
 
             //membentuk_file_java+ekstensi
             $filejava_file_dataclass = $filejavaCLASS . '.java';
             $filejava_layout_isi = $filejavalayoutisi . '.xml';
             $filejava_layout_list = $filejavalayoutlist . '.xml';
+            $filejava_layout_adapter = $filejavalayoutadapter . '.xml';
             $filejava_activity_isi = $filejavaActivityIsi . '.java';
             $filejava_activity_list = $filejavaActivityList . '.java';
+            $filejava_activity_adapter = $filejavaActivityAdapter . '.java';
+
 
             //membuat folder penampung android
             if (!file_exists($target . "java/" . $c_url)) {
                 mkdir($target . "java/" . $c_url, 0777, true);
             }
-            
+//            } else {
+//                        echo "<script type='text/javascript'>alert('package Android Is Empty, Please Fill Field of Android Package input For Generate Android File');</script>";
+//            }
         }
         //===FILE ANDROID===
 
@@ -129,10 +139,10 @@ if (isset($_POST['generate'])) {
         }
         include 'core/create_view_form.php';
         include 'core/create_view_read.php';
-        
+
         //ajax
         include 'core/create_ajax.php';
-        
+
         //css
         include 'core/create_css_datatable.php';
 
@@ -146,8 +156,10 @@ if (isset($_POST['generate'])) {
         $fileandroid == 1 ? include 'core/create_java_dataclass.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_isi.php' : '';
         $fileandroid == 1 ? include 'core/create_java_layout_list.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_layout_adapter.php' : '';
         $fileandroid == 1 ? include 'core/create_java_activity_isi.php' : '';
         $fileandroid == 1 ? include 'core/create_java_activity_list.php' : '';
+        $fileandroid == 1 ? include 'core/create_java_activity_adapter.php' : '';
 
         $hasil[] = $hasil_controller;
         $hasil[] = $hasil_model;
@@ -162,21 +174,25 @@ if (isset($_POST['generate'])) {
 
         //autocomplete
         $hasil[] = $hasil_view_autocomplete;
-        
-       
+
+
         //ajax
         $hasil[] = $hasil_ajax;
 
         //css
         $hasil[] = $hasil_css;
-        
 
-        //file android
-        $hasil[] = $hasil_CLASS;
-        $hasil[] = $hasil_java_layout_isi;
-        $hasil[] = $hasil_java_layout_list;
-        $hasil[] = $hasil_java_actifity_isi;
-        $hasil[] = $hasil_java_actifity_list;
+
+        if ($fileandroid == '1') {
+            //file android
+            $hasil[] = $hasil_CLASS;
+            $hasil[] = $hasil_java_layout_isi;
+            $hasil[] = $hasil_java_layout_list;
+            $hasil[] = $hasil_java_layout_adapter;
+            $hasil[] = $hasil_java_actifity_isi;
+            $hasil[] = $hasil_java_actifity_list;
+            $hasil[] = $hasil_java_actifity_adapter;
+        }
     } else {
         $hasil[] = 'No table selected.';
     }
@@ -189,13 +205,13 @@ if (isset($_POST['generateall'])) {
     $export_word = safe($_POST['export_word']);
     $export_pdf = safe($_POST['export_pdf']);
 
-    $android = safe($_POST['android']);
+//    $android = safe($_POST['android']);
     //java
     $fileandroid = safe($_POST['fileandroid']);
 
-    $packageAndroid= safe($_POST['packageAndroid']);
-    
-    if($packageAndroid == '' && $fileandroid == '1' ){
+    $packageAndroid = safe($_POST['packageAndroid']);
+
+    if ($packageAndroid == '' && $fileandroid == '1') {
         echo "<script type='text/javascript'>alert('Flase');</script>";
     }
 

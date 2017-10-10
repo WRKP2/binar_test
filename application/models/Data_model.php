@@ -16,7 +16,7 @@ class Data_model extends CI_Model
     }function getListdataAuto($xdata) {
         $xStr = "SELECT " .
                 "*" .
-                " FROM data WHERE nama like  '%" . $xdata . "%'";
+                " FROM data WHERE //masukan nama kolom autocompliet nama like  '%" . $xdata . "%'";
         $query = $this->db->query($xStr);
         return $query;
     }

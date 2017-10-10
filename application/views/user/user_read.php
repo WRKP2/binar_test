@@ -1,5 +1,4 @@
-<!doctype html>
-        <h2 style="margin-top:0px">User Read</h2>
+<h2 style="margin-top:0px">User Read</h2>
         <table class="table table-bordered table-striped table-hover">
 	    <tr><td>Nama</td><td><?php echo $nama; ?></td></tr>
 	    <tr><td>Alamat</td><td><?php echo $alamat; ?></td></tr>

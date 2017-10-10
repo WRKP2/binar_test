@@ -39,9 +39,11 @@ class Users_groups extends MY_Controller
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
-        );
-        $this->render('users_groups/users_groups_list', $data);
-    }
+            'title' => 'Users_groups',
+            'js' => 'users_groups_ajax',
+            'css_file' => 'users_groups_css',
+    
+        );    $this->render('users_groups/users_groups_list', $data);}
 
     public function read($id) 
     {

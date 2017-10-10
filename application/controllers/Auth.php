@@ -23,7 +23,8 @@ class Auth extends CI_Controller {
             redirect('auth/login', 'refresh');
         } elseif (!$this->ion_auth->is_admin()) { // remove this elseif if you want to enable this for non-admins
             // redirect them to the home page because they must be an administrator to view this
-            return show_error('You must be an administrator to view this page.');
+            redirect(site_url('data'));
+//            return show_error('You must be an administrator to view this page.');
         } else {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -197,9 +198,13 @@ class Auth extends CI_Controller {
 
             // run the forgotten password method to email an activation code to the user
             $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
+//            $test = json_encode($forgotten);
+//            echo $test;
 
             if ($forgotten) {
                 // if there were no errors
+                $this->sendMail1($forgotten['forgotten_password_code']);
+                
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect("auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
             } else {
@@ -210,13 +215,16 @@ class Auth extends CI_Controller {
     }
 
     // reset password - final step for forgotten password
-    public function reset_password($code = NULL) {
+    public function reset_password() {
+        $code = urldecode($this->input->get('q', TRUE));
+//                echo 'aaa = '.$code;
+
         if (!$code) {
             show_404();
         }
 
         $user = $this->ion_auth->forgotten_password_check($code);
-
+//        echo 'bbbbb = '.$user;
         if ($user) {
             // if the code is valid then display the password reset form
 
@@ -233,12 +241,14 @@ class Auth extends CI_Controller {
                     'name' => 'new',
                     'id' => 'new',
                     'type' => 'password',
+                    'class' => 'form-control',
                     'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
                 );
                 $this->data['new_password_confirm'] = array(
                     'name' => 'new_confirm',
                     'id' => 'new_confirm',
                     'type' => 'password',
+                    'class' => 'form-control',
                     'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
                 );
                 $this->data['user_id'] = array(
@@ -688,13 +698,62 @@ class Auth extends CI_Controller {
     }
 
     public function _render_page($view, $data = null, $returnhtml = false) {//I think this makes more sense
-
         $this->viewdata = (empty($data)) ? $this->data : $data;
 
         $view_html = $this->load->view($view, $this->viewdata, $returnhtml);
 
         if ($returnhtml)
             return $view_html; //This will return html on 3rd argument being true
+    }
+
+    
+    function sendMail1($forgotten) {
+        $ci = get_instance();
+        $ci->load->library('email');
+        $config['protocol'] = "smtp";
+        $config['smtp_host'] = "ssl://smtp.gmail.com";
+        $config['smtp_port'] = "465";
+        $config['smtp_user'] = "wrangga22@gmail.com";
+        $config['smtp_pass'] = "Aku7988;";
+        $config['charset'] = "utf-8";
+        $config['mailtype'] = "html";
+        $config['newline'] = "\r\n";
+                
+        $ci->email->initialize($config);
+
+        
+        $htmlContent = '<p>Dear W Rangga Purnama (Personal),</p><p>Recently a request was submitted to reset your password for our client area. If you did not request this, please ignore this email.';
+        $htmlContent .= ' It will expire and become useless in 2 hours time.</p><p>To reset your password, please visit the url below:'
+                . '<br><a href="http://localhost/web_generate_v5/auth/reset_password.html?q='.$forgotten.'"> Klik Disini</a>'
+                . '</p><p>When you visit the link above, you will have the opportunity to choose a new password.</p><p>Jabat erat,<br>';
+        $htmlContent .= '<br>
+        <br>
+        Footbalpedias<br>
+        -------------------------<br>
+        http://footbalpedias.id<br>
+        -------------------------<br>
+        <br>
+        Phone : <br>
+        SMS   : <br>
+        Fax   : <br>
+        Sales &amp; Customer Service : <br>
+        Technical Support : <br>
+        Billing : <br>
+        Abuse : </p>
+        </td>';
+        
+        $ci->email->from('wrangga22@gmail.com', 'Willybrodus Rangga');
+        $list = array('kapadadeveloper@gmail.com');
+        $ci->email->to($list);
+        $ci->email->subject('Test');
+//        $ci->email->message('Test email');
+          $ci->email->message($htmlContent);
+
+        if ($this->email->send()) {
+            echo 'Email sent.';
+        } else {
+            show_error($this->email->print_debugger());
+        }
     }
 
 }

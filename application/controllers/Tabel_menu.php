@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Tabel_menu extends CI_Controller
+class Tabel_menu extends MY_Controller
 {
     function __construct()
     {
@@ -39,9 +39,11 @@ class Tabel_menu extends CI_Controller
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
-        );
-        $this->load->view('tabel_menu/tabel_menu_list', $data);
-    }
+            'title' => 'Tabel_menu',
+            'js' => 'tabel_menu_ajax',
+            'css_file' => 'tabel_menu_css',
+    
+        );    $this->render('tabel_menu/tabel_menu_list', $data);}
 
     public function read($id) 
     {
@@ -54,7 +56,7 @@ class Tabel_menu extends CI_Controller
 		'icon' => $row->icon,
 		'is_main_menu' => $row->is_main_menu,
 	    );
-            $this->load->view('tabel_menu/tabel_menu_read', $data);
+            $this->render('tabel_menu/tabel_menu_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tabel_menu'));
@@ -71,8 +73,8 @@ class Tabel_menu extends CI_Controller
         $hasilnya       =  array();
         foreach ($query->result() as $d) {
             $hasilnya[]     = array(
-                'label' => $d->id.'-'.$d->judul_menu,//masukan label autocompliet (harus sama dengan model) , 
-                'value' => $d->judul_menu//masukan value autocompliet (harus sama dengan model)
+                'label' => $d->id.'-'.$d->judul_menu,  
+                'value' => $d->judul_menu
             );
         }
         echo json_encode($hasilnya);  
@@ -90,7 +92,7 @@ public function create()
 	    'icon' => set_value('icon'),
 	    'is_main_menu' => set_value('is_main_menu'),
 	);
-        $this->load->view('tabel_menu/tabel_menu_form', $data);
+        $this->render('tabel_menu/tabel_menu_form', $data);
     }
     
     public function create_action() 
@@ -127,7 +129,7 @@ public function create()
 		'icon' => set_value('icon', $row->icon),
 		'is_main_menu' => set_value('is_main_menu', $row->is_main_menu),
 	    );
-            $this->load->view('tabel_menu/tabel_menu_form', $data);
+            $this->render('tabel_menu/tabel_menu_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('tabel_menu'));
@@ -178,73 +180,6 @@ public function create()
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
-
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "tabel_menu.xls";
-        $judul = "tabel_menu";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Judul Menu");
-	xlsWriteLabel($tablehead, $kolomhead++, "Link");
-	xlsWriteLabel($tablehead, $kolomhead++, "Icon");
-	xlsWriteLabel($tablehead, $kolomhead++, "Is Main Menu");
-
-	foreach ($this->Tabel_menu_model->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->judul_menu);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->link);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->icon);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->is_main_menu);
-
-	    $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=tabel_menu.doc");
-
-        $data = array(
-            'tabel_menu_data' => $this->Tabel_menu_model->get_all(),
-            'start' => 0
-        );
-        
-        $this->load->view('tabel_menu/tabel_menu_doc',$data);
-    }
-    
-//    public function menu_sidebar(){
-//        $row = $this->Tabel_menu_model->get_all();
-//        
-//        if($row){
-//            
-//        }
-//        
-//    }
 
 }
 

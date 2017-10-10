@@ -1,6 +1,8 @@
 <?php
 
 $string = "
+package " . $packageAndroid . "." . $c_url . ";
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Log;
+
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,19 +31,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-public class ".$filejavaActivityIsi." extends AppCompatActivity {";
+import " . $packageAndroid . ".R;
+
+public class " . $filejavaActivityIsi . " extends AppCompatActivity {";
 
 foreach ($all as $row) {
-        $string .= "\nprivate EditText ed" . $row['column_name'] . ";";
-        $string .= "\nprivate String s" . $row['column_name'] . ";";
+    $string .= "\nprivate EditText ed" . $row['column_name'] . ";";
+    $string .= "\nprivate String s" . $row['column_name'] . ";";
 }
-$string .= "\n private Button btnsimpan".$filejavaActivityIsi.";
+$string .= "\n private Button btnsimpan" . $filejavaActivityIsi . ";
             \n private ProgressDialog progress;";
 
 $string .= "\n @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.".$filejavalayoutisi.");
+        setContentView(R.layout." . $filejavalayoutisi . ");
         progress = new ProgressDialog(this);
         progress.setMessage(\"Tunggu Sedang Memproses ...\");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -53,42 +59,43 @@ foreach ($all as $row) {
 
 $string .= "\n Bundle b = getIntent().getExtras();
             if(b!=null) {
-            String json".$filejavaActivityIsi." = b.getString(\"json".$filejavaActivityIsi."\");
-            Log.d(\" json".$filejavaActivityIsi."\", json".$filejavaActivityIsi." );  
-            Gson gson = new Gson();\n".
-            $filejavaCLASS." ". $filejavaActivityIsi." = gson.fromJson(json".$filejavaActivityIsi.", ".$filejavaCLASS.".class);";
+            String json" . $filejavaActivityIsi . " = b.getString(\"json" . $filejavaActivityIsi . "\");
+            Log.d(\" json" . $filejavaActivityIsi . "\", json" . $filejavaActivityIsi . " );  
+            Gson gson = new Gson();\n" .
+        $filejavaCLASS . " " . $filejavaActivityIsi . " = gson.fromJson(json" . $filejavaActivityIsi . ", " . $filejavaCLASS . ".class);";
 
 foreach ($all as $row) {
     if ($row['column_name'] != $pk) {
-        $string .= "\n\n\n ed" . $row['column_name'] . ".setText(". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "());";
+        $string .= "\ned" . $row['column_name'] . ".setText(" . $filejavaActivityIsi . ".get" . ucfirst($row['column_name']) . "());";
     } else {
-         $string .= "\ns" . $row['column_name'] . "= ". $filejavaActivityIsi.".get" . ucfirst($row['column_name']) . "();";
-    } 
+        $string .= "\ns" . $row['column_name'] . "= " . $filejavaActivityIsi . ".get" . ucfirst($row['column_name']) . "();";
+    }
 }
 
-$string .= "\n\n\n\n}"
-        . "btnsimpan".$filejavaActivityIsi." = (Button) findViewById(R.id.btnsimpan);
-           btnsimpan".$filejavaActivityIsi.".setOnClickListener(new View.OnClickListener() {
+$string .= "\n}"
+        . "btnsimpan" . $filejavaActivityIsi . " = (Button) findViewById(R.id.btnsimpan);
+           btnsimpan" . $filejavaActivityIsi . ".setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {\n";
 
 foreach ($all as $row) {
-        if ($row['column_name'] != $pk) {
+    if ($row['column_name'] != $pk) {
         $string .= "\n s" . $row['column_name'] . "= ed" . $row['column_name'] . ".getText().toString();";
-        }
+    }
 }
 
-$string .= "\n new Simpan".$filejavaActivityIsi."(null).execute(); 
+$string .= "\n new Simpan" . $filejavaActivityIsi . "(null).execute(); 
           }
          }); 
         }";
 
-$string .= "\n public class Simpan".$filejavaActivityIsi." extends AsyncTask<Void, Void, ArrayList<".$filejavaCLASS.">> {
+$string .= "//TODO AsyncTask Simpan" . $filejavaActivityIsi . ""
+        . "\n public class Simpan" . $filejavaActivityIsi . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
 
-        private ArrayList<".$filejavaCLASS."> listdataCombo;
+        private ArrayList<" . $filejavaCLASS . "> listdataCombo;
 
-        Simpan".$filejavaActivityIsi."(ArrayList<".$filejavaCLASS."> xList".$filejavaActivityIsi.") {
-            listdataCombo = xList".$filejavaActivityIsi.";
+        Simpan" . $filejavaActivityIsi . "(ArrayList<" . $filejavaCLASS . "> xList" . $filejavaActivityIsi . ") {
+            listdataCombo = xList" . $filejavaActivityIsi . ";
         }
 
         @Override
@@ -99,7 +106,7 @@ $string .= "\n public class Simpan".$filejavaActivityIsi." extends AsyncTask<Voi
         }
 
         @Override
-        protected ArrayList<".$filejavaCLASS."> doInBackground(Void... params) {
+        protected ArrayList<" . $filejavaCLASS . "> doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
             Gson gson = new Gson();
@@ -107,7 +114,7 @@ $string .= "\n public class Simpan".$filejavaActivityIsi." extends AsyncTask<Voi
             BufferedReader bufreader = null;
             URL url = null;
             try {
-            url = new URL(Config.SERVER_PHP + \"".$c."/simpanupdate" . $table_name . "Android/\");
+            url = new URL(Config.SERVER_PHP + \"" . $c . "/simpanupdate" . $table_name . "Android/\");
                 HttpURLConnection urlConnection = null;
                 try {
                     urlConnection = (HttpURLConnection) url.openConnection();
@@ -120,7 +127,7 @@ $string .= "\n public class Simpan".$filejavaActivityIsi." extends AsyncTask<Voi
                     Uri.Builder builder = new Uri.Builder()";
 
 foreach ($all as $row) {
-        $string .= "\n .appendQueryParameter(\"ed" . $row['column_name'] . "\", s" . $row['column_name'] . "+\"\")";
+    $string .= "\n .appendQueryParameter(\"ed" . $row['column_name'] . "\", s" . $row['column_name'] . "+\"\")";
 }
 
 $string .= ";"
@@ -150,7 +157,7 @@ $string .= ";"
 //                    }
 //                    Log.d(\"Data hasil Search \", \"> \" + Sresponse+\"\");
 
-                    listdataCombo = gson.fromJson(bufreader, new TypeToken<List<".$filejavaCLASS.">>() {
+                    listdataCombo = gson.fromJson(bufreader, new TypeToken<List<" . $filejavaCLASS . ">>() {
                     }.getType());
 
                 } catch (IOException e) {
@@ -165,19 +172,14 @@ $string .= ";"
         }";
 
 $string .= "\n @Override
-        protected void onPostExecute(final ArrayList<".$filejavaCLASS."> xlistDataCombo) {
+        protected void onPostExecute(final ArrayList<" . $filejavaCLASS . "> xlistDataCombo) {
             progress.dismiss();
             if(xlistDataCombo!=null){
-                ".$filejavaCLASS." xdataCombo = xlistDataCombo.get(0);
-                Intent intent=new Intent();
-                intent.putExtra(\"MESSAGE\",\"Y\");
-                intent.putExtra(\"isfromprodukfasilitas\",\"Y\");
-                setResult(2,intent);
-                finish();
-
-
+                Toast.makeText(getApplication(), \"Input ".$table_name." Sukses\", Toast.LENGTH_LONG).show();
+                 Intent intent = new Intent(" . $filejavaActivityIsi . ".this, ".$filejavaActivityList.".class);
+                 startActivity(intent);
             }else{
-                Toast.makeText(getApplication(), \"PENYIMPANAN produkfasilitas GAGAL\", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), \"PENYIMPANAN ".$table_name." GAGAL\", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -192,12 +194,32 @@ $string .= "\n @Override
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent();
-        intent.putExtra(\"MESSAGE\",\"Y\");
-                intent.putExtra(\"isfromprodukfasilitas\",\"Y\");
-        setResult(2,intent);
-        finish();
 
+    }
+    
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+    
+    @Override
+    public void onPause(){
+        super.onPause();
+    }
+    
+    @Override
+    public void onStop(){
+        super.onStop();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
     }
 }";
 //$hasil_CLASS = createFile($string, $target . "controllers/" . $filejava_file);

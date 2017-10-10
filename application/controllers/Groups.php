@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Groups extends CI_Controller
+class Groups extends MY_Controller
 {
     function __construct()
     {
@@ -39,9 +39,11 @@ class Groups extends CI_Controller
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
-        );
-        $this->load->view('groups/groups_list', $data);
-    }
+            'title' => 'Groups',
+            'js' => 'groups_ajax',
+            'css_file' => 'groups_css',
+    
+        );    $this->render('groups/groups_list', $data);}
 
     public function read($id) 
     {
@@ -52,7 +54,7 @@ class Groups extends CI_Controller
 		'name' => $row->name,
 		'description' => $row->description,
 	    );
-            $this->load->view('groups/groups_read', $data);
+            $this->render('groups/groups_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('groups'));
@@ -69,8 +71,8 @@ class Groups extends CI_Controller
         $hasilnya       =  array();
         foreach ($query->result() as $d) {
             $hasilnya[]     = array(
-                'label' => $d->id.'-'.$d->name,//masukan label autocompliet (harus sama dengan model) , 
-                'value' => $d->name//masukan value autocompliet (harus sama dengan model)
+                'label' => $d->id.'-'.$d->name,  
+                'value' => $d->name
             );
         }
         echo json_encode($hasilnya);  
@@ -86,7 +88,7 @@ public function create()
 	    'name' => set_value('name'),
 	    'description' => set_value('description'),
 	);
-        $this->load->view('groups/groups_form', $data);
+        $this->render('groups/groups_form', $data);
     }
     
     public function create_action() 
@@ -119,7 +121,7 @@ public function create()
 		'name' => set_value('name', $row->name),
 		'description' => set_value('description', $row->description),
 	    );
-            $this->load->view('groups/groups_form', $data);
+            $this->render('groups/groups_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('groups'));
@@ -165,60 +167,6 @@ public function create()
 
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
-    }
-
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "groups.xls";
-        $judul = "groups";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Name");
-	xlsWriteLabel($tablehead, $kolomhead++, "Description");
-
-	foreach ($this->Groups_model->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->name);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->description);
-
-	    $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=groups.doc");
-
-        $data = array(
-            'groups_data' => $this->Groups_model->get_all(),
-            'start' => 0
-        );
-        
-        $this->load->view('groups/groups_doc',$data);
     }
 
 }

@@ -73,15 +73,15 @@ require_once 'core/process.php';
                     </div>
 
                     <!-- untuk android -->
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <div class="checkbox">
-                            <?php $android = isset($_POST['android']) ? $_POST['android'] : ''; ?>
+                            <?php // $android = isset($_POST['android']) ? $_POST['android'] : ''; ?>
                             <label>
-                                <input type="checkbox" name="android" value="1" <?php echo $android == '1' ? 'checked' : '' ?>>
+                                <input type="checkbox" name="android" value="1" <?php // echo $android == '1' ? 'checked' : '' ?>>
                                 Build Android Fuction
                             </label>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group" >
                         <div class="checkbox" >
@@ -104,17 +104,17 @@ require_once 'core/process.php';
                         </div>
                     </div>    
 
-                    <!--                    <div class="form-group">
-                                            <div class="checkbox  <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled';          ?>">
-                    <?php // $export_pdf = isset($_POST['export_pdf']) ? $_POST['export_pdf'] : ''; ?>
-                                                <label>
-                                                    <input type="checkbox" name="export_pdf" value="1" <?php // echo $export_pdf == '1' ? 'checked' : ''          ?>
-                    <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled'; ?>>
-                                                    Export PDF
-                                                </label>
-                    <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : '<small class="text-danger">mpdf required, download <a href="http://harviacode.com">here</a></small>'; ?>
-                                            </div>
-                                        </div>-->
+<!--                    <div class="form-group">
+                        <div class="checkbox  <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled'; ?>">
+                            <?php // $export_pdf = isset($_POST['export_pdf']) ? $_POST['export_pdf'] : ''; ?>
+                            <label>
+                                <input type="checkbox" name="export_pdf" value="1" <?php // echo $export_pdf == '1' ? 'checked' : '' ?>
+                                       <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : 'disabled'; ?>>
+                                Export PDF
+                            </label>
+                            <?php // echo file_exists('../application/third_party/mpdf/mpdf.php') ? '' : '<small class="text-danger">mpdf required, download <a href="http://harviacode.com">here</a></small>'; ?>
+                        </div>
+                    </div>-->
 
 
                     <div class="form-group">
@@ -124,9 +124,9 @@ require_once 'core/process.php';
 
                     <div class="form-group">
                         <label>Custom Model Name</label>
-                        <input type="text" id="model" name="model" value="<?php echo isset($_POST['model']) ? $_POST['model'] : '' ?>" class="form-control" placeholder="Controller Name" />
+                        <input type="text" id="model" name="model" value="<?php echo isset($_POST['model']) ? $_POST['model'] : '' ?>" class="form-control" placeholder="Model Name" />
                     </div>
-                    
+
                     <div class="form-group" id="nameandroid">
                         <label>Input Android Package Name</label>
                         <input type="text" id="packageAndroid" name="packageAndroid" value="<?php echo isset($_POST['packageAndroid']) ? $_POST['packageAndroid'] : '' ?>" class="form-control" placeholder="Package Name Android" />

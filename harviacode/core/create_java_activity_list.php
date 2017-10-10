@@ -1,6 +1,8 @@
 <?php
 
 $string = "
+package " . $packageAndroid . "." . $c_url . ";
+
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.Button;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +38,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import " . $packageAndroid . ".R;
+import testk24willybrodusrangga.org.testk24willybrodusrangga.RecyclerTouchListener;
+import testk24willybrodusrangga.org.testk24willybrodusrangga.ClickListener;
+
+
 
 public class " . $filejavaActivityList . " extends AppCompatActivity {";
 
@@ -42,21 +51,14 @@ public class " . $filejavaActivityList . " extends AppCompatActivity {";
 //        $string .= "\nprivate String s" . $row['column_name'] . ";";
 //}
 
-$string .= " \n private ArrayList<" . $filejavaCLASS . "> xLsItem = null;
-    private " . $filejavaActivityAdapter . " ".$table_name.";
+$string .= " \n private ArrayList<" . $filejavaCLASS . "> xLs".$table_name." = null;
+    private " . $filejavaActivityAdapter . " " . $table_name . ";
     private RecyclerView rv;
-    private Boolean isStarted = false;
-    private Boolean isVisible = false;
-    private Boolean isAfterDetail = false;
     private LinearLayoutManager llm;
     private GridLayoutManager llmG;
     public ProgressDialog progress;
-    public int iStart = 0;
-    public int iLimit = 100;
-    public String xSearch = \"\";
-    private Menu mMenu;
     public int posisiOnLOngClick=-1;
-    public String idproduk;";
+    private Button btnInput;";
 
 $string .= "\n @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +79,15 @@ $string .= "\n}"
         . "\n\n
             rv = (RecyclerView) findViewById(R.id.rv_recycler);
             rv.setHasFixedSize(true);
-            xLsItem = new ArrayList<" . $filejavaCLASS . ">();
+            xLs".$table_name." = new ArrayList<" . $filejavaCLASS . ">();
             llm = new LinearLayoutManager(this);";
 
 $string .= "\n new list" . $filejavaActivityList . "(\"\").execute(); 
             rv.addOnItemTouchListener(new RecyclerTouchListener(this, rv, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                \n" . $filejavaCLASS . " " . strtolower($filejavaCLASS) . " = xLsItem.get(position);
-                if (!" . strtolower($filejavaCLASS) . ".getIdx().trim().equals(\"\")) {
+                \n" . $filejavaCLASS . " " . strtolower($filejavaCLASS) . " = xLs".$table_name.".get(position);
+                if (!" . strtolower($filejavaCLASS) . ".getID().trim().equals(\"\")) {
                     Intent intent = new Intent(" . $filejavaActivityList . ".this, " . $filejavaActivityIsi . ".class);
                     Gson gson=new Gson();
                     String json" . $filejavaActivityIsi . " = gson.toJson(" . strtolower($filejavaCLASS) . ");
@@ -105,7 +107,15 @@ $string .= "\n new list" . $filejavaActivityList . "(\"\").execute();
 
             }
         }));
-        handleIntent(getIntent());
+    
+            btnInput = (Button) findViewById(R.id.btnInput);    
+            btnInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(" . $filejavaActivityList . ".this, " . $filejavaActivityIsi . ".class);
+                startActivity(intent);
+            }
+        });
         }";
 
 $string .= "\n@Override
@@ -127,15 +137,7 @@ $string .= " \n@Override
             progress.dismiss();
         progress = null;
     }
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-
-        }
-
+    
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -150,17 +152,11 @@ $string .= " \n@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==11 && data!=null)
-        {
-            String message=data.getStringExtra(\"MESSAGE\");
-            if(message.equals(\"Y\")){
-                new list" . $filejavaActivityList . "(\"\").execute();
-            }
 
-        }
     }";
 
-$string .= "\n public class list" . $filejavaActivityList . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
+$string .= "//TODO AsyncTask GET list" . $filejavaActivityList . ""
+        . "\n public class list" . $filejavaActivityList . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
 
         private ArrayList<" . $filejavaCLASS . "> listdataCombo;
             private String isearch;
@@ -178,7 +174,6 @@ $string .= "\n public class list" . $filejavaActivityList . " extends AsyncTask<
 
         @Override
         protected ArrayList<" . $filejavaCLASS . "> doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             Gson gson = new Gson();
 
@@ -247,8 +242,8 @@ $string .= "\n @Override
             
             if (xlistDataCombo != null) {
                 if (xlistDataCombo.size() > 0) {
-                    xLsItem.clear();
-                    xLsItem.addAll(xlistDataCombo);
+                    xLs".$table_name.".clear();
+                    xLs".$table_name.".addAll(xlistDataCombo);
 
                    SetList" . $filejavaActivityList . "();
 
@@ -266,13 +261,14 @@ $string .= "\n @Override
     } ";
 
 $string .= " \npublic void SetList" . $filejavaActivityList . "() {
-        ".$table_name." = new ".$filejavaActivityAdapter. "(xLsItem); 
-        rv.setAdapter(".$table_name.");
+        " . $table_name . " = new " . $filejavaActivityAdapter . "(xLs".$table_name."); 
+        rv.setAdapter(" . $table_name . ");
         rv.setLayoutManager(llm);
 
     }";
 
-$string .= " public class Delete" . $filejavaActivityList . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
+$string .= "//TODO AsyncTask Delet" . $filejavaActivityList . "\n"
+        . "public class Delete" . $filejavaActivityList . " extends AsyncTask<Void, Void, ArrayList<" . $filejavaCLASS . ">> {
         private ArrayList<" . $filejavaCLASS . "> Listproduk;
         private String i" . $pk . ";
 
@@ -344,10 +340,6 @@ $string .= " public class Delete" . $filejavaActivityList . " extends AsyncTask<
 //                    }
 //                    Log.d(\"Data hasil Search \", \"> \" + Sresponse+\"\\n\");
 
-
-
-
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -377,14 +369,28 @@ $string .= " public class Delete" . $filejavaActivityList . " extends AsyncTask<
         }
     }";
 
-$string .= "    @Override
+$string .= "@Override
     public void onBackPressed() {
-        Intent intent=new Intent();
-        intent.putExtra(\"MESSAGE\",\"Y\");
-                intent.putExtra(\"isfromprodukfasilitas\",\"Y\");
-        setResult(2,intent);
-        finish();
-
+    }
+    
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+    
+    @Override
+    public void onStop(){
+        super.onStop();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
     }
 }
 ";

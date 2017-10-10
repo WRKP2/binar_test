@@ -1,43 +1,78 @@
 <?php
-class Files_Model extends CI_Model {
- 
-   public function insert_file($filename, $title)
-   {
-      $data = array(
-         'filename'     => $filename,
-         'title'        => $title
-      );
-      $this->db->insert('files', $data);
-      return $this->db->insert_id();
-   }
 
-   public function get_files()
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Files_model extends CI_Model
 {
-   return $this->db->select()
-         ->from('files')
-         ->get()
-         ->result();
+
+    public $table = 'files';
+    public $id = 'id';
+    public $order = 'DESC';
+
+    function __construct()
+    {
+        parent::__construct();
+    }function getListfilesAuto($xfiles) {
+        $xStr = "SELECT " .
+                "*" .
+                " FROM files WHERE filename like  '%" . $xfiles . "%'";
+        $query = $this->db->query($xStr);
+        return $query;
+    }
+
+    // get all
+    function get_all()
+    {
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+
+    // get data by id
+    function get_by_id($id)
+    {
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+    
+    // get total rows
+    function total_rows($q = NULL) {
+        $this->db->like('id', $q);
+	$this->db->or_like('filename', $q);
+	$this->db->or_like('title', $q);
+	$this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL) {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id', $q);
+	$this->db->or_like('filename', $q);
+	$this->db->or_like('title', $q);
+	$this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
+    }
+
 }
 
-public function delete_file($file_id)
-{
-   $file = $this->get_file($file_id);
-   if (!$this->db->where('id', $file_id)->delete('files'))
-   {
-      return FALSE;
-   }
-   unlink('./files/' . $file->filename);  
-   return TRUE;
-}
- 
-public function get_file($file_id)
-{
-   return $this->db->select()
-         ->from('files')
-         ->where('id', $file_id)
-         ->get()
-         ->row();
-}
- 
-}
-?>

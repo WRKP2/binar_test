@@ -10,7 +10,7 @@ $string = "<?xml version=\"1.0\" encoding=\"utf-8\"?>
     android:paddingRight=\"@dimen/activity_horizontal_margin\"
     android:paddingTop=\"@dimen/activity_vertical_margin\"
     android:orientation=\"vertical\"
-    tools:context=\".". $c_url . "/" .$filejava_layout_list."\">";
+    tools:context=\".". $c_url . "." .$filejavaActivityList."\">";
 
 $string .= "\n\n <android.support.v7.widget.RecyclerView
             android:id=\"@+id/rv_recycler\"
@@ -22,7 +22,7 @@ $string .= "\n\n <Button
         android:layout_width=\"match_parent\"
         android:layout_height=\"wrap_content\"
         android:text=\"Tambah\"
-        android:id=\"@+id/input\"/>";
+        android:id=\"@+id/btnInput\"/>";
 
 $string .= "\n\n </LinearLayout>";
 

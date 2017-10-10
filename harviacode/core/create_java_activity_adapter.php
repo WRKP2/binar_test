@@ -1,6 +1,8 @@
 <?php
 
 $string = "
+package ".$packageAndroid.".".$c_url.";
+    
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import ".$packageAndroid.".R;
 
 
 public class ".$filejavaActivityAdapter." extends RecyclerView.Adapter<".$filejavaActivityAdapter."." . ucfirst($table_name) . "Holder> {
@@ -57,8 +60,8 @@ $string .= "\n
 
     public class " . ucfirst($table_name) . "Holder extends RecyclerView.ViewHolder {
 
-        public CardView mCardView;
-//            private SparseBooleanArray selectedItems = new SparseBooleanArray();";
+        public CardView mCardView;";
+
 foreach ($all as $row) {
     if ($row['column_name'] != $pk) {
         $string .= "\n public TextView m" . $row['column_name'] . ";";

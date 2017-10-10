@@ -9,7 +9,7 @@ $string = "<?xml version=\"1.0\" encoding=\"utf-8\"?>
     android:paddingLeft=\"@dimen/activity_horizontal_margin\"
     android:paddingRight=\"@dimen/activity_horizontal_margin\"
     android:paddingTop=\"@dimen/activity_vertical_margin\"
-    tools:context=\"." . $c_url . "/" . $filejava_layout . "\">";
+    tools:context=\"." . $c_url . "." . $filejavaActivityIsi . "\">";
 
 $string .= "\n\n <ScrollView
         android:layout_width=\"match_parent\"

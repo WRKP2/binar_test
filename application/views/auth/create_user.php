@@ -20,13 +20,14 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="login-page">
+    <body class="login-page" style="background:#001930 ">
         <div class="login-box">
-            <div class="login-logo">
-                <a href="#"><b></b>Register</a>
+           <div class="login-logo">
+                <img src="<?php echo base_url('files/logo.png') ?>" alt="User Image" width="400" height="100"/> <br>
+                <h1 style="color: white">Register</h1>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg"></p>
                 <form action="<?php echo site_url('auth/create_user') ?>" method="post">
                     <div class="form-group has-feedback">
                         <input name="first_name" value="" id="first_name" type="text" placeholder="Frist Name" class="form-control"/>
@@ -52,10 +53,12 @@
 
                     <div class="form-group has-feedback">
                         <input name="email" value="" id="email" type=email placeholder="email" class="form-control"/>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
 
                     <div class="form-group has-feedback">
                         <input name="phone" value="" id="last_name" type=text placeholder="Phone" class="form-control"/>
+                        <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
                     </div>
 
                     <div class="form-group has-feedback">
@@ -65,18 +68,21 @@
                     </div>
                     
                     <div class="form-group has-feedback">
-                        <input name="password_confirm" value="" id="password_confirm" type=password placeholder="Password" class="form-control"/>
+                        <input name="password_confirm" value="" id="password_confirm" type=password placeholder="Confirm Password" class="form-control"/>
 
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Create Account</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Create Account</button> 
                         </div><!-- /.col -->
+                        
+                        <!--<div class="col-md-6"> <?php // echo anchor(site_url('auth/login'), 'Login', 'class="text-center"'); ?> </div>-->
+
                     </div>
                 </form>
-
+                
                 <div id="infoMessage"><?php echo $message; ?></div>
                 
             </div><!-- /.login-box-body -->

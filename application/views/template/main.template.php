@@ -21,6 +21,10 @@
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- ADMINLTE-->
+        
+        <!--TINY-->
+        <script type="text/javascript" src="<?php echo base_url('assets/tiny_mce/tiny_mce_src.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/tiny_mce/jquery.tinymce.js') ?>"></script>
 
         <!--CSS-->
         <?php if (isset($css_file)){ $help="assets/css/".$css_file.".css";?> 

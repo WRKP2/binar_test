@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE 2 | Sign in</title>
+        <title>Sign in</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
@@ -20,13 +20,14 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="login-page">
+    <body class="login-page" style="background:#001930 ">
         <div class="login-box">
             <div class="login-logo">
-                <a href="#"><b></b>Login</a>
+                <img src="<?php echo base_url('files/logo.png') ?>" alt="User Image" width="400" height="100"/> <br>
+                <h1 style="color: white">Sign In</h1>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg"></p>
                 <form action="<?php echo site_url('auth/login') ?>" method="post">
                     <div class="form-group has-feedback">
                         <input name="identity" value="" id="identity" type="text" placeholder="Email Address" class="form-control"/>
@@ -41,7 +42,7 @@
                         <div class="col-xs-8">    
                             <div class="checkbox icheck">
                                 <label>
-                                    <input style="display:none;" name="remember" value="1" id="remember" type="checkbox">Remember Me
+                                    <input style="display:none;" name="remember" value="1" id="remember" type="checkbox"> Remember Me
                                 </label>
                             </div>                        
                         </div><!-- /.col -->
@@ -52,12 +53,6 @@
                 </form>
                 
                 <div id="infoMessage"><?php echo $message;?></div>
-
-                <div class="social-auth-links text-center">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
-                    <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-                </div><!-- /.social-auth-links -->
 
                 <?php echo anchor(site_url('auth/forgot_password'), 'Forgot Password', 'class="text-center"'); ?><br>
      		<?php echo anchor(site_url('auth/create_user'), 'Register a new membership', 'class="text-center"'); ?>

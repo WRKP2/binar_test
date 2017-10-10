@@ -1,6 +1,8 @@
 <?php
 
-$string = "public class " . $c . "CLASS
+$string = ""
+        . "package ".$packageAndroid.".".$c_url.";"
+        . "\npublic class " . $c . "CLASS
 {";
 foreach ($all as $row) {
     $string .= "\nString " . $row['column_name'] . ";";

@@ -1,5 +1,4 @@
-<!doctype html>
-        <h2 style="margin-top:0px">User List</h2>
+<h2 style="margin-top:0px">User List</h2>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
                 <?php echo anchor(site_url('user/create'),'Create', 'class="btn btn-primary"'); ?>
@@ -67,10 +66,9 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
-		<?php echo anchor(site_url('user/excel'), 'Excel', 'class="btn btn-primary"'); ?>
-		<?php echo anchor(site_url('user/word'), 'Word', 'class="btn btn-primary"'); ?>
 	    </div>
             <div class="col-md-6 text-right">
                 <?php echo $pagination ?>
             </div>
         </div>
+   

@@ -9,7 +9,13 @@ foreach ($non_pk as $row) {
             <label for=\"".$row["column_name"]."\">".label($row["column_name"])." <?php echo form_error('".$row["column_name"]."') ?></label>
             <textarea class=\"form-control\" rows=\"3\" name=\"".$row["column_name"]."\" id=\"".$row["column_name"]."\" placeholder=\"".label($row["column_name"])."\"><?php echo $".$row["column_name"]."; ?></textarea>
         </div>";
-    } else
+    } else if($row["data_type"] == 'date'){
+        $string .= "\n\t    <div class=\"form-group\">
+            <label for=\"".$row["column_name"]."\">".label($row["column_name"])." <?php echo form_error('".$row["column_name"]."') ?></label>
+            <input type=\"text\" class=\"form-control\" name=\"".$row["column_name"]."\" id=\"".$row["column_name"]."\" placeholder=\"DD/MM/YYYY\" value=\"<?php echo $".$row["column_name"]."; ?>\" /><span class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span>
+        </div>";
+    }
+    else
     {
     $string .= "\n\t    <div class=\"form-group\">
             <label for=\"".$row["data_type"]."\">".label($row["column_name"])." <?php echo form_error('".$row["column_name"]."') ?></label>

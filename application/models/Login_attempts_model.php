@@ -16,7 +16,7 @@ class Login_attempts_model extends CI_Model
     }function getListlogin_attemptsAuto($xlogin_attempts) {
         $xStr = "SELECT " .
                 "*" .
-                " FROM login_attempts WHERE login like  '%" . $xlogin_attempts . "%'";
+                " FROM login_attempts WHERE //masukan nama kolom autocompliet (harus sama dengan control) like  '%" . $xlogin_attempts . "%'";
         $query = $this->db->query($xStr);
         return $query;
     }

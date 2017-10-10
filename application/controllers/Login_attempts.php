@@ -39,9 +39,11 @@ class Login_attempts extends MY_Controller
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
-        );
-        $this->render('login_attempts/login_attempts_list', $data);
-    }
+            'title' => 'Login_attempts',
+            'js' => 'login_attempts_ajax',
+            'css_file' => 'login_attempts_css',
+    
+        );    $this->render('login_attempts/login_attempts_list', $data);}
 
     public function read($id) 
     {
@@ -70,8 +72,8 @@ class Login_attempts extends MY_Controller
         $hasilnya       =  array();
         foreach ($query->result() as $d) {
             $hasilnya[]     = array(
-                'label' => $d->id.'-'.$d->login,  
-                'value' => $d->login
+                'label' => $d->id.'-'.$d->ip_addres,  
+                'value' => $d->ip_addres
             );
         }
         echo json_encode($hasilnya);  

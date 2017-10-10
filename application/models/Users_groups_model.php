@@ -16,7 +16,7 @@ class Users_groups_model extends CI_Model
     }function getListusers_groupsAuto($xusers_groups) {
         $xStr = "SELECT " .
                 "*" .
-                " FROM users_groups WHERE user_id like  '%" . $xusers_groups . "%'";
+                " FROM users_groups WHERE //masukan nama kolom autocompliet (harus sama dengan control) like  '%" . $xusers_groups . "%'";
         $query = $this->db->query($xStr);
         return $query;
     }
